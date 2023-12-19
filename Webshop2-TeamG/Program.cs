@@ -5,7 +5,7 @@ namespace Webshop2_TeamG
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Console.WriteLine("Hello, Customer!");
         }
     }
 }
