@@ -11,6 +11,7 @@ namespace Webshop2_TeamG.Models
     internal class Game
     {
         public int Id { get; set; }
+        public string Category { get; set; }
         public string Title { get; set; }
         public double Price { get; set; }
         public string ShortInfo { get; set; }
