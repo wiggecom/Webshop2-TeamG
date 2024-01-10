@@ -8,6 +8,7 @@ namespace Webshop2_TeamG
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, Customer!");
+            
             Helpers.Gfx.Frontend();
             Helpers.Admin.AdminTools(5, 13);
         }

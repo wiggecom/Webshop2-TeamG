@@ -10,19 +10,22 @@ using Webshop2_TeamG.Models;
 
 namespace Webshop2_TeamG.Helpers
 {
-    internal class Customer
+    public class Create
     {
-        public static void FillDatabase(ShopDbContext database)
+        public static void FillDatabase()
         {
-
-            if (database.Games.Any() || database.Genres.Any())
+            using (var database = new ShopDbContext())
             {
-                Console.WriteLine("Database already filled.");
-                return;
-            }
 
 
-            var genres = new List<Genre>
+                if (database.Games.Any())
+                {
+                    Console.WriteLine("Database already filled.");
+                    return;
+                }
+
+
+                var genres = new List<Genre>
         {
             new Genre { Name = "Action" },
             new Genre { Name = "Adventure" },
@@ -30,10 +33,10 @@ namespace Webshop2_TeamG.Helpers
             new Genre { Name = "Sport" }
         };
 
-            database.Genres.AddRange(genres);
-            database.SaveChanges();
+                database.Genres.AddRange(genres);
+                database.SaveChanges();
 
-            var actionGames = new List<Game>
+                var actionGames = new List<Game>
         {
             new Game
             {
@@ -67,7 +70,7 @@ namespace Webshop2_TeamG.Helpers
             }
         };
 
-            var adventureGames = new List<Game>
+                var adventureGames = new List<Game>
         {
             new Game
             {
@@ -101,7 +104,7 @@ namespace Webshop2_TeamG.Helpers
             }
         };
 
-            var strategyGames = new List<Game>
+                var strategyGames = new List<Game>
         {
             new Game
             {
@@ -135,7 +138,7 @@ namespace Webshop2_TeamG.Helpers
             }
         };
 
-            var sportGames = new List<Game>
+                var sportGames = new List<Game>
         {
             new Game
             {
@@ -168,14 +171,15 @@ namespace Webshop2_TeamG.Helpers
                 LongInfo = "Experience the thrill of open-world racing in Forza Horizon 3. Drive a diverse range of cars, explore stunning landscapes, and participate in dynamic races with changing weather conditions."
             }
         };
-            database.Games.AddRange(actionGames);
-            database.Games.AddRange(adventureGames);
-            database.Games.AddRange(strategyGames);
-            database.Games.AddRange(sportGames);
+                database.Games.AddRange(actionGames);
+                database.Games.AddRange(adventureGames);
+                database.Games.AddRange(strategyGames);
+                database.Games.AddRange(sportGames);
 
-            database.SaveChanges();
+                database.SaveChanges();
 
-            Console.WriteLine("Database filled successfully.");
+                Console.WriteLine("Database filled successfully.");
+            }
         }
         public static void CustomerTools(int menuX, int menuY, int infoX, int infoY)
         {
