@@ -177,9 +177,38 @@ namespace Webshop2_TeamG.Helpers
 
                 database.SaveChanges();
 
-                Console.WriteLine("Database filled successfully.");
+        //var customers = new List<Customer>
+        //{
+        //    new Customer
+        //    {
+        //        Name = "Smith",
+        //        Email = "Smith@matrix.neo",
+        //        Age =30,
+        //        Phone ="123-456789",
+        //        Street ="Rosvalla 76",
+        //        PostalCode="51130",
+        //        City ="Nykoping",
+        //        Country="Sweden",
+        //        CreditCard="9999-888777",
+        //        Baskets = new List<Basket>
+
+        //        {
+        //            new Basket
+        //            {
+        //                BasketEntries = new List<BasketEntry>
+        //                {
+        //                    new BasketEntry { GameId = actionGames.First().Id, Quantity = 2 },
+        //                }
+        //            }
+        //        }
+        //    },
+        //};
+        //    database.Customers.AddRange(customers);
+        //    database.SaveChanges();
+
+              Console.WriteLine("Database filled successfully.");
                 
-            }
+    }
         
         public static void CustomerTools(int menuX, int menuY, int infoX, int infoY)
         {
