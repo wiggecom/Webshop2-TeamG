@@ -12,9 +12,8 @@ namespace Webshop2_TeamG.Helpers
     {
         public static void AdminTools(int menuX, int menuY)
         {
-            //Helpers.Gfx.ClearMenu(menuX, menuY);
             int i = 0;
-            Console.BackgroundColor = ConsoleColor.DarkBlue; Console.ForegroundColor = ConsoleColor.Cyan;
+            //Console.BackgroundColor = ConsoleColor.DarkBlue; Console.ForegroundColor = ConsoleColor.Cyan;
             Console.SetCursorPosition(menuX, menuY + i); i++;
             Console.Write("Do you want to:");
             Console.SetCursorPosition(menuX, menuY + i); i++;
@@ -65,6 +64,7 @@ namespace Webshop2_TeamG.Helpers
                 Console.Write("Enter LongInfo: ");
                 string newLong = Console.ReadLine();
                 Console.SetCursorPosition(menuX, menuY + i); i++;
+
                 Console.Write("Enter Rating (3, 7, 12, 16, 18): ");
                 int newRating = 0;
                 int.TryParse(Console.ReadLine(), out newRating);
@@ -86,8 +86,6 @@ namespace Webshop2_TeamG.Helpers
                     AgeRating = ((AgeRating)newRating),
                     Publisher = newPub,
                     OnDisplay = false,
-                    OnSale = false,
-                    SalePercent = 0,
                     Stock = newStock
                 };
                 database.Games.Add(newGame);
