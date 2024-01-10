@@ -12,13 +12,12 @@ namespace Webshop2_TeamG.Helpers
 {
     public class Create
     {
-        public static void FillDatabase()
+        public static void FillDatabase(ShopDbContext database)
         {
-            using (var database = new ShopDbContext())
-            {
+            
 
 
-                if (database.Games.Any())
+                if (database.Games.Any()||database.Genres.Any()||database.Customers.Any())
                 {
                     Console.WriteLine("Database already filled.");
                     return;
@@ -179,8 +178,9 @@ namespace Webshop2_TeamG.Helpers
                 database.SaveChanges();
 
                 Console.WriteLine("Database filled successfully.");
+                
             }
-        }
+        
         public static void CustomerTools(int menuX, int menuY, int infoX, int infoY)
         {
             //Helpers.Gfx.ClearMenu(menuX, menuY);

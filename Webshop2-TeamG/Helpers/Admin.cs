@@ -40,7 +40,18 @@ namespace Webshop2_TeamG.Helpers
             }
             if (userInputKey.Key == ConsoleKey.D9)
             {
-                Helpers.Create.FillDatabase();
+                try
+                {
+                    using (var database = new ShopDbContext())
+                    {
+                        Helpers.Create.FillDatabase(database);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error occured: {ex.Message}");
+                }
+
                 return;
             }
             
