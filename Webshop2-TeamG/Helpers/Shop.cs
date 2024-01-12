@@ -96,9 +96,7 @@ namespace Webshop2_TeamG.Helpers
                     {
                         entry.Game.SoldTotal += entry.Quantity;
                         entry.Game.Stock -= entry.Quantity;
-                       // entry.Game.BasketEntries.Remove(entry);  ??????????
-                       // entry.Basket.BasketEntries.Remove(entry);
-                       // basket.BasketEntries.Remove(entry);           tilt
+                        basket.BasketEntries.Remove(entry);         
 
                         database.SaveChanges();
                     }
