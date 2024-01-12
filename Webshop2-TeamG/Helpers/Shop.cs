@@ -79,7 +79,42 @@ namespace Webshop2_TeamG.Helpers
                 Console.WriteLine("Basket is empty.");
             }
         }
-        public static void PurchaseGames(ShopDbContext database, Customer customer)
+        public static void CheckoutFromBasket(ShopDbContext database, Customer customer, string paymentMethod)
+        {
+            var basket = database.Baskets
+                         .Include(b => b.BasketEntries)
+                         .ThenInclude(entry => entry.Game)
+                         .FirstOrDefault(b => b.CustomerId== customer.Id);
+
+            if(basket != null&&basket.BasketEntries.Any())
+            {
+                Console.WriteLine($"Items in basket for {customer.Name}");
+                var totalAmount = basket.BasketEntries.Sum(entry => entry.Quantity * entry.Game.Price);
+                Console.WriteLine($"Total cost: SEK{totalAmount}");
+                Console.WriteLine("1.Creditcard");
+                Console.WriteLine("2.Klarna");
+
+                ConsoleKeyInfo paymentKey = Console.ReadKey();
+                string chosenPayment;
+                switch (paymentKey.Key)
+                {
+                    case ConsoleKey.D1:
+                        chosenPayment = "creditcard";
+
+                        break;
+                        case ConsoleKey.D2:
+                        chosenPayment = "klarna";
+                        break;
+                    default:
+                        Console.WriteLine("Error, exiting");
+                            return;
+                }
+                PurchaseGames(database, customer, chosenPayment);
+            }
+            else
+            { Console.WriteLine("Basket is empty"); }
+        }    
+        public static void PurchaseGames(ShopDbContext database, Customer customer,string paymentMethod)
         {
             var basket = database.Baskets
                 .Include(b => b.BasketEntries)
@@ -88,15 +123,29 @@ namespace Webshop2_TeamG.Helpers
 
             if (basket != null && basket.BasketEntries.Any())
             {
+                
                 Console.WriteLine($"Purchasing games for {customer.Name}...");
-
+                var totalAmount = basket.BasketEntries.Sum(entry => entry.Quantity * entry.Game.Price);
+                Console.WriteLine($"Total cost: SEK{totalAmount}");
+                switch (paymentMethod.ToLower())
+                {
+                    case "creditcard":
+                        Console.WriteLine("Creditcard payment complete");
+                        break;
+                    case "klarna":
+                        Console.WriteLine("Klarna payment complete");
+                        break;
+                    default:
+                        Console.WriteLine("Could not complete payment");
+                        break;
+                }
                 foreach (var entry in basket.BasketEntries)
                 {
                     if (entry.Game.Stock >= entry.Quantity)
                     {
                         entry.Game.SoldTotal += entry.Quantity;
                         entry.Game.Stock -= entry.Quantity;
-                        basket.BasketEntries.Remove(entry);         
+                                 
 
                         database.SaveChanges();
                     }
@@ -105,8 +154,10 @@ namespace Webshop2_TeamG.Helpers
                         Console.WriteLine($"Not enough stock available for {entry.Game.Title}. Skipping purchase.");
                     }
                 }
-
+                basket.BasketEntries.Clear();
+                database.SaveChanges();
                 Console.WriteLine("Purchase completed successfully.");
+                Console.ReadKey();
             }
             else
             {
