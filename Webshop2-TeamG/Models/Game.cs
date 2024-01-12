@@ -21,6 +21,7 @@ namespace Webshop2_TeamG.Models
         public int GenreId { get; set; }
         public Genre Genre { get; set; }
         public int Stock { get; set; }
+        public int SoldTotal { get; set; }
         public AgeRating AgeRating { get; set; }
         public string ShortInfo { get; set; }
         public string LongInfo { get; set; }
