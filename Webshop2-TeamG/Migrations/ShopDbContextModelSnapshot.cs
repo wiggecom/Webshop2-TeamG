@@ -81,18 +81,16 @@ namespace Webshop2_TeamG.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Admin")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreditCard")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -103,15 +101,21 @@ namespace Webshop2_TeamG.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Payment")
+                        .HasColumnType("int");
+
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PostalCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Street")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -137,12 +141,18 @@ namespace Webshop2_TeamG.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("OnDisplay")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ShortInfo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SoldTotal")
+                        .HasColumnType("int");
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");
@@ -178,7 +188,7 @@ namespace Webshop2_TeamG.Migrations
             modelBuilder.Entity("Webshop2_TeamG.Models.Basket", b =>
                 {
                     b.HasOne("Webshop2_TeamG.Models.Customer", "Customer")
-                        .WithMany("History")
+                        .WithMany("Baskets")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -223,7 +233,7 @@ namespace Webshop2_TeamG.Migrations
 
             modelBuilder.Entity("Webshop2_TeamG.Models.Customer", b =>
                 {
-                    b.Navigation("History");
+                    b.Navigation("Baskets");
                 });
 
             modelBuilder.Entity("Webshop2_TeamG.Models.Genre", b =>

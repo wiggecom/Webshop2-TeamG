@@ -12,8 +12,8 @@ using Webshop2_TeamG.Models;
 namespace Webshop2_TeamG.Migrations
 {
     [DbContext(typeof(ShopDbContext))]
-    [Migration("20240109140403_secondMigration")]
-    partial class secondMigration
+    [Migration("20240115235153_First")]
+    partial class First
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,32 @@ namespace Webshop2_TeamG.Migrations
                     b.ToTable("Baskets");
                 });
 
+            modelBuilder.Entity("Webshop2_TeamG.Models.BasketEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BasketId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BasketId");
+
+                    b.HasIndex("GameId");
+
+                    b.ToTable("BasketEntries");
+                });
+
             modelBuilder.Entity("Webshop2_TeamG.Models.Customer", b =>
                 {
                     b.Property<int>("Id")
@@ -58,18 +84,16 @@ namespace Webshop2_TeamG.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Admin")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreditCard")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -80,15 +104,21 @@ namespace Webshop2_TeamG.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Payment")
+                        .HasColumnType("int");
+
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PostalCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Street")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -104,32 +134,30 @@ namespace Webshop2_TeamG.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AgeRating")
+                    b.Property<int>("AgeRating")
                         .HasColumnType("int");
 
-                    b.Property<int?>("BasketId")
+                    b.Property<int>("GenreId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Category")
+                    b.Property<string>("LongInfo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LongInfo")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("OnDisplay")
+                        .HasColumnType("int");
 
-                    b.Property<bool?>("OnDisplay")
-                        .HasColumnType("bit");
-
-                    b.Property<double?>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Publisher")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ShortInfo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Stock")
+                    b.Property<int>("SoldTotal")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Stock")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -138,15 +166,32 @@ namespace Webshop2_TeamG.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BasketId");
+                    b.HasIndex("GenreId");
 
                     b.ToTable("Games");
+                });
+
+            modelBuilder.Entity("Webshop2_TeamG.Models.Genre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genres");
                 });
 
             modelBuilder.Entity("Webshop2_TeamG.Models.Basket", b =>
                 {
                     b.HasOne("Webshop2_TeamG.Models.Customer", "Customer")
-                        .WithMany("History")
+                        .WithMany("Baskets")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -154,21 +199,49 @@ namespace Webshop2_TeamG.Migrations
                     b.Navigation("Customer");
                 });
 
+            modelBuilder.Entity("Webshop2_TeamG.Models.BasketEntry", b =>
+                {
+                    b.HasOne("Webshop2_TeamG.Models.Basket", "Basket")
+                        .WithMany("BasketEntries")
+                        .HasForeignKey("BasketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Webshop2_TeamG.Models.Game", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Basket");
+
+                    b.Navigation("Game");
+                });
+
             modelBuilder.Entity("Webshop2_TeamG.Models.Game", b =>
                 {
-                    b.HasOne("Webshop2_TeamG.Models.Basket", null)
-                        .WithMany("BasketGames")
-                        .HasForeignKey("BasketId");
+                    b.HasOne("Webshop2_TeamG.Models.Genre", "Genre")
+                        .WithMany("Games")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Genre");
                 });
 
             modelBuilder.Entity("Webshop2_TeamG.Models.Basket", b =>
                 {
-                    b.Navigation("BasketGames");
+                    b.Navigation("BasketEntries");
                 });
 
             modelBuilder.Entity("Webshop2_TeamG.Models.Customer", b =>
                 {
-                    b.Navigation("History");
+                    b.Navigation("Baskets");
+                });
+
+            modelBuilder.Entity("Webshop2_TeamG.Models.Genre", b =>
+                {
+                    b.Navigation("Games");
                 });
 #pragma warning restore 612, 618
         }

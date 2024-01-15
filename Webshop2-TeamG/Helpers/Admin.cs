@@ -12,14 +12,81 @@ namespace Webshop2_TeamG.Helpers
     {
         public static void AdminTools(int option)
         {
+            SysMenu.ClearMainArea();
             switch (option)
             {
                 case 1:
-                    Admin.AddGame();
+                    //Admin.AddGame();
+                    Console.SetCursorPosition(45, 12);
+                    Console.Write("Add Title");
                     return;
                 case 2:
+                    Console.SetCursorPosition(45, 12);
+                    Console.Write("Remove Title");
                     return;
                 case 3:
+                    Console.SetCursorPosition(45, 12);
+                    Console.Write("Change Title");
+                    return;
+                case 4:
+                    Console.SetCursorPosition(45, 12);
+                    Console.Write("List Titles");
+                    return;
+                case 5:
+                    Console.SetCursorPosition(45, 12);
+                    try
+                    {
+                        using (var database = new ShopDbContext())
+                        {
+                            Console.Write("Checking if database is empty...");
+                            Console.SetCursorPosition(45, 12);
+                            Helpers.Create.FillDatabase(database);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.SetCursorPosition(45, 12);
+                        Console.Write("                                ");
+                        Console.SetCursorPosition(45, 12);
+                        Console.Write($"Error occured: {ex.Message}");
+                        //Thread.Sleep(3000);
+                        //Gfx.Frontend(0, 0);
+                        //Gfx.ColorIni();
+                    }
+                    return;
+                case 6:
+                    Console.SetCursorPosition(45, 12);
+                    Console.Write("Top Console");
+                    return;
+                case 7:
+                    Console.SetCursorPosition(45, 12);
+                    Console.Write("Top Game");
+                    return;
+                case 8:
+                    Console.SetCursorPosition(45, 12);
+                    Console.Write("Low Stock");
+                    return;
+                case 9:
+                    Console.SetCursorPosition(45, 12);
+                    try
+                    {
+                        using (var database = new ShopDbContext())
+                        {
+                            Console.Write("Checking if database is empty...");
+                            Console.SetCursorPosition(45, 12);
+                            Helpers.Create.SampleCustomers(database);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.SetCursorPosition(45, 12);
+                        Console.Write("                                ");
+                        Console.SetCursorPosition(45, 12);
+                        Console.Write($"Error occured: {ex.Message}");
+                        //Thread.Sleep(3000);
+                        //Gfx.Frontend(0, 0);
+                        //Gfx.ColorIni();
+                    }
                     return;
             }
             //var userInputKey = Console.ReadKey(true);
@@ -51,7 +118,7 @@ namespace Webshop2_TeamG.Helpers
 
             //    return;
             //}
-            
+
         }
         private static void AddGame()
         {

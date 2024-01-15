@@ -14,12 +14,12 @@ namespace Webshop2_TeamG.Helpers
     {
         public static void FillDatabase(ShopDbContext database)
         {
-            
-
-
-                if (database.Games.Any()||database.Genres.Any()||database.Customers.Any())
-                {
-                    Console.WriteLine("Database already filled.");
+            if (database.Games.Any() || database.Genres.Any())
+            {
+                Console.SetCursorPosition(45, 12);
+                Console.Write("                                ");
+                Console.SetCursorPosition(45, 12);
+                Console.WriteLine("Database already filled.");
                     return;
                 }
 
@@ -177,18 +177,38 @@ namespace Webshop2_TeamG.Helpers
 
                 database.SaveChanges();
 
+            Console.SetCursorPosition(45, 12);
+            Console.Write("                                ");
+            Console.SetCursorPosition(45, 12);
+            Console.WriteLine("Database filled successfully.");
+                
+    }
+        public static void SampleCustomers(ShopDbContext database)
+        {
+
+            if (database.Customers.Any())
+            {
+                Console.SetCursorPosition(45, 12);
+                Console.Write("                                ");
+                Console.SetCursorPosition(45, 12);
+                Console.WriteLine("Database already filled.");
+                return;
+            }
+
             var customer = new List<Customer>
         {
             new Customer
             {
                 Name = "Smith",
                 Email = "Smith@matrix.neo",
+                Password  = "abc123",
                 Age =30,
                 Phone ="123-456789",
                 Street ="Rosvalla 76",
                 PostalCode="51130",
                 City ="Nykoping",
                 Country="Sweden",
+                Admin = false,
                 Payment= PaymentMethod.CreditCard,
                 Baskets = new List<Basket>
 
@@ -197,19 +217,45 @@ namespace Webshop2_TeamG.Helpers
                     {
                         BasketEntries = new List<BasketEntry>
                         {
-                            new BasketEntry { GameId = actionGames.First().Id, Quantity = 2 },
+                            //new BasketEntry { GameId = actionGames.First().Id, Quantity = 2 },
                         }
                     }
                 }
             },
+            //            new Customer
+            //{
+            //    Name = "Admin",
+            //    Email = "admin@hog.se",
+            //    Password  = "admin",
+            //    Age =36,
+            //    Phone ="555-236865",
+            //    Street ="Admingatan 7",
+            //    PostalCode="61192",
+            //    City ="Nykoping",
+            //    Country="Sweden",
+            //    Admin = true,
+            //    Payment= PaymentMethod.Klarna,
+            //    Baskets = new List<Basket>
+
+            //    {
+            //        new Basket
+            //        {
+            //            BasketEntries = new List<BasketEntry>
+            //            {
+            //                //new BasketEntry { GameId = actionGames.First().Id, Quantity = 1 },
+            //            }
+            //        }
+            //    }
+            //}
         };
             database.Customers.AddRange(customer);
             database.SaveChanges();
-
+            Console.SetCursorPosition(45, 12);
+            Console.Write("                                ");
+            Console.SetCursorPosition(45, 12);
             Console.WriteLine("Database filled successfully.");
-                
-    }
-        
+
+        }
         public static void CustomerTools(int menuX, int menuY, int infoX, int infoY)
         {
             //Helpers.Gfx.ClearMenu(menuX, menuY);
