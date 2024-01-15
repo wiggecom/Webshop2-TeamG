@@ -10,53 +10,50 @@ namespace Webshop2_TeamG.Helpers
 {
     internal class Admin
     {
-        public static void AdminTools(int menuX, int menuY)
+        public static void AdminTools(int option)
         {
-            int i = 0;
-            //Console.BackgroundColor = ConsoleColor.DarkBlue; Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.SetCursorPosition(menuX, menuY + i); i++;
-            Console.Write("Do you want to:");
-            Console.SetCursorPosition(menuX, menuY + i); i++;
-            Console.Write("1. Add Game");
-            Console.SetCursorPosition(menuX, menuY + i); i++;
-            Console.Write("2. Delete Game (placeholder)");
-            Console.SetCursorPosition(menuX, menuY + i); i++;
-            Console.Write("3. Cancel");
-            Console.SetCursorPosition(menuX, menuY + i); i++;
-            Console.Write("9. Fill Db with Sample Games");
+            switch (option)
+            {
+                case 1:
+                    Admin.AddGame();
+                    return;
+                case 2:
+                    return;
+                case 3:
+                    return;
+            }
+            //var userInputKey = Console.ReadKey(true);
+            //if (userInputKey.Key == ConsoleKey.D1)
+            //{
+            //    AddGame(menuX, menuY);
+            //}
+            //if (userInputKey.Key == ConsoleKey.D2)
+            //{
+            //    return;
+            //}
+            //if (userInputKey.Key == ConsoleKey.D3)
+            //{
+            //    return;
+            //}
+            //if (userInputKey.Key == ConsoleKey.D9)
+            //{
+            //    try
+            //    {
+            //        using (var database = new ShopDbContext())
+            //        {
+            //            Helpers.Create.FillDatabase(database);
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Console.WriteLine($"Error occured: {ex.Message}");
+            //    }
 
-            var userInputKey = Console.ReadKey(true);
-            if (userInputKey.Key == ConsoleKey.D1)
-            {
-                AddGame(menuX, menuY);
-            }
-            if (userInputKey.Key == ConsoleKey.D2)
-            {
-                return;
-            }
-            if (userInputKey.Key == ConsoleKey.D3)
-            {
-                return;
-            }
-            if (userInputKey.Key == ConsoleKey.D9)
-            {
-                try
-                {
-                    using (var database = new ShopDbContext())
-                    {
-                        Helpers.Create.FillDatabase(database);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error occured: {ex.Message}");
-                }
-
-                return;
-            }
+            //    return;
+            //}
             
         }
-        private static void AddGame(int menuX, int menuY)
+        private static void AddGame()
         {
         //    Console.SetCursorPosition(0, 0);
         //    Helpers.Gfx.Frontend();
