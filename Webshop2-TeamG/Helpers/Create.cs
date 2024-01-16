@@ -16,9 +16,9 @@ namespace Webshop2_TeamG.Helpers
         {
             if (database.Games.Any() || database.Genres.Any())
             {
-                Console.SetCursorPosition(45, 12);
+                Position.MoveCursorMainStart();
                 Console.Write("                                ");
-                Console.SetCursorPosition(45, 12);
+                Position.MoveCursorMainStart();
                 Console.WriteLine("Database already filled.");
                     return;
                 }
@@ -177,9 +177,9 @@ namespace Webshop2_TeamG.Helpers
 
                 database.SaveChanges();
 
-            Console.SetCursorPosition(45, 12);
+            Position.MoveCursorMainStart();
             Console.Write("                                ");
-            Console.SetCursorPosition(45, 12);
+            Position.MoveCursorMainStart();
             Console.WriteLine("Database filled successfully.");
                 
     }
@@ -188,9 +188,9 @@ namespace Webshop2_TeamG.Helpers
 
             if (database.Customers.Any())
             {
-                Console.SetCursorPosition(45, 12);
+                Position.MoveCursorMainStart();
                 Console.Write("                                ");
-                Console.SetCursorPosition(45, 12);
+                Position.MoveCursorMainStart();
                 Console.WriteLine("Database already filled.");
                 return;
             }
@@ -250,9 +250,9 @@ namespace Webshop2_TeamG.Helpers
         };
             database.Customers.AddRange(customer);
             database.SaveChanges();
-            Console.SetCursorPosition(45, 12);
+            Position.MoveCursorMainStart();
             Console.Write("                                ");
-            Console.SetCursorPosition(45, 12);
+            Position.MoveCursorMainStart();
             Console.WriteLine("Database filled successfully.");
 
         }

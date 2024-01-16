@@ -23,7 +23,7 @@ namespace Webshop2_TeamG.Models
         public string? PostalCode { get; set; }
         public string? City { get; set; }
         public string? Country { get; set; }
-        public bool Admin { get; set; }
+        public bool Admin { get; set; } = false;
         public PaymentMethod Payment { get; set; }
         public ICollection<Basket> Baskets { get; set; } = new List<Basket>();
         
