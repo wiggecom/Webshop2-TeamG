@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Webshop2_TeamG.Models
 {
-    
+
     public enum AgeRating
     {
         Everyone,
@@ -25,5 +25,6 @@ namespace Webshop2_TeamG.Models
         public AgeRating AgeRating { get; set; }
         public string ShortInfo { get; set; }
         public string LongInfo { get; set; }
+        public int OnDisplay { get; set; } = 0;
     }
 }

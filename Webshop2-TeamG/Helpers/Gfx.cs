@@ -21,6 +21,8 @@ namespace Webshop2_TeamG.Helpers
             Console.SetWindowSize(winWidth, winHeight);
             Console.SetBufferSize(winWidth, winHeight);
             Console.CursorVisible = false;
+            Frontend(0, 0);
+            ColorIni();
         }
         public static void Frontend(int gfxLeft, int gfxTop)
         {

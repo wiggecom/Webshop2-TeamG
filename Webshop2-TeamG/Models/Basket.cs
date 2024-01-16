@@ -9,9 +9,9 @@ namespace Webshop2_TeamG.Models
 {
     public class Basket
     {
-            public int Id { get; set; }
-            public int CustomerId { get; set; }
-            public Customer Customer { get; set; }
+        public int Id { get; set; }
+        public int CustomerId { get; set; }
+        public Customer Customer { get; set; }
 
         public DateTime Today { get; set; }
         public string? DeliveryOption { get; set; }

@@ -12,7 +12,7 @@ namespace Webshop2_TeamG.Helpers
     {
         public static void AddToBasket(ShopDbContext database, Customer customer, Game game, int quantity)
         {
-            
+
             if (game.Stock < quantity)
             {
                 Console.WriteLine($"Not enough stock available for {game.Title}.");
@@ -84,9 +84,9 @@ namespace Webshop2_TeamG.Helpers
             var basket = database.Baskets
                          .Include(b => b.BasketEntries)
                          .ThenInclude(entry => entry.Game)
-                         .FirstOrDefault(b => b.CustomerId== customer.Id);
+                         .FirstOrDefault(b => b.CustomerId == customer.Id);
 
-            if(basket != null&&basket.BasketEntries.Any())
+            if (basket != null && basket.BasketEntries.Any())
             {
                 Console.WriteLine($"Items in basket for {customer.Name}");
                 var totalAmount = basket.BasketEntries.Sum(entry => entry.Quantity * entry.Game.Price);
@@ -102,19 +102,19 @@ namespace Webshop2_TeamG.Helpers
                         chosenPayment = "creditcard";
 
                         break;
-                        case ConsoleKey.D2:
+                    case ConsoleKey.D2:
                         chosenPayment = "klarna";
                         break;
                     default:
                         Console.WriteLine("Error, exiting");
-                            return;
+                        return;
                 }
                 PurchaseGames(database, customer, chosenPayment);
             }
             else
             { Console.WriteLine("Basket is empty"); }
-        }    
-        public static void PurchaseGames(ShopDbContext database, Customer customer,string paymentMethod)
+        }
+        public static void PurchaseGames(ShopDbContext database, Customer customer, string paymentMethod)
         {
             var basket = database.Baskets
                 .Include(b => b.BasketEntries)
@@ -123,7 +123,7 @@ namespace Webshop2_TeamG.Helpers
 
             if (basket != null && basket.BasketEntries.Any())
             {
-                
+
                 Console.WriteLine($"Purchasing games for {customer.Name}...");
                 var totalAmount = basket.BasketEntries.Sum(entry => entry.Quantity * entry.Game.Price);
                 Console.WriteLine($"Total cost: SEK{totalAmount}");
@@ -145,7 +145,7 @@ namespace Webshop2_TeamG.Helpers
                     {
                         entry.Game.SoldTotal += entry.Quantity;
                         entry.Game.Stock -= entry.Quantity;
-                                 
+
 
                         database.SaveChanges();
                     }

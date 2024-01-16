@@ -8,12 +8,8 @@ namespace Webshop2_TeamG.Helpers
 {
     internal class MainView
     {
-        public static void MoveCursorMainStart()
+        public static void MainArea()
         {
-            Console.SetCursorPosition(45, 12);
-        }
-        public static void MainArea() 
-        { 
             for (int i = 1; i < 4; i++)
             {
                 Featured(i);

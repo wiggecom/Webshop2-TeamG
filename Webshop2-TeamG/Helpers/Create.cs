@@ -14,26 +14,17 @@ namespace Webshop2_TeamG.Helpers
     {
         public static void FillDatabase(ShopDbContext database)
         {
-<<<<<<< Updated upstream
-            
-
-
-                if (database.Games.Any()||database.Genres.Any()||database.Customers.Any())
-                {
-                    Console.WriteLine("Database already filled.");
-=======
             if (database.Games.Any() || database.Genres.Any())
             {
-                MainView.MoveCursorMainStart();
+                Position.MoveCursorMainStart();
                 Console.Write("                                ");
-                MainView.MoveCursorMainStart();
+                Position.MoveCursorMainStart();
                 Console.WriteLine("Database already filled.");
->>>>>>> Stashed changes
-                    return;
-                }
+                return;
+            }
 
 
-                var genres = new List<Genre>
+            var genres = new List<Genre>
         {
             new Genre { Name = "Action" },
             new Genre { Name = "Adventure" },
@@ -41,10 +32,10 @@ namespace Webshop2_TeamG.Helpers
             new Genre { Name = "Sport" }
         };
 
-                database.Genres.AddRange(genres);
-                database.SaveChanges();
+            database.Genres.AddRange(genres);
+            database.SaveChanges();
 
-                var actionGames = new List<Game>
+            var actionGames = new List<Game>
         {
             new Game
             {
@@ -78,7 +69,7 @@ namespace Webshop2_TeamG.Helpers
             }
         };
 
-                var adventureGames = new List<Game>
+            var adventureGames = new List<Game>
         {
             new Game
             {
@@ -112,7 +103,7 @@ namespace Webshop2_TeamG.Helpers
             }
         };
 
-                var strategyGames = new List<Game>
+            var strategyGames = new List<Game>
         {
             new Game
             {
@@ -146,7 +137,7 @@ namespace Webshop2_TeamG.Helpers
             }
         };
 
-                var sportGames = new List<Game>
+            var sportGames = new List<Game>
         {
             new Game
             {
@@ -179,46 +170,45 @@ namespace Webshop2_TeamG.Helpers
                 LongInfo = "Experience the thrill of open-world racing in Forza Horizon 3. Drive a diverse range of cars, explore stunning landscapes, and participate in dynamic races with changing weather conditions."
             }
         };
-                database.Games.AddRange(actionGames);
-                database.Games.AddRange(adventureGames);
-                database.Games.AddRange(strategyGames);
-                database.Games.AddRange(sportGames);
+            database.Games.AddRange(actionGames);
+            database.Games.AddRange(adventureGames);
+            database.Games.AddRange(strategyGames);
+            database.Games.AddRange(sportGames);
 
-                database.SaveChanges();
+            database.SaveChanges();
 
-<<<<<<< Updated upstream
-=======
-            MainView.MoveCursorMainStart();
+            Position.MoveCursorMainStart();
             Console.Write("                                ");
-            MainView.MoveCursorMainStart();
+            Position.MoveCursorMainStart();
             Console.WriteLine("Database filled successfully.");
-                
-    }
+
+        }
         public static void SampleCustomers(ShopDbContext database)
         {
 
             if (database.Customers.Any())
             {
-                MainView.MoveCursorMainStart();
+                Position.MoveCursorMainStart();
                 Console.Write("                                ");
-                MainView.MoveCursorMainStart();
+                Position.MoveCursorMainStart();
                 Console.WriteLine("Database already filled.");
                 return;
             }
 
->>>>>>> Stashed changes
             var customer = new List<Customer>
         {
             new Customer
             {
                 Name = "Smith",
                 Email = "Smith@matrix.neo",
+                Password  = "abc123",
                 Age =30,
                 Phone ="123-456789",
                 Street ="Rosvalla 76",
                 PostalCode="51130",
                 City ="Nykoping",
                 Country="Sweden",
+                Admin = false,
                 Payment= PaymentMethod.CreditCard,
                 Baskets = new List<Basket>
 
@@ -227,26 +217,45 @@ namespace Webshop2_TeamG.Helpers
                     {
                         BasketEntries = new List<BasketEntry>
                         {
-                            new BasketEntry { GameId = actionGames.First().Id, Quantity = 2 },
+                            //new BasketEntry { GameId = actionGames.First().Id, Quantity = 2 },
                         }
                     }
                 }
             },
+            //            new Customer
+            //{
+            //    Name = "Admin",
+            //    Email = "admin@hog.se",
+            //    Password  = "admin",
+            //    Age =36,
+            //    Phone ="555-236865",
+            //    Street ="Admingatan 7",
+            //    PostalCode="61192",
+            //    City ="Nykoping",
+            //    Country="Sweden",
+            //    Admin = true,
+            //    Payment= PaymentMethod.Klarna,
+            //    Baskets = new List<Basket>
+
+            //    {
+            //        new Basket
+            //        {
+            //            BasketEntries = new List<BasketEntry>
+            //            {
+            //                //new BasketEntry { GameId = actionGames.First().Id, Quantity = 1 },
+            //            }
+            //        }
+            //    }
+            //}
         };
             database.Customers.AddRange(customer);
             database.SaveChanges();
-<<<<<<< Updated upstream
-=======
-            MainView.MoveCursorMainStart();
+            Position.MoveCursorMainStart();
             Console.Write("                                ");
-            MainView.MoveCursorMainStart();
+            Position.MoveCursorMainStart();
             Console.WriteLine("Database filled successfully.");
->>>>>>> Stashed changes
 
-            Console.WriteLine("Database filled successfully.");
-                
-    }
-        
+        }
         public static void CustomerTools(int menuX, int menuY, int infoX, int infoY)
         {
             //Helpers.Gfx.ClearMenu(menuX, menuY);

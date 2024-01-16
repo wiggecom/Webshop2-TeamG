@@ -9,18 +9,19 @@ namespace Webshop2_TeamG
     {
         static void Main(string[] args)
         {
-            int menuLevel = 3;
+            int menuLevel = 1;
+            int topX = 85;
+            int topY = 3;
+            int sideX = 7;
+            int sideY = 9;
             Gfx.WinIni();
-            Gfx.Frontend(0, 0);
-            Gfx.ColorIni();
-            SysMenu.TopMenu(85, 3);
+
+            SysMenu.TopMenu(topX, topY);
             while (true)
             {
-            menuLevel = SysMenu.SideMenu(7, 9, menuLevel);
+                SysMenu.ClearFullSidemenu(sideX, sideY + 4);
+                menuLevel = SysMenu.SideMenu(sideX, sideY, menuLevel);
             }
-            Console.ReadKey();
-            //Helpers.Gfx.Frontend();
-            //Helpers.Admin.AdminTools(5, 13);
         }
     }
 }
