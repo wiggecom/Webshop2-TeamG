@@ -14,7 +14,7 @@ namespace Webshop2_TeamG.Models
             public Customer Customer { get; set; }
 
         public DateTime Today { get; set; }
-        public string DeliveryOption { get; set; }
+        public string? DeliveryOption { get; set; }
 
         public ICollection<BasketEntry> BasketEntries { get; set; } = new List<BasketEntry>();
 

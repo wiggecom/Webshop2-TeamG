@@ -34,7 +34,6 @@ namespace Webshop2_TeamG.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("DeliveryOption")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Today")

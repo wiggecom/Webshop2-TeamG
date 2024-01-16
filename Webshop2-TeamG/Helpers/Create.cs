@@ -14,12 +14,21 @@ namespace Webshop2_TeamG.Helpers
     {
         public static void FillDatabase(ShopDbContext database)
         {
+<<<<<<< Updated upstream
             
 
 
                 if (database.Games.Any()||database.Genres.Any()||database.Customers.Any())
                 {
                     Console.WriteLine("Database already filled.");
+=======
+            if (database.Games.Any() || database.Genres.Any())
+            {
+                MainView.MoveCursorMainStart();
+                Console.Write("                                ");
+                MainView.MoveCursorMainStart();
+                Console.WriteLine("Database already filled.");
+>>>>>>> Stashed changes
                     return;
                 }
 
@@ -177,6 +186,27 @@ namespace Webshop2_TeamG.Helpers
 
                 database.SaveChanges();
 
+<<<<<<< Updated upstream
+=======
+            MainView.MoveCursorMainStart();
+            Console.Write("                                ");
+            MainView.MoveCursorMainStart();
+            Console.WriteLine("Database filled successfully.");
+                
+    }
+        public static void SampleCustomers(ShopDbContext database)
+        {
+
+            if (database.Customers.Any())
+            {
+                MainView.MoveCursorMainStart();
+                Console.Write("                                ");
+                MainView.MoveCursorMainStart();
+                Console.WriteLine("Database already filled.");
+                return;
+            }
+
+>>>>>>> Stashed changes
             var customer = new List<Customer>
         {
             new Customer
@@ -205,6 +235,13 @@ namespace Webshop2_TeamG.Helpers
         };
             database.Customers.AddRange(customer);
             database.SaveChanges();
+<<<<<<< Updated upstream
+=======
+            MainView.MoveCursorMainStart();
+            Console.Write("                                ");
+            MainView.MoveCursorMainStart();
+            Console.WriteLine("Database filled successfully.");
+>>>>>>> Stashed changes
 
             Console.WriteLine("Database filled successfully.");
                 

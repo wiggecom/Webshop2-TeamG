@@ -15,12 +15,101 @@ namespace Webshop2_TeamG.Helpers
             switch (option)
             {
                 case 1:
+<<<<<<< Updated upstream
                     Admin.AddGame();
                     return;
                 case 2:
                     return;
                 case 3:
                     return;
+=======
+                    //Admin.AddGame();
+                    MainView.MoveCursorMainStart();
+                    Console.Write("Add Title");
+                    return;
+                case 2:
+                    MainView.MoveCursorMainStart();
+                    Console.Write("Remove Title");
+                    return;
+                case 3:
+                    MainView.MoveCursorMainStart();
+                    Console.Write("Change Title");
+                    return;
+                case 4:
+                    MainView.MoveCursorMainStart();
+                    Console.Write("List Titles");
+                    return;
+
+                    // Add Sample Data
+                case 5:
+                    MainView.MoveCursorMainStart();
+                    try
+                    {
+                        using (var database = new ShopDbContext())
+                        {
+                            Console.Write("Checking if database is empty...");
+                            MainView.MoveCursorMainStart();
+                            Helpers.Create.FillDatabase(database);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MainView.MoveCursorMainStart();
+                        Console.Write("                                ");
+                        MainView.MoveCursorMainStart();
+                        Console.Write($"Error occured: {ex.Message}");
+                        //Thread.Sleep(3000);
+                        //Gfx.Frontend(0, 0);
+                        //Gfx.ColorIni();
+                    }
+                    return;
+
+                    // Add Sample Customer/Admin
+                case 6:
+                    MainView.MoveCursorMainStart();
+                    Console.Write("Adding to database...");
+                    MainView.MoveCursorMainStart();
+                    using (var database = new ShopDbContext())
+                    {
+                        Console.Write("Checking if database is empty...");
+                        MainView.MoveCursorMainStart();
+                        Helpers.Create.SampleCustomers(database);
+                    }
+                    //try
+                    //{
+                    //    using (var database = new ShopDbContext())
+                    //    {
+                    //        Console.Write("Checking if database is empty...");
+                    //        MainView.MoveCursorMainStart();
+                    //        Helpers.Create.SampleCustomers(database);
+                    //    }
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    MainView.MoveCursorMainStart();
+                    //    Console.Write("                                ");
+                    //    MainView.MoveCursorMainStart();
+                    //    Console.Write($"Error occured: {ex.Message}");
+                    //    //Thread.Sleep(3000);
+                    //    //Gfx.Frontend(0, 0);
+                    //    //Gfx.ColorIni();
+                    //}
+                    return;
+
+                case 7:
+                    MainView.MoveCursorMainStart();
+                    Console.Write("Top Console");
+                    return;
+                case 8:
+                    MainView.MoveCursorMainStart();
+                    Console.Write("Top Game");
+                    return;
+                case 9:
+                    MainView.MoveCursorMainStart();
+                    Console.Write("Low Stock");
+                    return;
+
+>>>>>>> Stashed changes
             }
             //var userInputKey = Console.ReadKey(true);
             //if (userInputKey.Key == ConsoleKey.D1)
@@ -53,6 +142,7 @@ namespace Webshop2_TeamG.Helpers
             //}
             
         }
+        
         private static void AddGame()
         {
         //    Console.SetCursorPosition(0, 0);
