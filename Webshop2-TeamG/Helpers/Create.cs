@@ -16,9 +16,9 @@ namespace Webshop2_TeamG.Helpers
         {
             if (database.Games.Any() || database.Genres.Any())
             {
-                Position.MoveCursorMainStart();
+                Position.MoveCursorMainStart(0);
                 Console.Write("                                ");
-                Position.MoveCursorMainStart();
+                Position.MoveCursorMainStart(0);
                 Console.WriteLine("Database already filled.");
                 return;
             }
@@ -78,6 +78,7 @@ namespace Webshop2_TeamG.Helpers
                 GenreId = genres[1].Id,
                 Stock = 90,
                 AgeRating = AgeRating.Everyone,
+                OnDisplay = 1,
                 ShortInfo = "Epic action-adventure game set in a vast, open world with creative puzzles and exploration.",
                 LongInfo = "Embark on a grand adventure in The Legend of Zelda: Breath of the Wild. Explore the vast kingdom of Hyrule, solve intricate puzzles, battle formidable enemies, and uncover the secrets of this beautifully crafted open-world game."
             },
@@ -97,6 +98,7 @@ namespace Webshop2_TeamG.Helpers
                 Price = 499.99m,
                 GenreId = genres[1].Id,
                 Stock = 110,
+                OnDisplay= 3,
                 AgeRating = AgeRating.Mature,
                 ShortInfo = "Wild West open-world game with an immersive story and realistic details.",
                 LongInfo = "Immerse yourself in the vast open world of the Wild West in Red Dead Redemption 2. Ride through stunning landscapes, engage in intense gunfights, and experience a gripping narrative that explores the era of outlaws and lawmen."
@@ -162,9 +164,10 @@ namespace Webshop2_TeamG.Helpers
             new Game
             {
                 Title = "Forza Horizon 3",
-                Price = 299.99m,
+                Price = 999.99m,
                 GenreId = genres[3].Id,
                 Stock = 80,
+                OnDisplay = 2,
                 AgeRating = AgeRating.Everyone,
                 ShortInfo = "Open-world racing game featuring a variety of cars, stunning landscapes, and dynamic weather.",
                 LongInfo = "Experience the thrill of open-world racing in Forza Horizon 3. Drive a diverse range of cars, explore stunning landscapes, and participate in dynamic races with changing weather conditions."
@@ -177,9 +180,9 @@ namespace Webshop2_TeamG.Helpers
 
             database.SaveChanges();
 
-            Position.MoveCursorMainStart();
+            Position.MoveCursorMainStart(0);
             Console.Write("                                ");
-            Position.MoveCursorMainStart();
+            Position.MoveCursorMainStart(0);
             Console.WriteLine("Database filled successfully.");
 
         }
@@ -188,9 +191,9 @@ namespace Webshop2_TeamG.Helpers
 
             if (database.Customers.Any())
             {
-                Position.MoveCursorMainStart();
+                Position.MoveCursorMainStart(0);
                 Console.Write("                                ");
-                Position.MoveCursorMainStart();
+                Position.MoveCursorMainStart(0);
                 Console.WriteLine("Database already filled.");
                 return;
             }
@@ -208,7 +211,6 @@ namespace Webshop2_TeamG.Helpers
                 PostalCode="51130",
                 City ="Nykoping",
                 Country="Sweden",
-                Admin = false,
                 Payment= PaymentMethod.CreditCard,
                 Baskets = new List<Basket>
 
@@ -222,38 +224,45 @@ namespace Webshop2_TeamG.Helpers
                     }
                 }
             },
-            //            new Customer
-            //{
-            //    Name = "Admin",
-            //    Email = "admin@hog.se",
-            //    Password  = "admin",
-            //    Age =36,
-            //    Phone ="555-236865",
-            //    Street ="Admingatan 7",
-            //    PostalCode="61192",
-            //    City ="Nykoping",
-            //    Country="Sweden",
-            //    Admin = true,
-            //    Payment= PaymentMethod.Klarna,
-            //    Baskets = new List<Basket>
-
-            //    {
-            //        new Basket
-            //        {
-            //            BasketEntries = new List<BasketEntry>
-            //            {
-            //                //new BasketEntry { GameId = actionGames.First().Id, Quantity = 1 },
-            //            }
-            //        }
-            //    }
-            //}
         };
             database.Customers.AddRange(customer);
             database.SaveChanges();
-            Position.MoveCursorMainStart();
+            Position.MoveCursorMainStart(0);
             Console.Write("                                ");
-            Position.MoveCursorMainStart();
+            Position.MoveCursorMainStart(0);
             Console.WriteLine("Database filled successfully.");
+
+        }
+        public static void FirstAdmin(ShopDbContext database)
+        {
+
+            if (database.Administrators.Any())
+            {
+                return;
+            }
+
+            var administrator = new List<Administrator>
+            {
+                        new Administrator
+            {
+                Name = "Admin",
+                Age =36,
+                Email = "admin@hog.se",
+                Password  = "admin",
+                Phone ="555-236865",
+                Street ="Admingatan 7",
+                PostalCode="61192",
+                City ="Nykoping",
+                Country="Sweden",
+            }
+        };
+            database.Administrators.AddRange(administrator);
+            database.SaveChanges();
+            Position.MoveCursorMainStart(0);
+            Console.Write("                                ");
+            Position.MoveCursorMainStart(0);
+            Console.WriteLine("Welcome to your new shop Admin, press any key to continue");
+            Console.ReadKey();
 
         }
         public static void CustomerTools(int menuX, int menuY, int infoX, int infoY)

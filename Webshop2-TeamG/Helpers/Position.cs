@@ -8,9 +8,9 @@ namespace Webshop2_TeamG.Helpers
 {
     internal class Position
     {
-        public static void MoveCursorMainStart()
+        public static void MoveCursorMainStart(int nextRow)
         {
-            Console.SetCursorPosition(45, 12);
+            Console.SetCursorPosition(45, 12+nextRow);
         }
     }
 }

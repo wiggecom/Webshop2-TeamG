@@ -15,7 +15,7 @@ namespace Webshop2_TeamG
             int sideX = 7;
             int sideY = 9;
             Gfx.WinIni();
-
+            Admin.MakeFirstAdmin();
             SysMenu.TopMenu(topX, topY);
             while (true)
             {

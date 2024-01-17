@@ -13,6 +13,7 @@ namespace Webshop2_TeamG.Models
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Administrator> Administrators { get; set; }
         public DbSet<BasketEntry> BasketEntries { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

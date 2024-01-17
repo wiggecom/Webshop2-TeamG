@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace Webshop2_TeamG.Models
 {
-    public enum PaymentMethod
-    {
-        CreditCard,
-        Klarna
-    }
-    public class Customer
+    internal class SelectedUser
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -23,8 +18,8 @@ namespace Webshop2_TeamG.Models
         public string? PostalCode { get; set; }
         public string? City { get; set; }
         public string? Country { get; set; }
-        public PaymentMethod Payment { get; set; }
-        public ICollection<Basket> Baskets { get; set; } = new List<Basket>();
+        public PaymentMethod? Payment { get; set; }
+        public ICollection<Basket>? Baskets { get; set; } = new List<Basket>();
 
     }
 }

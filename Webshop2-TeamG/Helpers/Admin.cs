@@ -17,37 +17,37 @@ namespace Webshop2_TeamG.Helpers
             {
                 case 1:
                     //Admin.AddGame();
-                    Position.MoveCursorMainStart();
+                    Position.MoveCursorMainStart(0);
                     Console.Write("Add Title");
                     return;
                 case 2:
-                    Position.MoveCursorMainStart();
+                    Position.MoveCursorMainStart(0);
                     Console.Write("Remove Title");
                     return;
                 case 3:
-                    Position.MoveCursorMainStart();
+                    Position.MoveCursorMainStart(0);
                     Console.Write("Change Title");
                     return;
                 case 4:
-                    Position.MoveCursorMainStart();
+                    Position.MoveCursorMainStart(0);
                     Console.Write("List Titles");
                     return;
                 case 5:
-                    Position.MoveCursorMainStart();
+                    Position.MoveCursorMainStart(0);
                     try
                     {
                         using (var database = new ShopDbContext())
                         {
                             Console.Write("Checking if database is empty...");
-                            Position.MoveCursorMainStart();
+                            Position.MoveCursorMainStart(0);
                             Helpers.Create.FillDatabase(database);
                         }
                     }
                     catch (Exception ex)
                     {
-                        Position.MoveCursorMainStart();
+                        Position.MoveCursorMainStart(0);
                         Console.Write("                                ");
-                        Position.MoveCursorMainStart();
+                        Position.MoveCursorMainStart(0);
                         Console.Write($"Error occured: {ex.Message}");
                         //Thread.Sleep(3000);
                         //Gfx.Frontend(0, 0);
@@ -55,21 +55,21 @@ namespace Webshop2_TeamG.Helpers
                     }
                     return;
                 case 6:
-                    Position.MoveCursorMainStart();
+                    Position.MoveCursorMainStart(0);
                     try
                     {
                         using (var database = new ShopDbContext())
                         {
                             Console.Write("Checking if database is empty...");
-                            Position.MoveCursorMainStart();
+                            Position.MoveCursorMainStart(0);
                             Helpers.Create.SampleCustomers(database);
                         }
                     }
                     catch (Exception ex)
                     {
-                        Position.MoveCursorMainStart();
+                        Position.MoveCursorMainStart(0);
                         Console.Write("                                ");
-                        Position.MoveCursorMainStart();
+                        Position.MoveCursorMainStart(0);
                         Console.Write($"Error occured: {ex.Message}");
                         //Thread.Sleep(3000);
                         //Gfx.Frontend(0, 0);
@@ -77,15 +77,15 @@ namespace Webshop2_TeamG.Helpers
                     }
                     return;
                 case 7:
-                    Position.MoveCursorMainStart();
+                    Position.MoveCursorMainStart(0);
                     Console.Write("Top Console");
                     return;
                 case 8:
-                    Position.MoveCursorMainStart();
+                    Position.MoveCursorMainStart(0);
                     Console.Write("Top Game");
                     return;
                 case 9:
-                    Position.MoveCursorMainStart();
+                    Position.MoveCursorMainStart(0);
                     Console.Write("Low Stock");
                     return;
 
@@ -121,70 +121,89 @@ namespace Webshop2_TeamG.Helpers
             //}
 
         }
+        public static void MakeFirstAdmin()
+        {
+            using (var database = new ShopDbContext())
+            {
+                //Position.MoveCursorMainStart(0);
+                //Console.Write("Checking for first run...");
+                Position.MoveCursorMainStart(0);
+                Helpers.Create.FirstAdmin(database);
+            }
+        }
+        private static void SelectGenre()
+        {
+            using (var database = new ShopDbContext())
+            {
+
+            }
+
+        }
         private static void AddGame()
         {
-            //    Console.SetCursorPosition(0, 0);
-            //    Helpers.Gfx.Frontend();
-            //    Console.SetCursorPosition(menuX, menuY);
-            //    int i = 1;
-            //    Console.BackgroundColor = ConsoleColor.DarkBlue; Console.ForegroundColor = ConsoleColor.Cyan;
-            //    using (var database = new ShopDbContext())
-            //    {
-            //        Console.SetCursorPosition(menuX, menuY + i); i++;
-            //        Console.Write("Enter Category: ");
-            //        string newCat = Console.ReadLine();
-            //        Console.SetCursorPosition(menuX, menuY + i); i++;
-            //        Console.Write("Enter Title: ");
-            //        string newTit = Console.ReadLine();
-            //        Console.SetCursorPosition(menuX, menuY + i); i++;
-            //        Console.Write("Enter Price: ");
-            //        double newPrice = double.Parse(Console.ReadLine());
-            //        Console.SetCursorPosition(menuX, menuY + i); i++;
-            //        Console.Write("Enter ShortInfo: ");
-            //        string newShort = Console.ReadLine();
-            //        Console.SetCursorPosition(menuX, menuY + i); i++;
-            //        Console.Write("Enter LongInfo: ");
-            //        string newLong = Console.ReadLine();
-            //        Console.SetCursorPosition(menuX, menuY + i); i++;
+            int menuX = 45;
+            int menuY = 12;
+            SysMenu.ClearMainArea();
+            Position.MoveCursorMainStart(0);
+            int i = 1;
+            using (var database = new ShopDbContext())
+            {
+                Console.SetCursorPosition(menuX, menuY + i); i++;
+                Console.Write("Select Genre: ");
+                string selectedGenre = Console.ReadLine();
+                Console.SetCursorPosition(menuX, menuY + i); i++;
+                Console.Write("Enter Title: ");
+                string newTit = Console.ReadLine();
+                Console.SetCursorPosition(menuX, menuY + i); i++;
+                Console.Write("Enter Price: ");
+                double newPrice = double.Parse(Console.ReadLine());
+                Console.SetCursorPosition(menuX, menuY + i); i++;
+                Console.Write("Enter ShortInfo: ");
+                string newShort = Console.ReadLine();
+                Console.SetCursorPosition(menuX, menuY + i); i++;
+                Console.Write("Enter LongInfo: ");
+                string newLong = Console.ReadLine();
+                Console.SetCursorPosition(menuX, menuY + i); i++;
 
-            //        Console.Write("Enter Rating (3, 7, 12, 16, 18): ");
-            //        int newRating = 0;
-            //        int.TryParse(Console.ReadLine(), out newRating);
+                Console.Write("Enter Rating (3, 7, 12, 16, 18): ");
+                int newRating = 0;
+                int.TryParse(Console.ReadLine(), out newRating);
 
-            //        Console.SetCursorPosition(menuX, menuY + i); i++;
-            //        Console.Write("Enter Publisher ");
-            //        string newPub = Console.ReadLine();
-            //        Console.SetCursorPosition(menuX, menuY + i); i++;
-            //        Console.Write("How many units?: ");
-            //        int newStock = int.Parse(Console.ReadLine());
+                Console.SetCursorPosition(menuX, menuY + i); i++;
+                Console.Write("Enter Publisher ");
+                string newPub = Console.ReadLine();
+                Console.SetCursorPosition(menuX, menuY + i); i++;
+                Console.Write("How many units?: ");
+                int newStock = int.Parse(Console.ReadLine());
 
-            //        var newGame = new Game
-            //        {
-            //            Category = newCat,
-            //            Title = newTit,
-            //            Price = newPrice,
-            //            ShortInfo = newShort,
-            //            LongInfo = newLong,
-            //            AgeRating = ((AgeRating)newRating),
-            //            Publisher = newPub,
-            //            OnDisplay = false,
-            //            Stock = newStock
-            //        };
+                //var newGame = new Game
+                //{
+                //    Category = newCat,
+                //    Title = newTit,
+                //    Price = newPrice,
+                //    ShortInfo = newShort,
+                //    LongInfo = newLong,
+                //    AgeRating = ((AgeRating)newRating),
+                //    Publisher = newPub,
+                //    OnDisplay = false,
+                //    Stock = newStock
+                //};
 
-            //        /*
-            //                 public int Id { get; set; }
-            //public string Title { get; set; }
-            //public decimal Price { get; set; }
-            //public int GenreId { get; set; }
-            //public Genre Genre { get; set; }
-            //public int Stock { get; set; }
-            //public AgeRating AgeRating { get; set; }
-            //public string ShortInfo { get; set; }
-            //public string LongInfo { get; set; }
-            //         */
-            //        database.Games.Add(newGame);
-            //        database.SaveChanges();
-            //    }
+                //        /*
+                //                 public int Id { get; set; }
+                //public string Title { get; set; }
+                //public decimal Price { get; set; }
+                //public int GenreId { get; set; }
+                //public Genre Genre { get; set; }
+                //public int Stock { get; set; }
+                //public AgeRating AgeRating { get; set; }
+                //public string ShortInfo { get; set; }
+                //public string LongInfo { get; set; }
+                //         */
+                //        database.Games.Add(newGame);
+                //        database.SaveChanges();
+                //    }
+            }
         }
     }
 }
