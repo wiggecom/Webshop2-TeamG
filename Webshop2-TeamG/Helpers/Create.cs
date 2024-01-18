@@ -29,7 +29,7 @@ namespace Webshop2_TeamG.Helpers
             new Genre { Name = "Action" },
             new Genre { Name = "Adventure" },
             new Genre { Name = "Strategy" },
-            new Genre { Name = "Sport" }
+            new Genre { Name = "Sports / Racing" }
         };
 
             database.Genres.AddRange(genres);
@@ -62,10 +62,12 @@ enthusiasts."
                 ShortInfo = @"Epic action-adventure game set in a vast,
 open world with creative puzzles and
 exploration.",
-                LongInfo = @"Embark on a grand adventure in The Legend of Zelda: Breath of the Wild. Explore 
-the vast kingdom of Hyrule, solve intricate puzzles, battle formidable enemies, 
-and uncover the secrets of this beautifully crafted open-world game."
+                LongInfo = "Embark on a grand adventure in The Legend of Zelda: Breath of the Wild. Explore \nthe vast kingdom of Hyrule, solve intricate puzzles, battle formidable enemies, \nand uncover the secrets of this beautifully crafted open-world game."
             },
+                        // 123456789 123456789 123456789 123456789 123456
+                        // Fast-paced, demon-slaying action with stunning
+                        // 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+                        // Embark on a grand adventure in The Legend of Zelda: Breath of the Wild. Explore
             new Game
             {
                 Title = "DOOM Eternal",

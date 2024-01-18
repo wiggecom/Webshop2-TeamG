@@ -15,7 +15,7 @@ namespace Webshop2_TeamG.Helpers
             {
                 Featured(i);
             }
-            Gfx.LongDNA(175, 2); // static spiral
+            //Gfx.LongDNA(175, 2); // static spiral
             Gfx.ColorIni();
             //Gfx.Icons5(170, 8, 1);
             //Gfx.LowDNA(175, 8);
@@ -232,10 +232,7 @@ namespace Webshop2_TeamG.Helpers
                             {
                                 idNumber = gamesTotal - 1;
                             }
-                            //else
-                            //{
-                            //    idNumber = gamesTotal-1;
-                            //}
+
                             return idNumber;
                         }
                         if (userInputKey.Key == ConsoleKey.RightArrow)
@@ -253,10 +250,6 @@ namespace Webshop2_TeamG.Helpers
                         }
 
                     }
-                    Console.ReadKey();
-                    return 1;
-                    //return goBack;
-                    // NEXT - PREVIOUS
                 }
                 else
                 {

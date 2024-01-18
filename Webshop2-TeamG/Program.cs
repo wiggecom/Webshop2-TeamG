@@ -19,14 +19,12 @@ namespace Webshop2_TeamG
 
 
             Admin.MakeFirstAdmin();
-            SysMenu.TopMenu(topX, topY);
-            //new Thread(new ThreadStart(Spinner)).Start();
+            
             while (true)
             {
+                SysMenu.TopMenu(topX, topY);
                 SysMenu.ClearFullSidemenu(sideX, sideY + 4);
                 menuLevel = SysMenu.SideMenu(sideX, sideY, menuLevel);
-                
-                //var result = Spinner();
             }
         }
 
