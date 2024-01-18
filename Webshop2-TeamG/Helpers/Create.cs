@@ -44,7 +44,8 @@ namespace Webshop2_TeamG.Helpers
                 GenreId = genres[0].Id,
                 Stock = 100,
                 AgeRating = AgeRating.Mature,
-                ShortInfo = "Intense first-person shooter with realistic graphics and thrilling multiplayer.",
+                ShortInfo = @"Intense first-person shooter with realistic
+graphics and thrilling multiplayer.",
                 LongInfo = "Call of Duty: Modern Warfare is a first-person shooter game that delivers a gripping and realistic experience. With stunning graphics, a compelling single-player campaign, and intense multiplayer action, it's a must-play for FPS enthusiasts."
             },
             new Game
@@ -54,7 +55,8 @@ namespace Webshop2_TeamG.Helpers
                 GenreId = genres[0].Id,
                 Stock = 80,
                 AgeRating = AgeRating.Mature,
-                ShortInfo = "Explore the Viking era in this open-world action-adventure game.",
+                ShortInfo = @"Explore the Viking era in this open-world 
+action-adventure game.",
                 LongInfo = "Assassin's Creed Valhalla takes you on a journey to the Viking era, where you lead a clan in epic battles and explore a vast open world. With stunning visuals and engaging gameplay, it's a captivating experience for adventure lovers."
             },
             new Game
@@ -63,8 +65,10 @@ namespace Webshop2_TeamG.Helpers
                 Price = 549.99m,
                 GenreId = genres[0].Id,
                 Stock = 120,
+                OnDisplay= 3,
                 AgeRating = AgeRating.Mature,
-                ShortInfo = "Fast-paced, demon-slaying action with stunning visuals and intense gameplay.",
+                ShortInfo = @"Fast-paced, demon-slaying action with stunning
+visuals and intense gameplay.",
                 LongInfo = "DOOM Eternal continues the legacy of the iconic series with fast-paced, brutal action. Battle hordes of demons across various dimensions, unravel the lore, and experience heart-pounding moments in this adrenaline-fueled first-person shooter."
             }
         };
@@ -79,7 +83,9 @@ namespace Webshop2_TeamG.Helpers
                 Stock = 90,
                 AgeRating = AgeRating.Everyone,
                 OnDisplay = 1,
-                ShortInfo = "Epic action-adventure game set in a vast, open world with creative puzzles and exploration.",
+                ShortInfo = @"Epic action-adventure game set in a vast,
+open world with creative puzzles and
+exploration.",
                 LongInfo = "Embark on a grand adventure in The Legend of Zelda: Breath of the Wild. Explore the vast kingdom of Hyrule, solve intricate puzzles, battle formidable enemies, and uncover the secrets of this beautifully crafted open-world game."
             },
             new Game
@@ -89,7 +95,8 @@ namespace Webshop2_TeamG.Helpers
                 GenreId = genres[1].Id,
                 Stock = 75,
                 AgeRating = AgeRating.Teen,
-                ShortInfo = "Action-packed cinematic experience following Nathan Drake's final adventure.",
+                ShortInfo = @"Action-packed cinematic experience following
+Nathan Drake's final adventure.",
                 LongInfo = "Join Nathan Drake in his final adventure in Uncharted 4: A Thief's End. Experience breathtaking visuals, cinematic storytelling, and thrilling action as Drake embarks on a quest to find a lost pirate treasure."
             },
             new Game
@@ -98,9 +105,10 @@ namespace Webshop2_TeamG.Helpers
                 Price = 499.99m,
                 GenreId = genres[1].Id,
                 Stock = 110,
-                OnDisplay= 3,
+                OnDisplay= 0,
                 AgeRating = AgeRating.Mature,
-                ShortInfo = "Wild West open-world game with an immersive story and realistic details.",
+                ShortInfo = @"Wild West open-world game with an immersive
+story and realistic details.",
                 LongInfo = "Immerse yourself in the vast open world of the Wild West in Red Dead Redemption 2. Ride through stunning landscapes, engage in intense gunfights, and experience a gripping narrative that explores the era of outlaws and lawmen."
             }
         };
@@ -114,7 +122,9 @@ namespace Webshop2_TeamG.Helpers
                 GenreId = genres[2].Id,
                 Stock = 85,
                 AgeRating = AgeRating.Everyone,
-                ShortInfo = "Turn-based strategy game where you lead a civilization from ancient times to the modern era.",
+                ShortInfo = @"Turn-based strategy game where you lead a 
+civilization from ancient times to the
+modern era.",
                 LongInfo = "Lead your civilization to greatness in Civilization VI. From the dawn of civilization to the modern era, engage in diplomacy, build wonders, and wage wars to establish your empire's legacy."
             },
             new Game
@@ -124,7 +134,9 @@ namespace Webshop2_TeamG.Helpers
                 GenreId = genres[2].Id,
                 Stock = 65,
                 AgeRating = AgeRating.Teen,
-                ShortInfo = "Grand strategy game set in space with exploration, diplomacy, and epic space battles.",
+                ShortInfo = @"Grand strategy game set inspace with 
+exploration, diplomacy, and epic space
+battles.",
                 LongInfo = "Explore the vastness of space in Stellaris, a grand strategy game that combines exploration, diplomacy, and epic space battles. Customize your species, build your empire, and encounter other civilizations in a procedurally generated universe."
             },
             new Game
@@ -134,7 +146,9 @@ namespace Webshop2_TeamG.Helpers
                 GenreId = genres[2].Id,
                 Stock = 95,
                 AgeRating = AgeRating.Mature,
-                ShortInfo = "Historical strategy game set in ancient China with real-time battles and diplomacy.",
+                ShortInfo = @"Historical strategy game set in ancient
+China with real-time battles and
+diplomacy.",
                 LongInfo = "Experience the drama of ancient China in Total War: Three Kingdoms. Command armies, engage in real-time battles, and navigate a complex web of diplomacy and intrigue in this historical strategy masterpiece."
             }
         };
@@ -148,7 +162,9 @@ namespace Webshop2_TeamG.Helpers
                 GenreId = genres[3].Id,
                 Stock = 120,
                 AgeRating = AgeRating.Everyone,
-                ShortInfo = "The latest installment in the popular football simulation series with realistic gameplay and updated teams.",
+                ShortInfo = @"The latest installment in the popular
+football simulation series with 
+realistic gameplay and updated teams.",
                 LongInfo = "Experience the excitement of football in FIFA 22. With realistic gameplay, updated teams, and stunning visuals, FIFA 22 delivers the most authentic football simulation experience to date."
             },
             new Game
@@ -158,7 +174,9 @@ namespace Webshop2_TeamG.Helpers
                 GenreId = genres[3].Id,
                 Stock = 100,
                 AgeRating = AgeRating.Everyone,
-                ShortInfo = "Basketball simulation game featuring stunning graphics, immersive career mode, and competitive online play.",
+                ShortInfo = @"Basketball simulation game featuring
+stunning graphics, immersive career
+mode, and competitive online play.",
                 LongInfo = "Dunk, shoot, and dominate the court in NBA 2K22. With stunning graphics, an immersive career mode, and competitive online play, NBA 2K22 offers the ultimate basketball simulation experience."
             },
             new Game
@@ -169,7 +187,9 @@ namespace Webshop2_TeamG.Helpers
                 Stock = 80,
                 OnDisplay = 2,
                 AgeRating = AgeRating.Everyone,
-                ShortInfo = "Open-world racing game featuring a variety of cars, stunning landscapes, and dynamic weather.",
+                ShortInfo = @"Open-world racing game featuring a variety
+of cars, stunning landscapes, and dynamic
+weather.",
                 LongInfo = "Experience the thrill of open-world racing in Forza Horizon 3. Drive a diverse range of cars, explore stunning landscapes, and participate in dynamic races with changing weather conditions."
             }
         };

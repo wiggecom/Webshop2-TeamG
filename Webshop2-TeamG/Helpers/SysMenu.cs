@@ -172,9 +172,9 @@ namespace Webshop2_TeamG.Helpers
         public static void ClearMainArea()
         {
             int startX = 45;
-            int lengthX = Console.WindowWidth - (startX + 4);
+            int lengthX = Console.WindowWidth - (startX + 6);
             string wiper = new string(' ', lengthX);
-            int startY = 12;
+            int startY = 10;
             int endY = 48;
             for (int i = startY; i < endY; i++)
             {
@@ -510,7 +510,11 @@ namespace Webshop2_TeamG.Helpers
                             }
                         }
                     }
+                default:
+                    break;
+
             }
+            
             return menuLevel;
         }
     }

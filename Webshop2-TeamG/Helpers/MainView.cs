@@ -15,84 +15,102 @@ namespace Webshop2_TeamG.Helpers
             {
                 Featured(i);
             }
+            Gfx.LongDNA(175, 2);
+            //Gfx.Icons5(170, 8, 1);
+            //Gfx.LowDNA(175, 8);
         }
         public static void Featured(int featuredNumber)
         {
-            string titleString = "";
-            string genreString = "Tmp Genre";
-            string ratingString = "Tmp Rating";
+            string ratingString = "";
             string infoString = "";
             using (var database = new ShopDbContext())
             {
-                var games = database.Games.Where(g => g.OnDisplay == featuredNumber).ToList();
-                // if game.ondisplay
+                if (database.Games.Any() || database.Genres.Any())
+                {
+                    var games = database.Games.Where(g => g.OnDisplay == featuredNumber).ToList();
+                    var genres = database.Genres.ToList();
+                    // if game.ondisplay
+                    ratingString = Enum.GetName(typeof(AgeRating), games[0].AgeRating);
+                    infoString = games[0].ShortInfo;
+                    featuredNumber *= 12;
+                    featuredNumber -= 1; // raderna ska börja på 11, 23 och 35
+                    int featuredStart = featuredNumber;
+                    Console.SetCursorPosition(45, featuredNumber); featuredNumber++;
+                    Console.Write("█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█");
+                    Console.SetCursorPosition(45, featuredNumber); featuredNumber++;
+                    Console.Write("█                                                                            █");
+                    Console.SetCursorPosition(45, featuredNumber); featuredNumber++;
+                    Console.Write("█                                                                            █");
+                    Console.SetCursorPosition(45, featuredNumber); featuredNumber++;
+                    Console.Write("█                                                                            █");
+                    Console.SetCursorPosition(45, featuredNumber); featuredNumber++;
+                    Console.Write("█                                                                            █");
+                    Console.SetCursorPosition(45, featuredNumber); featuredNumber++;
+                    Console.Write("█                                                                            █");
+                    Console.SetCursorPosition(45, featuredNumber); featuredNumber++;
+                    Console.Write("█                                                                            █");
+                    Console.SetCursorPosition(45, featuredNumber); featuredNumber++;
+                    Console.Write("█                                                                            █");
+                    Console.SetCursorPosition(45, featuredNumber); featuredNumber++;
+                    Console.Write("█                                                                            █");
+                    Console.SetCursorPosition(45, featuredNumber); featuredNumber++;
+                    Console.Write("█                                                                            █");
+                    Console.SetCursorPosition(45, featuredNumber); featuredNumber++;
+                    Console.Write("█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█");
+                    featuredNumber = featuredStart + 1;
 
-                titleString = games[0].Title;
-                // genreString = games[featuredNumber].Genre.ToString();
-                // ratingString = games[featuredNumber].Genre.ToString();
-                infoString = games[0].ShortInfo;
-                //for (int i = 0; i < games.Count; i++)
-                //{
-                //    Console.WriteLine($"{i + 1}. {games[i].Title}");
-                //}
-                // sök efter data i databasen, lägg i variabler som ska visas eg. titleString, genreString etc.
-                featuredNumber *= 10;
-                featuredNumber += 2; // raderna ska börja på 12, 22 och 32
-                int featuredStart = featuredNumber;
-                Console.SetCursorPosition(45, featuredNumber); featuredNumber++;
-                Console.Write("█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█");
-                //Console.SetCursorPosition(45, featuredNumber); featuredNumber++;
-                //Console.Write("█ Title blah blah                                        █");
 
-                Console.SetCursorPosition(45, featuredNumber);
-                Console.Write("█ " + titleString);
-                Console.SetCursorPosition(45 + 57, featuredNumber); featuredNumber++;
-                Console.Write("█");
-                Console.SetCursorPosition(45, featuredNumber);
-                Console.Write("█ " + genreString);
-                Console.SetCursorPosition(45 + 57, featuredNumber); featuredNumber++;
-                Console.Write("█");
-                Console.SetCursorPosition(45, featuredNumber);
-                Console.Write("█ " + ratingString);
-                Console.SetCursorPosition(45 + 57, featuredNumber); featuredNumber++;
-                Console.Write("█");
-                Console.SetCursorPosition(45, featuredNumber);
-                Console.Write("█ " + infoString);
-                Console.SetCursorPosition(45 + 57, featuredNumber); featuredNumber++;
-                Console.Write("█");
+                    int underscoreLength = games[0].Title.Length;
+                    string titleUnderscore = new string('▀', underscoreLength);
 
-                // Alternativ: lägg in databasens objekt.info direkt
+                    Console.SetCursorPosition(47, featuredNumber); featuredNumber++;
+                    Console.Write(games[0].Title);
+                    Console.SetCursorPosition(47, featuredNumber); featuredNumber++;
+                    Console.Write(titleUnderscore);
+                    Console.SetCursorPosition(47, featuredNumber); featuredNumber++;
+                    Console.Write("Genre: " + genres[(games[0].GenreId - 1)].Name);
+                    Console.SetCursorPosition(47, featuredNumber); featuredNumber++;
+                    Console.Write("Rating: " + ratingString);
+                    Console.SetCursorPosition(47, featuredNumber); featuredNumber++;
+                    Console.Write("Price: " + games[0].Price + " SEK");
+                    foreach (var line in infoString.Split('\n'))
+                    {
+                        Console.SetCursorPosition(49, featuredNumber); featuredNumber++;
+                        Console.Write(line);
+                    }
 
-                //Console.SetCursorPosition(45, featuredNumber); featuredNumber++;
-                //Console.Write("█ Genre                                                  █");
-                //Console.SetCursorPosition(45, featuredNumber); featuredNumber++;
-                //Console.Write("█ Age Rating                                             █");
-                //Console.SetCursorPosition(45, featuredNumber); featuredNumber++;
-                //Console.Write("█ Short Info                                             █");
-                Console.SetCursorPosition(45, featuredNumber); featuredNumber++;
-                Console.Write("█                                                        █");
-                Console.SetCursorPosition(45, featuredNumber); featuredNumber++;
-                Console.Write("█                                                        █");
-                Console.SetCursorPosition(45, featuredNumber); featuredNumber++;
-                Console.Write("█                                                        █");
-                Console.SetCursorPosition(45, featuredNumber); featuredNumber++;
-                Console.Write("█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█");
-                // ▄ ▀
-                //featuredNumber = featuredStart + 1;
-                //Console.SetCursorPosition(77, featuredNumber); featuredNumber++;
-                //Console.Write("████████████████████████");
-                //Console.SetCursorPosition(77, featuredNumber); featuredNumber++;
-                //Console.Write("█        Very          █");
-                //Console.SetCursorPosition(77, featuredNumber); featuredNumber++;
-                //Console.Write("█                      █");
-                //Console.SetCursorPosition(77, featuredNumber); featuredNumber++;
-                //Console.Write("█        Cool          █");
-                //Console.SetCursorPosition(77, featuredNumber); featuredNumber++;
-                //Console.Write("█                      █");
-                //Console.SetCursorPosition(77, featuredNumber); featuredNumber++;
-                //Console.Write("█        Image         █");
-                //Console.SetCursorPosition(77, featuredNumber); featuredNumber++;
-                //Console.Write("████████████████████████");
+                    // Alternativ: lägg in databasens objekt.info direkt med lambda
+
+                    // ▄ ▀
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    featuredNumber = featuredStart + 1;
+                    Console.SetCursorPosition(97, featuredNumber); featuredNumber++;
+                    Console.Write("█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█");
+                    Console.SetCursorPosition(97, featuredNumber); featuredNumber++;
+                    Console.Write("█      Incredibly      █");
+                    Console.SetCursorPosition(97, featuredNumber); featuredNumber++;
+                    Console.Write("█                      █");
+                    Console.SetCursorPosition(97, featuredNumber); featuredNumber++;
+                    Console.Write("█        Cool          █");
+                    Console.SetCursorPosition(97, featuredNumber); featuredNumber++;
+                    Console.Write("█                      █");
+                    Console.SetCursorPosition(97, featuredNumber); featuredNumber++;
+                    Console.Write("█       Image          █");
+                    Console.SetCursorPosition(97, featuredNumber); featuredNumber++;
+                    Console.Write("█                      █");
+                    Console.SetCursorPosition(97, featuredNumber); featuredNumber++;
+                    Console.Write("█        Here          █");
+                    Console.SetCursorPosition(97, featuredNumber); featuredNumber++;
+                    Console.Write("█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█");
+
+                    // CallImage
+                    int iconNum = games[0].GenreId;
+                    Gfx.Icons5(98, featuredStart + 2, iconNum);
+                    //
+
+                    Gfx.ColorIni();
+                }
             }
         }
     }
