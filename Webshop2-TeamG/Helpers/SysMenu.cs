@@ -172,7 +172,7 @@ namespace Webshop2_TeamG.Helpers
         public static void ClearMainArea()
         {
             int startX = 45;
-            int lengthX = Console.WindowWidth - (startX + 6);
+            int lengthX = Console.WindowWidth - (startX + 28);
             string wiper = new string(' ', lengthX);
             int startY = 10;
             int endY = 48;
@@ -213,6 +213,8 @@ namespace Webshop2_TeamG.Helpers
                             {
                                 ClearMainArea();
                                 int nxtRow = 0;
+                                int selectedIndex = 0;
+                                int pageLength = 8; // -------------------------------------  SET TO NUMBER OF GAMES LISTED PER PAGE ---------------------------
                                 using (var database = new ShopDbContext())
                                 {
                                     var games = database.Games.ToList();
@@ -220,22 +222,67 @@ namespace Webshop2_TeamG.Helpers
                                     {
                                         Position.MoveCursorMainStart(nxtRow); nxtRow++;
                                         Console.WriteLine($"{i + 1}. {games[i].Title}");
+                                        if (nxtRow >= pageLength)
+                                        {
+                                            Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                                            Console.Write("Enter Game Number or [ENTER] to Continue: ");
+                                            Console.CursorVisible = true;
+                                            int.TryParse(Console.ReadLine(), out selectedIndex);
+                                            Console.CursorVisible = false;
+                                            if (selectedIndex >= 1 && selectedIndex <= games.Count)
+                                            {
+                                                selectedIndex -= 1;
+                                                Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                                                Console.WriteLine("Selected Game: " + games[selectedIndex].Title);
+                                                //MainView.DetailGame(selectedIndex);
+                                                while (selectedIndex != 999999)
+                                                {
+                                                    ClearMainArea();
+                                                    selectedIndex = MainView.DetailGame(selectedIndex);
+                                                }
+                                                if (selectedIndex == 999999)
+                                                {
+                                                    ClearMainArea();
+                                                    MainView.MainArea();
+                                                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                                                }
+                                                break;
+                                            }
+                                            Console.CursorVisible = false;
+                                            ClearMainArea();
+                                            nxtRow = 0;
+                                        }
                                     }
                                     Position.MoveCursorMainStart(nxtRow); nxtRow++;
                                     Console.CursorSize = 100;
                                     Console.CursorVisible = true;
-                                    Console.Write("Enter the number of the game: ");
-                                    if (int.TryParse(Console.ReadLine(), out int selectedIndex) && selectedIndex >= 1 && selectedIndex <= games.Count)
+                                    Console.Write("Enter Game Number or [ENTER] to Exit: ");
+                                    int.TryParse(Console.ReadLine(), out selectedIndex);
+                                    Console.CursorVisible = false;
+                                    if (selectedIndex >= 1 && selectedIndex <= games.Count)
                                     {
                                         selectedIndex -= 1;
                                         Position.MoveCursorMainStart(nxtRow); nxtRow++;
                                         Console.WriteLine("Selected Game: " +games[selectedIndex].Title);
+                                        //MainView.DetailGame(selectedIndex);
+                                        while (selectedIndex != 999999)
+                                        {
+                                            ClearMainArea();
+                                            selectedIndex = MainView.DetailGame(selectedIndex);
+                                        }
+                                        if (selectedIndex == 999999)
+                                        {
+                                            ClearMainArea();
+                                            MainView.MainArea();
+                                            Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                                        }
                                         //return games[selectedIndex - 1];
                                     }
                                     else
                                     {
+                                        MainView.MainArea();
                                         Position.MoveCursorMainStart(nxtRow); nxtRow++;
-                                        Console.WriteLine("Invalid selection. Returning null.");
+                                        //Console.WriteLine("Invalid selection. Returning null.");
                                         //return null;
                                     }
                                     Console.CursorVisible = false;
