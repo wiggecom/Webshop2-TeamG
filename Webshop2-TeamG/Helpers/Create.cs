@@ -351,7 +351,43 @@ with changing weather conditions."
             }
 
         }
-
+        public static string StringBreak(string stringBreak, int rowLength)
+        {
+            string reworkedString = "";
+            string[] stringArray = stringBreak.Split(' ');
+            string stringWip = "";
+            int wordNumber = 0;
+            int wordCount = 0;
+            int placedWord = 0;
+            int allWords = stringArray.Length;
+            while (placedWord < allWords)
+            {
+                int wordCountMarker = wordNumber;
+                while (stringWip.Length < rowLength)
+                {
+                    stringWip = stringWip + stringArray[wordNumber] + " ";
+                    wordCount++;
+                    if (wordNumber < allWords - 1) { wordNumber++; }
+                    else { }
+                }
+                wordCount--;
+                stringWip = "";
+                wordNumber = wordCountMarker;
+                for (int i = 0; i < wordCount; i++)
+                {
+                    if (placedWord < allWords)
+                    {
+                        stringWip = stringWip + stringArray[wordNumber] + " ";
+                        if (wordNumber < allWords - 1) { wordNumber++; }
+                        placedWord++;
+                    }
+                }
+                reworkedString = reworkedString + stringWip.TrimEnd() + "\n";
+                stringWip = "";
+                wordCount = 0;
+            }
+            return reworkedString;
+        }
         private static void AddPerson(int menuX, int menuY)
         {
             //    //Helpers.Gfx.ClearMenu(menuX, menuY);

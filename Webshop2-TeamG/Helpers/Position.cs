@@ -12,5 +12,9 @@ namespace Webshop2_TeamG.Helpers
         {
             Console.SetCursorPosition(45, 12+nextRow);
         }
+        public static void MoveCursorTextAnywhere(int columnStart, int nextRow)
+        {
+            Console.SetCursorPosition(columnStart, 12 + nextRow);
+        }
     }
 }

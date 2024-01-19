@@ -101,7 +101,7 @@ namespace Webshop2_TeamG.Helpers
             MainView.MainArea();
             menuLevel = KeyInput(40, 12, menuLevel);
             return menuLevel;
-        }
+        }  // ------------ SETS SET VIEW ON MAIN AREA ------------
         public static int BasketMenu(int winX, int winY, int menuLevel)
         {
             //ClearFullSidemenu(winX, winY);
@@ -120,6 +120,7 @@ namespace Webshop2_TeamG.Helpers
             Console.Write("");
             //------------------------------
             CopyrightMenu(winX, winY + 32);
+            MainView.BasketCase();
             menuLevel = KeyInput(40, 12, menuLevel);
             return menuLevel;
         }
@@ -233,9 +234,6 @@ namespace Webshop2_TeamG.Helpers
                                             if (selectedIndex >= 1 && selectedIndex <= games.Count)
                                             {
                                                 selectedIndex -= 1;
-                                                //Position.MoveCursorMainStart(nxtRow); nxtRow++;
-                                                //Console.WriteLine("Selected Game: " + games[selectedIndex].Title);
-                                                //MainView.DetailGame(selectedIndex);
                                                 while (selectedIndex != 999999)
                                                 {
                                                     ClearMainArea();

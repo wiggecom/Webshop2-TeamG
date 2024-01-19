@@ -257,6 +257,23 @@ namespace Webshop2_TeamG.Helpers
                 }
             }
         }
+
+        public static void BasketCase()  // rework to separate method for all info that needs positioning
+        {
+            string testString = "The quick brown fox jumped over the lazy dog";
+            SysMenu.ClearMainArea();
+            Position.MoveCursorMainStart(0);
+            int rowLength = 20;
+            testString = Create.StringBreak(testString, rowLength);
+            int posY = 0;
+            int posX = 45;
+            foreach (var line in testString.Split('\n'))
+            {
+                Position.MoveCursorTextAnywhere(posX, posY); posY++;
+                Console.Write(line);
+            }
+            
+        }
     }
 }
 
