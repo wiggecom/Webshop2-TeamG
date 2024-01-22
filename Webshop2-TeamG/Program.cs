@@ -1,32 +1,28 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-
+using System.Reflection.PortableExecutable;
+using System.Threading.Tasks;
 using Webshop2_TeamG.Helpers;
 
 namespace Webshop2_TeamG
 {
     internal class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             int menuLevel = 1;
-            int topX = 85;
-            int topY = 3;
-            int sideX = 7;
-            int sideY = 9;
-            int tick = 1;
             Gfx.WinIni();
 
-
+            Position.MoveCursorMainStart(0);
+            Console.WriteLine("Database?");
             Admin.MakeFirstAdmin();
-            
+
             while (true)
             {
-                SysMenu.TopMenu(topX, topY);
-                SysMenu.ClearFullSidemenu(sideX, sideY + 4);
-                menuLevel = SysMenu.SideMenu(sideX, sideY, menuLevel);
+                SysMenu.TopMenu(Position.topX, Position.topY);
+                SysMenu.ClearFullSidemenu(Position.sideX, Position.sideY + 4);
+                menuLevel = SysMenu.SideMenu(Position.sideX, Position.sideY, menuLevel);
             }
         }
-
     }
 }

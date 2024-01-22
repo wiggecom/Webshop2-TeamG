@@ -114,16 +114,19 @@ namespace Webshop2_TeamG.Helpers
                 }
             }
         }
-        public static int DetailGame(int idNumber)
+        public static int DetailGame(int idNumber, int browsable)
         {
             string ratingString = "";
             string infoString = "";
             using (var database = new ShopDbContext())
             {
-                if (database.Games.Any() || database.Genres.Any())
+                if (database.Games.Any() && database.Genres.Any())
                 {
+                    
                     int gamesTotal = database.Games.Count();
-                    var games = database.Games.Where(g => g.Id == idNumber + 1).ToList();
+                    var allGames = database.Games.ToList();
+                    //idNumber = allGames[idNumber].Id;
+                    var games = database.Games.Where(g => g.Id == idNumber + 1).ToList(); // idNumber + 1
                     var genres = database.Genres.ToList();
                     // if game.ondisplay
                     ratingString = Enum.GetName(typeof(AgeRating), games[0].AgeRating);
@@ -132,6 +135,7 @@ namespace Webshop2_TeamG.Helpers
                     int posYReset = posY;
                     //posY -= 1; // raderna ska börja på 11, 23 och 35
                     int idStart = idNumber;
+                    #region gfxFrame
                     Console.SetCursorPosition(45, posY); posY++;
                     Console.Write("█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█");
                     Console.SetCursorPosition(45, posY); posY++;
@@ -160,13 +164,15 @@ namespace Webshop2_TeamG.Helpers
                     Console.Write("█                                                                                                                    █");
                     Console.SetCursorPosition(45, posY); posY++;
                     Console.Write("█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█");
-
+                    if (browsable == 1) 
+                    { 
                     Console.SetCursorPosition(45, posY); posY++;
                     Console.Write("█     [Left/Right Arrow - Previous/Next Title]        [Spacebar - Add to basket]        [Escape - Exit to Main]      █");
                     Console.SetCursorPosition(45, posY); posY++;
                     Console.Write("█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█");
+                    }
                     posY = posYReset + 1;
-
+                    #endregion
 
                     int underscoreLength = games[0].Title.Length;
                     string titleUnderscore = new string('▀', underscoreLength);
@@ -190,6 +196,7 @@ namespace Webshop2_TeamG.Helpers
                     // Alternativ: lägg in databasens objekt.info direkt med lambda
 
                     // ▄ ▀
+                    #region iconFrame
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.BackgroundColor = ConsoleColor.Black;
                     posY = posYReset + 1;
@@ -216,8 +223,12 @@ namespace Webshop2_TeamG.Helpers
                     int iconNum = games[0].GenreId;
                     Gfx.Icons5(131, posYReset + 2, iconNum);
                     //
-
+                    #endregion
                     Gfx.ColorIni();
+                    if (browsable == 1)
+                    {
+
+                    
                     while (true)
                     {
                         var userInputKey = Console.ReadKey(true);
@@ -232,29 +243,44 @@ namespace Webshop2_TeamG.Helpers
                             {
                                 idNumber = gamesTotal - 1;
                             }
-
                             return idNumber;
                         }
                         if (userInputKey.Key == ConsoleKey.RightArrow)
                         {
+                                idNumber++;
                             if (idNumber >= gamesTotal-1)
                             {
                                 idNumber = 0;
                             }
-                            else
-                            {
-                                idNumber++;
-                            }
-
-                            return idNumber;
+                            //while (true)
+                            //    {
+                            //        if (database.Games.Any(g => g.Id == idNumber - 1) && idNumber < allGames.Count())
+                            //        {
+                            //            break;
+                            //        }
+                            //        else if (database.Games.Any(g => g.Id == idNumber - 1) && idNumber == allGames.Count()) 
+                            //        {
+                            //            idNumber = 0;
+                            //            break; 
+                            //        }
+                            //        else 
+                            //        { 
+                            //            idNumber++;
+                            //        }
+                            //    }
+                                //idNumber = games[idNumber-1].Id;
+                                return idNumber;
                         }
 
                     }
+                    
                 }
                 else
                 {
                     return 999999;
                 }
+                }
+                return 999999;
             }
         }
 
@@ -272,7 +298,6 @@ namespace Webshop2_TeamG.Helpers
                 Position.MoveCursorTextAnywhere(posX, posY); posY++;
                 Console.Write(line);
             }
-            
         }
     }
 }

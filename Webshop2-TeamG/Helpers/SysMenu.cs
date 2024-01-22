@@ -97,7 +97,7 @@ namespace Webshop2_TeamG.Helpers
             Console.SetCursorPosition(winX, winY + i); i++;
             Console.Write("   * Unused");
             //------------------------------
-            CopyrightMenu(winX, winY + 32);
+            //CopyrightMenu(winX, winY + 32);
             MainView.MainArea();
             menuLevel = KeyInput(40, 12, menuLevel);
             return menuLevel;
@@ -119,7 +119,7 @@ namespace Webshop2_TeamG.Helpers
             Console.SetCursorPosition(winX, winY + i); i++;
             Console.Write("");
             //------------------------------
-            CopyrightMenu(winX, winY + 32);
+            //CopyrightMenu(winX, winY + 32);
             MainView.BasketCase();
             menuLevel = KeyInput(40, 12, menuLevel);
             return menuLevel;
@@ -150,7 +150,7 @@ namespace Webshop2_TeamG.Helpers
             Console.Write("L) Low Stock");
 
             //------------------------------
-            CopyrightMenu(winX, winY + 32);
+            //CopyrightMenu(winX, winY + 32);
             menuLevel = KeyInput(40, 12, menuLevel);
             return menuLevel;
         }
@@ -182,6 +182,145 @@ namespace Webshop2_TeamG.Helpers
                 Console.SetCursorPosition(startX, i);
                 Console.Write(wiper);
             }
+        }
+        public static void SelectGame(int edit)
+        { // edit 0 = browse, 1 = delete
+            int nxtRow = 0;
+            int selectedIndex = 0;
+            int pageLength = 18; // -------------------------------------  SET TO NUMBER OF GAMES LISTED PER PAGE ---------------------------
+            using (var database = new ShopDbContext())
+            {
+                var games = database.Games.ToList();
+                for (int i = 0; i < games.Count; i++)
+                {
+                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                    Console.WriteLine($"{i + 1}. {games[i].Title}");
+                    if (nxtRow >= pageLength)
+                    {
+                        Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                        Console.Write("Enter Game Number or [ENTER] to Continue: ");
+                        Console.CursorVisible = true;
+                        int.TryParse(Console.ReadLine(), out selectedIndex);
+                        Console.CursorVisible = false;
+
+
+                        if (selectedIndex >= 1 && selectedIndex <= games.Count)
+                        {
+                            selectedIndex -= 1;
+                            while (selectedIndex != 999999)
+                            {
+                                if (edit == 0)
+                                {
+                                    ClearMainArea();
+                                    selectedIndex = MainView.DetailGame(selectedIndex, 1);
+                                }
+                                else if (edit == 1)
+                                {
+                                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                                    Console.Write("Selected title: " + games[selectedIndex].Title);
+                                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                                    Console.Write("Do you want to delete this title? (Y) to delete, [ENTER] to skip: ");
+                                    string inputDelete = Console.ReadLine();
+                                    if (inputDelete == "y" || inputDelete == "Y")
+                                    {
+                                        var deleteGame = games[selectedIndex];
+                                        database.Games.Remove(deleteGame);
+                                        database.SaveChanges();
+                                        inputDelete = "";
+                                        selectedIndex = 999999;
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+                            if (selectedIndex == 999999)
+                            {
+                                ClearMainArea();
+                                MainView.MainArea();
+                                MainMenu(7, 13, 1);
+                                Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                            }
+                            break;
+                        }
+                        Console.CursorVisible = false;
+                        ClearMainArea();
+                        nxtRow = 0;
+                    }
+                }
+                if (selectedIndex == 0)
+                {
+
+
+                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                    Console.CursorSize = 100;
+                    Console.CursorVisible = true;
+                    Console.Write("Enter Game Number or [ENTER] to Exit: ");
+                    int.TryParse(Console.ReadLine(), out selectedIndex);
+                    Console.CursorVisible = false;
+
+
+                    if (selectedIndex >= 1 && selectedIndex <= games.Count)
+                    {
+                        selectedIndex -= 1;
+                        while (selectedIndex != 999999)
+                        {
+                            if (edit == 0)
+                            {
+                                ClearMainArea();
+                                selectedIndex = MainView.DetailGame(selectedIndex, 1);
+                            }
+                            else if (edit == 1)
+                            {
+                                Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                                Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                                Console.WriteLine("Selected title: " + games[selectedIndex].Title);
+                                Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                                Console.Write("Do you want to delete this title? (Y) to delete, [ENTER] to skip: ");
+                                string inputDelete = Console.ReadLine();
+                                if (inputDelete == "y" || inputDelete == "Y")
+                                {
+                                    var deleteGame = games[selectedIndex];
+                                    database.Games.Remove(deleteGame);
+                                    database.SaveChanges();
+                                    inputDelete = "";
+                                    selectedIndex = 999999;
+                                }
+                                else
+                                {
+                                    ReturnToMain();
+                                }
+                            }
+                        }
+                        if (selectedIndex == 999999)
+                        {
+                            ReturnToMain();
+
+                        }
+                    }
+                    else
+                    {
+                        ReturnToMain();
+
+                    }
+                }
+                else
+                {
+                    ReturnToMain();
+
+                }
+                Console.CursorVisible = false;
+            }
+        }
+        public static void ReturnToMain()
+        {
+            Gfx.WinIni();
+            Gfx.ColorIni();
+            TopMenu(Position.topX, Position.topY);
+            SideMenu(Position.sideX, Position.sideY, 1);
+            Position.MoveCursorMainStart(0);
         }
         public static int KeyInput(int winX, int winY, int menuLevel)
         {
@@ -216,7 +355,7 @@ namespace Webshop2_TeamG.Helpers
                                 ClearFullSidemenu(7, 13);
                                 int nxtRow = 0;
                                 int selectedIndex = 0;
-                                int pageLength = 8; // -------------------------------------  SET TO NUMBER OF GAMES LISTED PER PAGE ---------------------------
+                                int pageLength = 18; // -------------------------------------  SET TO NUMBER OF GAMES LISTED PER PAGE ---------------------------
                                 using (var database = new ShopDbContext())
                                 {
                                     var games = database.Games.ToList();
@@ -237,7 +376,7 @@ namespace Webshop2_TeamG.Helpers
                                                 while (selectedIndex != 999999)
                                                 {
                                                     ClearMainArea();
-                                                    selectedIndex = MainView.DetailGame(selectedIndex);
+                                                    selectedIndex = MainView.DetailGame(selectedIndex, 1);
                                                 }
                                                 if (selectedIndex == 999999)
                                                 {
@@ -272,7 +411,7 @@ namespace Webshop2_TeamG.Helpers
                                             while (selectedIndex != 999999)
                                             {
                                                 ClearMainArea();
-                                                selectedIndex = MainView.DetailGame(selectedIndex);
+                                                selectedIndex = MainView.DetailGame(selectedIndex, 1);
                                             }
                                             if (selectedIndex == 999999)
                                             {
@@ -283,7 +422,14 @@ namespace Webshop2_TeamG.Helpers
                                             }
                                             //return games[selectedIndex - 1];
                                         }
-
+                                        else
+                                        {
+                                            MainView.MainArea();
+                                            MainMenu(7, 13, 1);
+                                            Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                                            //Console.WriteLine("Invalid selection. Returning null.");
+                                            //return null;
+                                        }
                                     }
                                     else
                                     {
@@ -299,9 +445,6 @@ namespace Webshop2_TeamG.Helpers
                             } // Show All
                             if (userInputKey.Key == ConsoleKey.S)
                             {
-                                //ClearMainArea();
-                                //Position.MoveCursorMainStart(0);
-                                //Console.Write("Select Category");  // ▄ ▀ █
                                 ClearMainArea();
                                 ClearFullSidemenu(7, 13);
                                 int nxtRow = 0;
@@ -357,7 +500,7 @@ namespace Webshop2_TeamG.Helpers
                                                 {
                                                     selectedIndex = games.Count;
                                                 }
-                                                selectedIndex = MainView.DetailGame(selectedIndex);
+                                                selectedIndex = MainView.DetailGame(selectedIndex, 1);
                                             }
                                             if (selectedIndex == 999999)
                                             {
@@ -366,8 +509,6 @@ namespace Webshop2_TeamG.Helpers
                                                 MainMenu(7, 13, 1);
                                                 Position.MoveCursorMainStart(nxtRow); nxtRow++;
                                             }
-                                            //selectedIndex -= 1;
-                                            ////selectedIndex = MainView.DetailGame(selectedIndex);
                                             Console.CursorVisible = false;
                                         }
                                         else
@@ -421,173 +562,173 @@ namespace Webshop2_TeamG.Helpers
 
                 // Shopping Basket
                 case 2:
+                    {
+                        while (true)
+                        {
+
+                            var userInputKey = Console.ReadKey(true);
+                            if (userInputKey.Key == ConsoleKey.F1)
                             {
-                                while (true)
-                                {
-
-                                    var userInputKey = Console.ReadKey(true);
-                                    if (userInputKey.Key == ConsoleKey.F1)
-                                    {
-                                        menuLevel = 1;
-                                        return menuLevel;
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.F2)
-                                    {
-                                        menuLevel = 2;
-                                        return menuLevel;
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.F3)
-                                    {
-                                        menuLevel = 3;
-                                        return menuLevel;
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.A)
-                                    {
-                                        ClearMainArea();
-                                        Position.MoveCursorMainStart(0);
-                                        Console.Write("Add Item");
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.S)
-                                    {
-                                        ClearMainArea();
-                                        Position.MoveCursorMainStart(0);
-                                        Console.Write("Empty Basket");
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.D)
-                                    {
-                                        ClearMainArea();
-                                        Position.MoveCursorMainStart(0);
-                                        Console.Write("Delete Item");
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.F)
-                                    {
-                                        ClearMainArea();
-                                        Position.MoveCursorMainStart(0);
-                                        Console.Write("Checkout");
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.D1)
-                                    {
-                                        ClearMainArea();
-                                        Position.MoveCursorMainStart(0);
-                                        Console.Write("Selecting Game 1");
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.D2)
-                                    {
-                                        ClearMainArea();
-                                        Position.MoveCursorMainStart(0);
-                                        Console.Write("Selecting Game 2");
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.D3)
-                                    {
-                                        ClearMainArea();
-                                        Position.MoveCursorMainStart(0);
-                                        Console.Write("Selecting Game 3");
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.D4)
-                                    {
-                                        ClearMainArea();
-                                        Position.MoveCursorMainStart(0);
-                                        Console.Write("Selecting Game 4");
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.D5)
-                                    {
-                                        ClearMainArea();
-                                        Position.MoveCursorMainStart(0);
-                                        Console.Write("Selecting Game 5");
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.D6)
-                                    {
-                                        ClearMainArea();
-                                        Position.MoveCursorMainStart(0);
-                                        Console.Write("Selecting Game 6");
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.D7)
-                                    {
-                                        ClearMainArea();
-                                        Position.MoveCursorMainStart(0);
-                                        Console.Write("Selecting Game 7");
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.D8)
-                                    {
-                                        ClearMainArea();
-                                        Position.MoveCursorMainStart(0);
-                                        Console.Write("Selecting Game 8");
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.D9)
-                                    {
-                                        ClearMainArea();
-                                        Position.MoveCursorMainStart(0);
-                                        Console.Write("Selecting Game 9");
-                                    }
-                                }
+                                menuLevel = 1;
+                                return menuLevel;
                             }
-
-                        // Admin
-                        case 3:
+                            if (userInputKey.Key == ConsoleKey.F2)
                             {
-                                while (true)
-                                {
-
-                                    var userInputKey = Console.ReadKey(true);
-                                    if (userInputKey.Key == ConsoleKey.F1)
-                                    {
-                                        menuLevel = 1;
-                                        return menuLevel;
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.F2)
-                                    {
-                                        menuLevel = 2;
-                                        return menuLevel;
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.F3)
-                                    {
-                                        menuLevel = 3;
-                                        return menuLevel;
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.A)
-                                    {
-                                        Admin.AdminTools(1);
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.S)
-                                    {
-                                        Admin.AdminTools(2);
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.D)
-                                    {
-                                        Admin.AdminTools(3);
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.F)
-                                    {
-                                        Admin.AdminTools(4);
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.G)
-                                    {
-                                        Admin.AdminTools(5);
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.H)
-                                    {
-                                        Admin.AdminTools(6);
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.J)
-                                    {
-                                        Admin.AdminTools(7);
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.K)
-                                    {
-                                        Admin.AdminTools(8);
-                                    }
-                                    if (userInputKey.Key == ConsoleKey.L)
-                                    {
-                                        Admin.AdminTools(9);
-                                    }
-                                }
+                                menuLevel = 2;
+                                return menuLevel;
                             }
-                        default:
-                            break;
-
+                            if (userInputKey.Key == ConsoleKey.F3)
+                            {
+                                menuLevel = 3;
+                                return menuLevel;
+                            }
+                            if (userInputKey.Key == ConsoleKey.A)
+                            {
+                                ClearMainArea();
+                                Position.MoveCursorMainStart(0);
+                                Console.Write("Add Item");
+                            }
+                            if (userInputKey.Key == ConsoleKey.S)
+                            {
+                                ClearMainArea();
+                                Position.MoveCursorMainStart(0);
+                                Console.Write("Empty Basket");
+                            }
+                            if (userInputKey.Key == ConsoleKey.D)
+                            {
+                                ClearMainArea();
+                                Position.MoveCursorMainStart(0);
+                                Console.Write("Delete Item");
+                            }
+                            if (userInputKey.Key == ConsoleKey.F)
+                            {
+                                ClearMainArea();
+                                Position.MoveCursorMainStart(0);
+                                Console.Write("Checkout");
+                            }
+                            if (userInputKey.Key == ConsoleKey.D1)
+                            {
+                                ClearMainArea();
+                                Position.MoveCursorMainStart(0);
+                                Console.Write("Selecting Game 1");
+                            }
+                            if (userInputKey.Key == ConsoleKey.D2)
+                            {
+                                ClearMainArea();
+                                Position.MoveCursorMainStart(0);
+                                Console.Write("Selecting Game 2");
+                            }
+                            if (userInputKey.Key == ConsoleKey.D3)
+                            {
+                                ClearMainArea();
+                                Position.MoveCursorMainStart(0);
+                                Console.Write("Selecting Game 3");
+                            }
+                            if (userInputKey.Key == ConsoleKey.D4)
+                            {
+                                ClearMainArea();
+                                Position.MoveCursorMainStart(0);
+                                Console.Write("Selecting Game 4");
+                            }
+                            if (userInputKey.Key == ConsoleKey.D5)
+                            {
+                                ClearMainArea();
+                                Position.MoveCursorMainStart(0);
+                                Console.Write("Selecting Game 5");
+                            }
+                            if (userInputKey.Key == ConsoleKey.D6)
+                            {
+                                ClearMainArea();
+                                Position.MoveCursorMainStart(0);
+                                Console.Write("Selecting Game 6");
+                            }
+                            if (userInputKey.Key == ConsoleKey.D7)
+                            {
+                                ClearMainArea();
+                                Position.MoveCursorMainStart(0);
+                                Console.Write("Selecting Game 7");
+                            }
+                            if (userInputKey.Key == ConsoleKey.D8)
+                            {
+                                ClearMainArea();
+                                Position.MoveCursorMainStart(0);
+                                Console.Write("Selecting Game 8");
+                            }
+                            if (userInputKey.Key == ConsoleKey.D9)
+                            {
+                                ClearMainArea();
+                                Position.MoveCursorMainStart(0);
+                                Console.Write("Selecting Game 9");
+                            }
                         }
-
-                        return menuLevel;
                     }
+
+                // Admin
+                case 3:
+                    {
+                        while (true)
+                        {
+
+                            var userInputKey = Console.ReadKey(true);
+                            if (userInputKey.Key == ConsoleKey.F1)
+                            {
+                                menuLevel = 1;
+                                return menuLevel;
+                            }
+                            if (userInputKey.Key == ConsoleKey.F2)
+                            {
+                                menuLevel = 2;
+                                return menuLevel;
+                            }
+                            if (userInputKey.Key == ConsoleKey.F3)
+                            {
+                                menuLevel = 3;
+                                return menuLevel;
+                            }
+                            if (userInputKey.Key == ConsoleKey.A)
+                            {
+                                Admin.AdminTools(1);
+                            }
+                            if (userInputKey.Key == ConsoleKey.S)
+                            {
+                                Admin.AdminTools(2);
+                            }
+                            if (userInputKey.Key == ConsoleKey.D)
+                            {
+                                Admin.AdminTools(3);
+                            }
+                            if (userInputKey.Key == ConsoleKey.F)
+                            {
+                                Admin.AdminTools(4);
+                            }
+                            if (userInputKey.Key == ConsoleKey.G)
+                            {
+                                Admin.AdminTools(5);
+                            }
+                            if (userInputKey.Key == ConsoleKey.H)
+                            {
+                                Admin.AdminTools(6);
+                            }
+                            if (userInputKey.Key == ConsoleKey.J)
+                            {
+                                Admin.AdminTools(7);
+                            }
+                            if (userInputKey.Key == ConsoleKey.K)
+                            {
+                                Admin.AdminTools(8);
+                            }
+                            if (userInputKey.Key == ConsoleKey.L)
+                            {
+                                Admin.AdminTools(9);
+                            }
+                        }
+                    }
+                default:
+                    break;
+
             }
+
+            return menuLevel;
         }
+    }
+}

@@ -12,6 +12,9 @@ namespace Webshop2_TeamG.Helpers
 {
     public class Create
     {
+        // Fast-paced, demon-slaying action with stunning   // 46
+        // 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+        // the vast kingdom of Hyrule, solve intricate puzzles, battle formidable enemies,   // 79
         public static void FillDatabase(ShopDbContext database)
         {
             if (database.Games.Any() || database.Genres.Any())
@@ -222,6 +225,102 @@ weather.",
                 LongInfo = @"Experience the thrill of open-world racing in Forza Horizon 3. Drive a diverse 
 range of cars, explore stunning landscapes, and participate in dynamic races 
 with changing weather conditions."
+            },
+                        new Game
+            {
+                Title = "Laban on the Run",
+                Price = 599.99m,
+                GenreId = genres[0].Id,
+                Stock = 17,
+                AgeRating = AgeRating.Mature,
+                ShortInfo = @"Laban is on the run again, trying to avoid
+everything",
+                LongInfo = @"The bandit Laban is on the run from the long arm of the law once again. In
+his adventures he will need to find clever ways to use the environment and
+items he can find in it to finally leave the country for a life in retirement
+on Bahamas."
+            },
+            new Game
+            {
+                Title = "Greger in LaLa-Land",
+                Price = 499.99m,
+                GenreId = genres[3].Id,
+                Stock = 22,
+                AgeRating = AgeRating.Everyone,
+                ShortInfo = @"Greger is racing in LaLa-Land, It's a
+Rough Day at Work!",
+                LongInfo = @"Greger, the well known racing maniac, is racing against various inhabitants
+in LaLa-Land. The little bastards are using all kinds of weapons, traps and unjust
+methods to win this race, but Greger is tougher than a nut."
+            },
+
+            new Game
+            {
+                Title = "Ninja Commando XIV",
+                Price = 599.99m,
+                GenreId = genres[0].Id,
+                Stock = 22,
+                AgeRating = AgeRating.Mature,
+                ShortInfo = @"The fourteenth installment of this 
+popular action game series",
+                LongInfo = @"Here we go again in this Epic franchise of Ninja games. The fourteenth 
+installment of the series involves extra many ninjas, more weapons than ever and we 
+guarantee the bloodiest mess ever witnessed on screen! Hii-yaaaah!"
+            },
+
+            new Game
+            {
+                Title = "The Thinker",
+                Price = 199.95m,
+                GenreId = genres[2].Id,
+                Stock = 22,
+                AgeRating = AgeRating.Teen,
+                ShortInfo = @"In this game you have to think,
+like really really hard. For real.",
+                LongInfo = @"Here is the perfect game for deep thinking. You can think in english,
+german and even swahili! You just can't answer in any other language than english,
+unfortunately. This game is much harder than you think!"
+            },
+
+            new Game
+            {
+                Title = "Adventures in the house",
+                Price = 12.95m,
+                GenreId = genres[1].Id,
+                Stock = 22,
+                AgeRating = AgeRating.Everyone,
+                ShortInfo = @"Your house could be an adventure, sort of,
+we guess >:(",
+                LongInfo = @"In this, more or less exciting, adventure you get to move between rooms.
+You can go to exotic places like the kitchen, bathroom, livingroom, bedroom and even the
+rickety shed that is about to collapse. Head out on the least extensive adventure ever
+written NOW!"
+            },
+
+            new Game
+            {
+                Title = "Rally-Åke",
+                Price = 79.95m,
+                GenreId = genres[3].Id,
+                Stock = 22,
+                AgeRating = AgeRating.Everyone,
+                ShortInfo = @"Rally-Åke rullar buss",
+                LongInfo = @"Rally-Åke på tävling med sin gula buss, vi hoppas bromsarna håller hela
+vägen och inte trillar av i Halmstads Kummun."
+            },
+
+            new Game
+            {
+                Title = "Check Mate with Checkmate",
+                Price = 799.95m,
+                GenreId = genres[2].Id,
+                Stock = 22,
+                AgeRating = AgeRating.Mature,
+                ShortInfo = @"The world's first chess/dating
+simulator, guaranteed!",
+                LongInfo = @"In this unusual strategy title you are testing your competibility with
+potential mates by playing games of chess... Beware the extra naughty
+scene, kings and queens, we dare not say anything else. NSFW!!!"
             }
         };
             //database.Games.AddRange(actionGames);
