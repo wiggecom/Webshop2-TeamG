@@ -35,7 +35,8 @@ namespace Webshop2_TeamG.Helpers
                     return;
                 case 3:
                     Position.MoveCursorMainStart(0);
-                    Console.Write("Change Title");
+                    EditGame();
+                    //Console.Write("Change Title");
                     return;
                 case 4:
                     Position.MoveCursorMainStart(0);
@@ -145,6 +146,10 @@ namespace Webshop2_TeamG.Helpers
 
             }
 
+        }
+        private static void EditGame()
+        {
+            SysMenu.SelectGame(2, 666666);
         }
         private static void RemoveGame()
         {
@@ -261,58 +266,6 @@ namespace Webshop2_TeamG.Helpers
             SysMenu.MenuTitle(7, 9, "Admin Menu");
             SysMenu.AdminMenu(7, 13, 3);
         }
-        //private static void RemoveGame(ShopDbContext database)
-        //{
-        //    int menuX = 45;
-        //    int menuY = 12;
-        //    SysMenu.ClearMainArea();
-        //    Position.MoveCursorMainStart(0);
-        //    int i = 1;
-        //    var games = database.Games.ToList();
-        //    for (int j = 0; j < games.Count; j++)
-        //    {
-        //        Console.SetCursorPosition(menuX, menuY + i); i++;
-        //        Console.WriteLine("(" + j + ") - " + games[j].Title);
-        //    }
 
-        //    Console.SetCursorPosition(menuX, menuY + i); i++;
-        //    Console.Write("Enter Rating (1) - Everyone, (2) - Teen, (3) - Mature: ");
-        //    int newRating = 0;
-        //    int.TryParse(Console.ReadLine(), out newRating);
-        //    AgeRating ageRating = new AgeRating();
-
-        //    if (newRating == 1)
-        //    {
-        //        ageRating = AgeRating.Everyone;
-        //    }
-        //    else if (newRating == 2)
-        //    {
-        //        ageRating = AgeRating.Teen;
-        //    }
-        //    else
-        //    {
-        //        ageRating = AgeRating.Mature;
-        //    }
-
-        //    // --------------------------------------------------------------------------------------------------------------------
-
-        //    var newGame = new List<Game>
-        //    {
-        //    };
-
-        //    database.Games.AddRange(newGame);
-
-        //    database.SaveChanges();
-
-        //    Gfx.WinIni();
-        //    SysMenu.TopMenu(85, 3);
-        //    SysMenu.ClearFullSidemenu(7, 13);
-        //    //SysMenu.SideMenu(7, 13, 1);
-        //    var refreshGameList = database.Games.ToList();
-        //    var lastGame = refreshGameList.Count() - 1;
-        //    MainView.DetailGame(lastGame, 0);
-        //    SysMenu.MenuTitle(7, 9, "Admin Menu");
-        //    SysMenu.AdminMenu(7, 13, 3);
-        //}
     }
 }

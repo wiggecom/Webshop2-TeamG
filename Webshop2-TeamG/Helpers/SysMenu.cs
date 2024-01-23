@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,8 +39,10 @@ namespace Webshop2_TeamG.Helpers
             Console.SetCursorPosition(topX + i, topY + 2);
             Console.Write("[Basket ####SEK Total]");
         }
-        public static void SideMenu(int winX, int winY, int menuLevel)
+        public static void SideMenu(int menuLevel)
         {
+            int winX = Position.sideX;
+            int winY = Position.sideY;
             // Stay in each submenu unless menuLevel changes
             switch (menuLevel)
             {
@@ -90,11 +93,8 @@ namespace Webshop2_TeamG.Helpers
             Console.SetCursorPosition(winX, winY + i); i++;
             Console.Write("D) Search");
             Console.SetCursorPosition(winX, winY + i); i++;
-            Console.Write("F) Add to Basket");
-            Console.SetCursorPosition(winX, winY + i); i++;
-            Console.Write("*1-9) Select Item");
-            Console.SetCursorPosition(winX, winY + i); i++;
-            Console.Write("   * Unused");
+            Console.Write("1-3) Select Featured");
+
             //------------------------------
             //CopyrightMenu(winX, winY + 32);
             MainView.MainArea();
@@ -201,7 +201,7 @@ namespace Webshop2_TeamG.Helpers
             }
         }
         public static void SelectGame(int edit, int gameId)
-        { // edit 0 = browse, 1 = delete
+        { // edit 0 = browse, 1 = delete, 2 = edit
             ClearAllAreas();
             int nxtRow = 0;
             int selectedIndex = gameId;
@@ -264,13 +264,20 @@ namespace Webshop2_TeamG.Helpers
                                         break;
                                     }
                                 }
+                                else if (edit == 2)
+                                {
+                                    EditGame(selectedIndex, 0);
+                                    EditGame(selectedIndex, 1);
+                                    selectedIndex = 666666;
+                                    break;
+                                }
                             }
                             if (selectedIndex == 999999)
                             {
-                                ClearMainArea();
-                                MainView.MainArea();
-                                MainMenu(7, 13, 1);
-                                Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                                //ClearMainArea();
+                                //MainView.MainArea();
+                                //MainMenu(7, 13, 1);
+                                //Position.MoveCursorMainStart(nxtRow); nxtRow++;
                             }
                             break;
                         }
@@ -322,37 +329,335 @@ namespace Webshop2_TeamG.Helpers
                                 }
                                 else
                                 {
-                                    ReturnToMain();
+                                    ReturnToMainWithMenu(edit);
                                     return;
                                 }
+                            }
+                            else if (edit == 2)
+                            {
+                                EditGame(selectedIndex, 0);
+                                EditGame(selectedIndex, 1);
+                                selectedIndex = 666666;
+                                break;
                             }
                         }
                         if (selectedIndex == 999999)
                         {
-                            ReturnToMain();
+                            ReturnToMainWithMenu(edit);
                             return;
                         }
                     }
                     else
                     {
-                        ReturnToMain();
+                        ReturnToMainWithMenu(edit);
                         return;
                     }
                 }
                 else
                 {
-                    ReturnToMain();
+                    ReturnToMainWithMenu(edit);
                     return;
                 }
                 Console.CursorVisible = false;
             }
         }
-        public static void ReturnToMain()
+        public static void ReturnToMainWithMenu(int edit)
+        {
+            if (edit == 1 || edit == 2)
+            {
+                ReturnToMain(3);
+            }
+            else if (edit == 0)
+            {
+                ReturnToMain(1);
+            }
+        }
+        public static void EditGame(int selectedIndex, int updated)
+        {
+            using (var database = new ShopDbContext())
+            {
+                var games = database.Games.ToList();
+                var genres = database.Genres.ToList();
+                var ratings = Enum.GetValues(typeof(AgeRating)).Cast<AgeRating>().ToList();
+                while (updated <= 1)
+                {
+
+                    ClearMainArea();
+                    int nxtRow = 0;
+                    int genreRow = 0;
+                    int ratingRow = 0;
+                    //Position.MoveCursorTextAnywhere(140, ratingRow);
+                    //Position.MoveCursorTextAnywhere(140, genreRow);
+                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                    Console.Write("Selected title: " + games[selectedIndex].Title);
+                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                    // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                    Console.Write("1 - Title: " + games[selectedIndex].Title);
+                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                    Console.Write("2 - Price: " + games[selectedIndex].Price);
+                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                    Console.Write("3 - GenreId: " + games[selectedIndex].GenreId);
+                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                    Console.Write("4 - Stock: " + games[selectedIndex].Stock);
+                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                    Console.Write("5 - SoldTotal: " + games[selectedIndex].SoldTotal);
+                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                    Console.Write("6 - Age Rating: " + games[selectedIndex].AgeRating);
+                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                    Console.Write("7 - Featured Game: " + games[selectedIndex].OnDisplay);
+                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                    Console.Write("8 - Short Info: ");
+                    //Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                    foreach (var sRow in games[selectedIndex].ShortInfo.Split('\n'))
+                    {//foreach (var line in testString.Split('\n'))
+                        Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                        Console.Write(sRow);
+                    }
+                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                    Console.Write("9 - Long Info: ");
+                    foreach (var lRow in games[selectedIndex].LongInfo.Split('\n'))
+                    {
+                        Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                        Console.Write(lRow);
+                    }
+                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                    if (updated == 0)
+                    {
+                        Console.Write("Please enter field to edit [ENTER to exit]: ");
+                        string inputEdit = Console.ReadLine();
+                        Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                        if (inputEdit == "1")
+                        {
+                            Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                            Console.Write("Current Title: " + games[selectedIndex].Title);
+                            Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                            Console.Write("Enter New Title: ");
+                            string newTitle = Console.ReadLine();
+                            database.Games.Where(g => g.Id == selectedIndex + 1).ExecuteUpdate(a => a.SetProperty(b => b.Title, newTitle));
+                            database.SaveChanges();
+                        }
+                        else if (inputEdit == "2")
+                        {
+                            decimal newPrice = 0;
+                            Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                            Console.Write("Current Price: " + games[selectedIndex].Price);
+                            Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                            Console.Write("Enter New Price: ");
+                            string strPrice = Console.ReadLine();
+                            decimal.TryParse(strPrice, out newPrice);
+                            if (newPrice > 0)
+                            {
+                                database.Games.Where(g => g.Id == selectedIndex + 1).ExecuteUpdate(a => a.SetProperty(b => b.Price, newPrice));
+                                database.SaveChanges();
+                            }
+                        }
+                        else if (inputEdit == "3")
+                        {
+                            int newGenre = 0;
+                            int genreCounter = 1;
+                            foreach (var gId in genres)
+                            {
+                                Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                                Console.Write(genreCounter + ": " + gId.Name); genreCounter++;
+                            }
+                            Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                            Console.Write("Current Genre: " + games[selectedIndex].GenreId);
+                            Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                            Console.Write("Enter New Genre: ");
+                            string strGenre = Console.ReadLine();
+                            int.TryParse(strGenre, out newGenre);
+                            if (newGenre >= 1)
+                            {
+                                database.Games.Where(g => g.Id == selectedIndex + 1).ExecuteUpdate(a => a.SetProperty(b => b.GenreId, newGenre));
+                                database.SaveChanges();
+                            }
+                        }
+                        else if (inputEdit == "4")
+                        {
+                            int newStock = 0;
+                            Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                            Console.Write("Current Stock: " + games[selectedIndex].Stock);
+                            Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                            Console.Write("Enter New Stock: ");
+                            string strStock = Console.ReadLine();
+                            int.TryParse(strStock, out newStock);
+                            if (newStock > 0)
+                            {
+                                database.Games.Where(g => g.Id == selectedIndex + 1).ExecuteUpdate(a => a.SetProperty(b => b.Stock, newStock));
+                                database.SaveChanges();
+                            }
+                        }
+                        else if (inputEdit == "5")
+                        {
+                            int newSold = 0;
+                            Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                            Console.Write("Current Total Sold: " + games[selectedIndex].SoldTotal);
+                            Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                            Console.Write("Enter New Total Sold: ");
+                            string strSold = Console.ReadLine();
+                            int.TryParse(strSold, out newSold);
+                            if (newSold > 0)
+                            {
+                                database.Games.Where(g => g.Id == selectedIndex + 1).ExecuteUpdate(a => a.SetProperty(b => b.SoldTotal, newSold));
+                                database.SaveChanges();
+                            }
+                        }
+                        else if (inputEdit == "6")
+                        {
+                            int newRating = 0;
+                            int ratingCounter = 1;
+                            AgeRating newAgeRating = AgeRating.Mature;
+                            foreach (var rating in ratings)
+                            {
+                                Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                                Console.Write(ratingCounter + ": " + rating); ratingCounter++;
+                            }
+                            Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                            Console.Write("Current Rating: " + games[selectedIndex].AgeRating);
+                            Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                            Console.Write("Enter New Rating: ");
+                            string strRating = Console.ReadLine();
+                            int.TryParse(strRating, out newRating);
+                            if (newRating >= 1 && newRating <= 3)
+                            {
+                                if (newRating == 1)
+                                {
+                                    newAgeRating = AgeRating.Everyone;
+                                }
+                                if (newRating == 2)
+                                {
+                                    newAgeRating = AgeRating.Teen;
+                                }
+                                if (newRating == 3)
+                                {
+                                    newAgeRating = AgeRating.Mature;
+                                }
+                                database.Games.Where(g => g.Id == selectedIndex + 1).ExecuteUpdate(a => a.SetProperty(b => b.AgeRating, newAgeRating));
+                                database.SaveChanges();
+                            }
+                        }
+                        else if (inputEdit == "7")
+                        {
+                            if (games[selectedIndex].OnDisplay != 0)
+                            {
+                                Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                                Console.Write("This game is already featured on the front page");
+                                Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                                Console.Write("Press [ANY] key to continue");
+                                Console.ReadKey();
+                                updated = 2;
+                                break;
+                            }
+                            else
+                            {
+
+
+                                int newFeatured = 0;
+                                int oldFeatured = 0;
+                                for (int i = 1; i <= 3; i++)
+                                {
+                                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                                    var gameTmp = database.Games.Where(g => g.OnDisplay == i).ToList();
+                                    Console.Write(gameTmp[0].OnDisplay + " - " + gameTmp[0].Title);
+                                }
+                                Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                                Console.Write("Current Featured Number: " + games[selectedIndex].OnDisplay);
+                                Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                                Console.Write("Enter New Placement: ");
+                                string strFeatured = Console.ReadLine();
+                                int.TryParse(strFeatured, out newFeatured);
+                                if (newFeatured >= 1 && newFeatured <= 3)
+                                {
+                                    if (newFeatured == 1)
+                                    {
+                                        database.Games.Where(g => g.OnDisplay == 1).ExecuteUpdate(a => a.SetProperty(b => b.OnDisplay, 0));
+                                        database.SaveChanges();
+                                    }
+                                    else if (newFeatured == 2)
+                                    {
+                                        database.Games.Where(g => g.OnDisplay == 2).ExecuteUpdate(a => a.SetProperty(b => b.OnDisplay, 0));
+                                        database.SaveChanges();
+                                    }
+                                    else if (newFeatured == 3)
+                                    {
+                                        database.Games.Where(g => g.OnDisplay == 3).ExecuteUpdate(a => a.SetProperty(b => b.OnDisplay, 0));
+                                        database.SaveChanges();
+                                    }
+                                    database.Games.Where(g => g.Id == selectedIndex + 1).ExecuteUpdate(a => a.SetProperty(b => b.OnDisplay, newFeatured));
+                                    database.SaveChanges();
+                                }
+                            }
+                        }
+                        if (inputEdit == "8")
+                        {
+                            Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                            Console.Write("Enter New Short Info (Limited to 120 characters): ");
+                            string newShort = Console.ReadLine();
+                            if (newShort != "")
+                            {
+                                int shortLen = newShort.Length;
+                                if (shortLen > 120)
+                                {
+                                    newShort = newShort.Remove(120) + "...";
+                                }
+                                newShort = Create.StringBreak(newShort, 46); // break lines at 46 chars
+                                database.Games.Where(g => g.Id == selectedIndex + 1).ExecuteUpdate(a => a.SetProperty(b => b.ShortInfo, newShort));
+                                database.SaveChanges();
+                            }
+
+                        }
+                        if (inputEdit == "9")
+                        {
+                            Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                            Console.Write("Enter New Long Info (Limited to 420 characters): ");
+                            string newLong = Console.ReadLine();
+                            if (newLong != "")
+                            {
+                                int longLen = newLong.Length;
+                                if (longLen > 420)
+                                {
+                                    newLong = newLong.Remove(420) + "...";
+                                }
+                                newLong = Create.StringBreak(newLong, 49); // break lines at 79 chars
+                                database.Games.Where(g => g.Id == selectedIndex + 1).ExecuteUpdate(a => a.SetProperty(b => b.LongInfo, newLong));
+                                database.SaveChanges();
+                            }
+
+                        }
+                        updated = 2;
+                    }
+                    else if (updated == 1)
+                    {
+                        Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                        Console.WriteLine("Database Updated");
+                        Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                        Console.WriteLine("Press [ANY] key to continue");
+                        Console.ReadKey();
+                        updated = 2; break;
+                    }
+
+                }
+                //else
+                //{
+                //    Console.Write("Buhuuu");
+                //    //break;
+                //}
+
+                return;
+                //Console.Write("6 - Age Rating: " + games[selectedIndex].AgeRating);
+                //Console.Write("7 - Featured Game: " + games[selectedIndex].OnDisplay);
+            }
+        }
+        //}
+        public static void ReturnToMain(int menuLevel)
         {
             Gfx.WinIni();
             Gfx.ColorIni();
             TopMenu(Position.topX, Position.topY);
-            SideMenu(Position.sideX, Position.sideY, 1);
+            SideMenu(menuLevel);
             Position.MoveCursorMainStart(0);
         }
         public static int KeyInput(int winX, int winY, int menuLevel)
@@ -505,7 +810,20 @@ namespace Webshop2_TeamG.Helpers
                             if (userInputKey.Key == ConsoleKey.D)
                             {
                                 MainView.Search();
-                            } // Show All
+                            }
+                            if (userInputKey.Key == ConsoleKey.D1)
+                            {
+                                MainView.FeaturedDetail(1);
+                            }
+                            if (userInputKey.Key == ConsoleKey.D2)
+                            {
+                                MainView.FeaturedDetail(2);
+                            }
+                            if (userInputKey.Key == ConsoleKey.D3)
+                            {
+                                MainView.FeaturedDetail(3);
+                            }
+                            // Show All
                         }
                     }
 
@@ -536,78 +854,104 @@ namespace Webshop2_TeamG.Helpers
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Add Item");
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.S)
                             {
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Empty Basket");
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D)
                             {
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Delete Item");
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.F)
                             {
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Checkout");
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D1)
                             {
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Selecting Game 1");
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D2)
                             {
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Selecting Game 2");
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D3)
                             {
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Selecting Game 3");
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D4)
                             {
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Selecting Game 4");
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D5)
                             {
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Selecting Game 5");
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D6)
                             {
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Selecting Game 6");
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D7)
                             {
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Selecting Game 7");
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D8)
                             {
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Selecting Game 8");
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D9)
                             {
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Selecting Game 9");
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                         }
                     }
@@ -637,38 +981,56 @@ namespace Webshop2_TeamG.Helpers
                             if (userInputKey.Key == ConsoleKey.A)
                             {
                                 Admin.AdminTools(1);
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.S)
                             {
                                 Admin.AdminTools(2);
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D)
                             {
                                 Admin.AdminTools(3);
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.F)
                             {
                                 SelectGame(0, 666666);
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.G)
                             {
                                 Admin.AdminTools(5);
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.H)
                             {
                                 Admin.AdminTools(6);
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.J)
                             {
                                 Admin.AdminTools(7);
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.K)
                             {
                                 Admin.AdminTools(8);
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.L)
                             {
                                 Admin.AdminTools(9);
+                                menuLevel = 1;
+                                return menuLevel;
                             }
                         }
                     }

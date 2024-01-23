@@ -61,7 +61,7 @@ enthusiasts."
                 GenreId = genres[1].Id,
                 Stock = 90,
                 AgeRating = AgeRating.Everyone,
-                OnDisplay = 1,
+                OnDisplay = 0,
                 ShortInfo = @"Epic action-adventure game set in a vast,
 open world with creative puzzles and
 exploration.",
@@ -77,7 +77,7 @@ exploration.",
                 Price = 549.99m,
                 GenreId = genres[0].Id,
                 Stock = 120,
-                OnDisplay= 3,
+                OnDisplay= 0,
                 AgeRating = AgeRating.Mature,
                 ShortInfo = @"Fast-paced, demon-slaying action with stunning
 visuals and intense gameplay.",
@@ -217,7 +217,7 @@ lovers."
                 Price = 999.99m,
                 GenreId = genres[3].Id,
                 Stock = 80,
-                OnDisplay = 2,
+                OnDisplay = 0,
                 AgeRating = AgeRating.Everyone,
                 ShortInfo = @"Open-world racing game featuring a variety
 of cars, stunning landscapes, and dynamic
@@ -275,6 +275,7 @@ guarantee the bloodiest mess ever witnessed on screen! Hii-yaaaah!"
                 GenreId = genres[2].Id,
                 Stock = 22,
                 AgeRating = AgeRating.Teen,
+                OnDisplay = 0,
                 ShortInfo = @"In this game you have to think,
 like really really hard. For real.",
                 LongInfo = @"Here is the perfect game for deep thinking. You can think in english,
@@ -303,18 +304,34 @@ written NOW!"
                 Price = 79.95m,
                 GenreId = genres[3].Id,
                 Stock = 22,
+                OnDisplay = 3,
                 AgeRating = AgeRating.Everyone,
                 ShortInfo = @"Rally-Åke rullar buss",
                 LongInfo = @"Rally-Åke på tävling med sin gula buss, vi hoppas bromsarna håller hela
 vägen och inte trillar av i Halmstads Kummun."
             },
-
+                        new Game
+            {
+                Title = "Laban in the Jungle",
+                Price = 12.95m,
+                GenreId = genres[0].Id,
+                Stock = 22,
+                OnDisplay = 2,
+                AgeRating = AgeRating.Teen,
+                ShortInfo = @"Laban is on the warpath in the jungle 
+against a vicious tribe of cannibals",
+                LongInfo = @"Pick up your rifle and enter a vast labyrinth in the jungle where every 
+corner can hide things like dangerous cannibals, predators, quicksand, 
+mosquitoes and/or traps! Shoot your way trough everything that moves (or 
+doesn't move, we don't really care)."
+            },
             new Game
             {
                 Title = "Check Mate or Checkmate",
                 Price = 799.95m,
                 GenreId = genres[2].Id,
                 Stock = 22,
+                OnDisplay = 1,
                 AgeRating = AgeRating.Mature,
                 ShortInfo = @"The world's first chess/dating
 simulator, guaranteed!",

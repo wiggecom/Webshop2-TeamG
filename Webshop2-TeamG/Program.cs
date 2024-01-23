@@ -22,7 +22,7 @@ namespace Webshop2_TeamG
             {
                 SysMenu.TopMenu(Position.topX, Position.topY);
                 SysMenu.ClearFullSidemenu(Position.sideX, Position.sideY + 4);
-                SysMenu.SideMenu(Position.sideX, Position.sideY, menuLevel);
+                SysMenu.SideMenu(menuLevel);
                 menuLevel = SysMenu.KeyInput(0,0, menuLevel);
             }
         }
