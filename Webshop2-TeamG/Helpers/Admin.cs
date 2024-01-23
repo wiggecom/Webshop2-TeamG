@@ -148,7 +148,7 @@ namespace Webshop2_TeamG.Helpers
         }
         private static void RemoveGame()
         {
-            SysMenu.SelectGame(1);
+            SysMenu.SelectGame(1, 666666);
         }
         private static void AddGame(ShopDbContext database)
         {

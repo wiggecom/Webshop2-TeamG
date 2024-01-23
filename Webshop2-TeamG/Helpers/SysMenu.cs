@@ -38,7 +38,7 @@ namespace Webshop2_TeamG.Helpers
             Console.SetCursorPosition(topX + i, topY + 2);
             Console.Write("[Basket ####SEK Total]");
         }
-        public static int SideMenu(int winX, int winY, int menuLevel)
+        public static void SideMenu(int winX, int winY, int menuLevel)
         {
             // Stay in each submenu unless menuLevel changes
             switch (menuLevel)
@@ -47,26 +47,25 @@ namespace Webshop2_TeamG.Helpers
                     {
                         MenuTitle(winX, winY, "Main Menu");
                         ClearMainArea();
-                        menuLevel = MainMenu(winX, winY + 4, menuLevel);
+                        MainMenu(winX, winY + 4, menuLevel);
                         break;
                     }
                 case 2:
                     {
                         MenuTitle(winX, winY, "Shopping Basket");
                         ClearMainArea();
-                        menuLevel = BasketMenu(winX, winY + 4, menuLevel);
+                        BasketMenu(winX, winY + 4, menuLevel);
                         break;
                     }
                 case 3:
                     {
                         MenuTitle(winX, winY, "Admin Menu");
                         ClearMainArea();
-                        menuLevel = AdminMenu(winX, winY + 4, menuLevel);
+                        AdminMenu(winX, winY + 4, menuLevel);
                         break;
                     }
 
             }
-            return menuLevel;
         }
         public static void MenuTitle(int winX, int winY, string title)
         {
@@ -81,7 +80,7 @@ namespace Webshop2_TeamG.Helpers
             Console.SetCursorPosition(winX, winY + 1);
             Console.Write(underScore);
         }
-        public static int MainMenu(int winX, int winY, int menuLevel)
+        public static void MainMenu(int winX, int winY, int menuLevel)
         {
             int i = 0;
             Console.SetCursorPosition(winX, winY + i); i++;
@@ -99,10 +98,9 @@ namespace Webshop2_TeamG.Helpers
             //------------------------------
             //CopyrightMenu(winX, winY + 32);
             MainView.MainArea();
-            menuLevel = KeyInput(40, 12, menuLevel);
-            return menuLevel;
+            //return menuLevel;
         }  // ------------ SETS SET VIEW ON MAIN AREA ------------
-        public static int BasketMenu(int winX, int winY, int menuLevel)
+        public static void BasketMenu(int winX, int winY, int menuLevel)
         {
             //ClearFullSidemenu(winX, winY);
             int i = 0;
@@ -121,10 +119,10 @@ namespace Webshop2_TeamG.Helpers
             //------------------------------
             //CopyrightMenu(winX, winY + 32);
             MainView.BasketCase();
-            menuLevel = KeyInput(40, 12, menuLevel);
-            return menuLevel;
+            //menuLevel = KeyInput(40, 12, menuLevel);
+            //return menuLevel;
         }
-        public static int AdminMenu(int winX, int winY, int menuLevel)
+        public static void AdminMenu(int winX, int winY, int menuLevel)
         {
             //ClearFullSidemenu(winX, winY);
             int i = 0;
@@ -151,8 +149,8 @@ namespace Webshop2_TeamG.Helpers
 
             //------------------------------
             //CopyrightMenu(winX, winY + 32);
-            menuLevel = KeyInput(40, 12, menuLevel);
-            return menuLevel;
+            //menuLevel = KeyInput(40, 12, menuLevel);
+            //return menuLevel;
         }
         public static void CopyrightMenu(int winX, int winY)
         {
@@ -183,10 +181,30 @@ namespace Webshop2_TeamG.Helpers
                 Console.Write(wiper);
             }
         }
-        public static void SelectGame(int edit)
+        public static void ClearAllAreas()
+        {
+            ClearMainArea();
+            ClearTopArea();
+            ClearFullSidemenu(Position.sideX, Position.sideYMenu);
+            MenuTitle(Position.sideX, Position.sideY, "");
+        }
+        public static void ClearTopArea()
+        {
+            int startX = Position.topX;
+            int lengthX = Console.WindowWidth - (Position.topX + 60);
+            string wiper = new string(' ', lengthX);
+            int endY = 6;
+            for (int i = Position.topY; i < endY; i++)
+            {
+                Console.SetCursorPosition(startX, i);
+                Console.Write(wiper);
+            }
+        }
+        public static void SelectGame(int edit, int gameId)
         { // edit 0 = browse, 1 = delete
+            ClearAllAreas();
             int nxtRow = 0;
-            int selectedIndex = 0;
+            int selectedIndex = gameId;
             int pageLength = 18; // -------------------------------------  SET TO NUMBER OF GAMES LISTED PER PAGE ---------------------------
             using (var database = new ShopDbContext())
             {
@@ -195,24 +213,35 @@ namespace Webshop2_TeamG.Helpers
                 {
                     Position.MoveCursorMainStart(nxtRow); nxtRow++;
                     Console.WriteLine($"{i + 1}. {games[i].Title}");
-                    if (nxtRow >= pageLength)
+                    if (nxtRow >= pageLength || gameId != 666666 || gameId != 999999)
                     {
-                        Position.MoveCursorMainStart(nxtRow); nxtRow++;
-                        Console.Write("Enter Game Number or [ENTER] to Continue: ");
-                        Console.CursorVisible = true;
-                        int.TryParse(Console.ReadLine(), out selectedIndex);
-                        Console.CursorVisible = false;
-
-
+                        if (gameId == 666666 && nxtRow >= pageLength || gameId == 999999 && nxtRow >= pageLength)
+                        {
+                            Position.MoveCursorMainStart(nxtRow); nxtRow++;
+                            Console.Write("Enter Game Number or [ENTER] to Continue: ");
+                            Console.CursorVisible = true;
+                            int.TryParse(Console.ReadLine(), out selectedIndex);
+                            Console.CursorVisible = false;
+                        }
+                        if (gameId != 666666)
+                        {
+                            selectedIndex = gameId + 1;
+                            gameId = 666666;
+                        }
                         if (selectedIndex >= 1 && selectedIndex <= games.Count)
                         {
                             selectedIndex -= 1;
                             while (selectedIndex != 999999)
                             {
-                                if (edit == 0)
+                                if (edit == 0 && gameId == 666666)
                                 {
                                     ClearMainArea();
                                     selectedIndex = MainView.DetailGame(selectedIndex, 1);
+                                }
+                                else if (edit == 0 && gameId != 666666)
+                                {
+                                    ClearMainArea();
+                                    selectedIndex = MainView.DetailGame(gameId, 1);
                                 }
                                 else if (edit == 1)
                                 {
@@ -245,9 +274,12 @@ namespace Webshop2_TeamG.Helpers
                             }
                             break;
                         }
-                        Console.CursorVisible = false;
-                        ClearMainArea();
-                        nxtRow = 0;
+                        if (nxtRow >= pageLength)
+                        {
+                            Console.CursorVisible = false;
+                            ClearMainArea();
+                            nxtRow = 0;
+                        }
                     }
                 }
                 if (selectedIndex == 0)
@@ -291,25 +323,26 @@ namespace Webshop2_TeamG.Helpers
                                 else
                                 {
                                     ReturnToMain();
+                                    return;
                                 }
                             }
                         }
                         if (selectedIndex == 999999)
                         {
                             ReturnToMain();
-
+                            return;
                         }
                     }
                     else
                     {
                         ReturnToMain();
-
+                        return;
                     }
                 }
                 else
                 {
                     ReturnToMain();
-
+                    return;
                 }
                 Console.CursorVisible = false;
             }
@@ -351,98 +384,10 @@ namespace Webshop2_TeamG.Helpers
                             }
                             if (userInputKey.Key == ConsoleKey.A)
                             {
-                                ClearMainArea();
-                                ClearFullSidemenu(7, 13);
-                                int nxtRow = 0;
-                                int selectedIndex = 0;
-                                int pageLength = 18; // -------------------------------------  SET TO NUMBER OF GAMES LISTED PER PAGE ---------------------------
-                                using (var database = new ShopDbContext())
-                                {
-                                    var games = database.Games.ToList();
-                                    for (int i = 0; i < games.Count; i++)
-                                    {
-                                        Position.MoveCursorMainStart(nxtRow); nxtRow++;
-                                        Console.WriteLine($"{i + 1}. {games[i].Title}");
-                                        if (nxtRow >= pageLength)
-                                        {
-                                            Position.MoveCursorMainStart(nxtRow); nxtRow++;
-                                            Console.Write("Enter Game Number or [ENTER] to Continue: ");
-                                            Console.CursorVisible = true;
-                                            int.TryParse(Console.ReadLine(), out selectedIndex);
-                                            Console.CursorVisible = false;
-                                            if (selectedIndex >= 1 && selectedIndex <= games.Count)
-                                            {
-                                                selectedIndex -= 1;
-                                                while (selectedIndex != 999999)
-                                                {
-                                                    ClearMainArea();
-                                                    selectedIndex = MainView.DetailGame(selectedIndex, 1);
-                                                }
-                                                if (selectedIndex == 999999)
-                                                {
-                                                    ClearMainArea();
-                                                    MainView.MainArea();
-                                                    MainMenu(7, 13, 1);
-                                                    Position.MoveCursorMainStart(nxtRow); nxtRow++;
-                                                }
-                                                break;
-                                            }
-                                            Console.CursorVisible = false;
-                                            ClearMainArea();
-                                            nxtRow = 0;
-                                        }
-                                    }
-                                    if (selectedIndex == 0)
-                                    {
-
-
-                                        Position.MoveCursorMainStart(nxtRow); nxtRow++;
-                                        Console.CursorSize = 100;
-                                        Console.CursorVisible = true;
-                                        Console.Write("Enter Game Number or [ENTER] to Exit: ");
-                                        int.TryParse(Console.ReadLine(), out selectedIndex);
-                                        Console.CursorVisible = false;
-                                        if (selectedIndex >= 1 && selectedIndex <= games.Count)
-                                        {
-                                            selectedIndex -= 1;
-                                            //Position.MoveCursorMainStart(nxtRow); nxtRow++;
-                                            //Console.WriteLine("Selected Game: " + games[selectedIndex].Title);
-                                            //MainView.DetailGame(selectedIndex);
-                                            while (selectedIndex != 999999)
-                                            {
-                                                ClearMainArea();
-                                                selectedIndex = MainView.DetailGame(selectedIndex, 1);
-                                            }
-                                            if (selectedIndex == 999999)
-                                            {
-                                                ClearMainArea();
-                                                MainView.MainArea();
-                                                MainMenu(7, 13, 1);
-                                                Position.MoveCursorMainStart(nxtRow); nxtRow++;
-                                            }
-                                            //return games[selectedIndex - 1];
-                                        }
-                                        else
-                                        {
-                                            MainView.MainArea();
-                                            MainMenu(7, 13, 1);
-                                            Position.MoveCursorMainStart(nxtRow); nxtRow++;
-                                            //Console.WriteLine("Invalid selection. Returning null.");
-                                            //return null;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        MainView.MainArea();
-                                        MainMenu(7, 13, 1);
-                                        Position.MoveCursorMainStart(nxtRow); nxtRow++;
-                                        //Console.WriteLine("Invalid selection. Returning null.");
-                                        //return null;
-                                    }
-                                    Console.CursorVisible = false;
-                                }
-                                //Console.Write("Show All");
+                                SelectGame(0, 666666);
                             } // Show All
+
+
                             if (userInputKey.Key == ConsoleKey.S)
                             {
                                 ClearMainArea();
@@ -557,6 +502,10 @@ namespace Webshop2_TeamG.Helpers
                                     Console.Write("Selecting Game 3");
                                 }
                             }
+                            if (userInputKey.Key == ConsoleKey.D)
+                            {
+                                MainView.Search();
+                            } // Show All
                         }
                     }
 
@@ -699,7 +648,7 @@ namespace Webshop2_TeamG.Helpers
                             }
                             if (userInputKey.Key == ConsoleKey.F)
                             {
-                                Admin.AdminTools(4);
+                                SelectGame(0, 666666);
                             }
                             if (userInputKey.Key == ConsoleKey.G)
                             {

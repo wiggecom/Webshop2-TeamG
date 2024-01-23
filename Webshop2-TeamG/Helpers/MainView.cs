@@ -126,6 +126,7 @@ namespace Webshop2_TeamG.Helpers
                     int gamesTotal = database.Games.Count();
                     var allGames = database.Games.ToList();
                     //idNumber = allGames[idNumber].Id;
+
                     var games = database.Games.Where(g => g.Id == idNumber + 1).ToList(); // idNumber + 1
                     var genres = database.Genres.ToList();
                     // if game.ondisplay
@@ -234,7 +235,8 @@ namespace Webshop2_TeamG.Helpers
                         var userInputKey = Console.ReadKey(true);
                         if (userInputKey.Key == ConsoleKey.Escape)
                         {
-                            return 999999;
+                                SysMenu.ReturnToMain();
+                                return 999999;
                         }
                         if (userInputKey.Key == ConsoleKey.LeftArrow)
                         {
@@ -277,13 +279,91 @@ namespace Webshop2_TeamG.Helpers
                 }
                 else
                 {
+                        SysMenu.ReturnToMain();
                     return 999999;
                 }
                 }
+                SysMenu.ReturnToMain();
                 return 999999;
             }
         }
+        public static void Search()
+        {
+            int selectedIndex = 0;
+            string ratingString = "";
+            string infoString = "";
+            int rowStep = 0;
+            using (var database = new ShopDbContext())
+            {
+                if (database.Games.Any() || database.Genres.Any())
+                {
+                    string searchTerm = "exit";
+                    SysMenu.ClearAllAreas();
+                    Position.MoveCursorMainStart(rowStep);
+                    Console.Write("Please enter text to search for, [ENTER] to exit: ");
+                    searchTerm = Console.ReadLine();
+                    while (searchTerm.Length < 3)
+                    {
+                        if (searchTerm.Length < 3)
+                        {
+                            Position.MoveCursorMainStart(rowStep);
+                            Console.Write("                                                                                  ");
+                            Position.MoveCursorMainStart(rowStep);
+                            Console.Write("Minimum search is 3 characters, please try again or [ENTER] to exit: ");
+                            searchTerm = Console.ReadLine();
+                        }
+                        if (searchTerm == "")
+                        {
+                            SysMenu.ClearAllAreas();
+                            SysMenu.ReturnToMain();
+                            break;
+                        }
+                    }
+                    rowStep++;
+                    rowStep++;
+                    int counter = 1;
+                    var genres = database.Genres.ToList();
+                    var games = database.Games.Where(g => g.Title.Contains(searchTerm) || g.ShortInfo.Contains(searchTerm) || g.LongInfo.Contains(searchTerm) || g.Genre.Name.Contains(searchTerm)).ToList();
+                    foreach (var game in games)
+                    {
+                        Position.MoveCursorMainStart(rowStep); rowStep++;
+                        Console.Write(counter + " - " + game.Title + " - [" + genres[game.GenreId-1].Name + "]"); counter++;
+                        Position.MoveCursorMainStart(rowStep); rowStep++;
+                        string gameDesc = game.ShortInfo.Replace("\r\n", " ");
+                        Console.Write(gameDesc); rowStep++;
 
+                    }
+                    if (games.Count == 0)
+                    {
+                        Position.MoveCursorMainStart(rowStep);
+                        Console.WriteLine("No games found, press any key to continue");
+                        Console.ReadKey();
+                        SysMenu.ClearAllAreas();
+                        SysMenu.ReturnToMain();
+                    }
+                    Position.MoveCursorMainStart(rowStep); rowStep++;
+                    Console.Write("Enter game number or [ENTER] to X-it: ");
+                    Console.CursorVisible = true;
+                    int.TryParse(Console.ReadLine(), out selectedIndex);
+                    Console.CursorVisible = false;
+                    rowStep++;
+                    Position.MoveCursorMainStart(rowStep); rowStep++;
+                    if (selectedIndex != 0 && selectedIndex != null)
+                    {
+                        Console.WriteLine("Selected game: " + games[selectedIndex - 1].Title + " - Id: " + games[selectedIndex - 1].Id);
+                        int gameId = games[selectedIndex - 1].Id - 1;
+                        //Console.ReadKey();
+                        SysMenu.ClearAllAreas();
+                        SysMenu.SelectGame(0, gameId);
+                    }
+                    else
+                    {
+                        SysMenu.ClearAllAreas();
+                        SysMenu.ReturnToMain();
+                    }
+                }
+            }
+        }
         public static void BasketCase()  // rework to separate method for all info that needs positioning
         {
             string testString = "The quick brown fox jumped over the lazy dog";

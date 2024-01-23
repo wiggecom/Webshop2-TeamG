@@ -311,7 +311,7 @@ vägen och inte trillar av i Halmstads Kummun."
 
             new Game
             {
-                Title = "Check Mate with Checkmate",
+                Title = "Check Mate or Checkmate",
                 Price = 799.95m,
                 GenreId = genres[2].Id,
                 Stock = 22,

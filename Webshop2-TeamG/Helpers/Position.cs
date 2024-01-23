@@ -13,8 +13,13 @@ namespace Webshop2_TeamG.Helpers
         public static int topY = 3;
         public static int sideX = 7;
         public static int sideY = 9;
+        public static int sideYMenu = 13;
+        //public static int menuLevel = 1;
+
+
         public static void MoveCursorMainStart(int nextRow)
         {
+            if (nextRow + 12 >= Console.WindowHeight - 3) { nextRow = 25; }
             Console.SetCursorPosition(45, 12+nextRow);
         }
         public static void MoveCursorTextAnywhere(int columnStart, int nextRow)

@@ -8,9 +8,10 @@ namespace Webshop2_TeamG
 {
     internal class Program
     {
+        public static int menuLevel = 1;
         public static void Main(string[] args)
         {
-            int menuLevel = 1;
+            //int menuLevel = 1;
             Gfx.WinIni();
 
             Position.MoveCursorMainStart(0);
@@ -21,7 +22,8 @@ namespace Webshop2_TeamG
             {
                 SysMenu.TopMenu(Position.topX, Position.topY);
                 SysMenu.ClearFullSidemenu(Position.sideX, Position.sideY + 4);
-                menuLevel = SysMenu.SideMenu(Position.sideX, Position.sideY, menuLevel);
+                SysMenu.SideMenu(Position.sideX, Position.sideY, menuLevel);
+                menuLevel = SysMenu.KeyInput(0,0, menuLevel);
             }
         }
     }
