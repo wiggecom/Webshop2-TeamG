@@ -100,36 +100,6 @@ namespace Webshop2_TeamG.Helpers
                     return;
 
             }
-            //var userInputKey = Console.ReadKey(true);
-            //if (userInputKey.Key == ConsoleKey.D1)
-            //{
-            //    AddGame(menuX, menuY);
-            //}
-            //if (userInputKey.Key == ConsoleKey.D2)
-            //{
-            //    return;
-            //}
-            //if (userInputKey.Key == ConsoleKey.D3)
-            //{
-            //    return;
-            //}
-            //if (userInputKey.Key == ConsoleKey.D9)
-            //{
-            //    try
-            //    {
-            //        using (var database = new ShopDbContext())
-            //        {
-            //            Helpers.Create.FillDatabase(database);
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Console.WriteLine($"Error occured: {ex.Message}");
-            //    }
-
-            //    return;
-            //}
-
         }
         public static void MakeFirstAdmin()
         {
@@ -138,14 +108,6 @@ namespace Webshop2_TeamG.Helpers
                 Position.MoveCursorMainStart(0);
                 Helpers.Create.FirstAdmin(database);
             }
-        }
-        private static void SelectGenre()
-        {
-            using (var database = new ShopDbContext())
-            {
-
-            }
-
         }
         private static void EditGame()
         {

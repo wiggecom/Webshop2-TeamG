@@ -17,7 +17,6 @@ namespace Webshop2_TeamG
             Position.MoveCursorMainStart(0);
             Console.WriteLine("Database?");
             Admin.MakeFirstAdmin();
-
             while (true)
             {
                 SysMenu.TopMenu(Position.topX, Position.topY);

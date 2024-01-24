@@ -447,7 +447,8 @@ namespace Webshop2_TeamG.Helpers
                             Position.MoveCursorMainStart(nxtRow); nxtRow++;
                             Console.Write("Enter New Price: ");
                             string strPrice = Console.ReadLine();
-                            decimal.TryParse(strPrice, out newPrice);
+                            string strPriceChecked = strPrice.Replace('.', ',');
+                            decimal.TryParse(strPriceChecked, out newPrice);
                             if (newPrice > 0)
                             {
                                 database.Games.Where(g => g.Id == selectedIndex + 1).ExecuteUpdate(a => a.SetProperty(b => b.Price, newPrice));
@@ -854,7 +855,7 @@ namespace Webshop2_TeamG.Helpers
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Add Item");
-                                menuLevel = 1;
+                                menuLevel = 2;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.S)
@@ -862,7 +863,7 @@ namespace Webshop2_TeamG.Helpers
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Empty Basket");
-                                menuLevel = 1;
+                                menuLevel = 2;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D)
@@ -870,7 +871,7 @@ namespace Webshop2_TeamG.Helpers
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Delete Item");
-                                menuLevel = 1;
+                                menuLevel = 2;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.F)
@@ -878,7 +879,7 @@ namespace Webshop2_TeamG.Helpers
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Checkout");
-                                menuLevel = 1;
+                                menuLevel = 2;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D1)
@@ -886,7 +887,7 @@ namespace Webshop2_TeamG.Helpers
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Selecting Game 1");
-                                menuLevel = 1;
+                                menuLevel = 2;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D2)
@@ -894,7 +895,7 @@ namespace Webshop2_TeamG.Helpers
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Selecting Game 2");
-                                menuLevel = 1;
+                                menuLevel = 2;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D3)
@@ -902,7 +903,7 @@ namespace Webshop2_TeamG.Helpers
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Selecting Game 3");
-                                menuLevel = 1;
+                                menuLevel = 2;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D4)
@@ -910,7 +911,7 @@ namespace Webshop2_TeamG.Helpers
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Selecting Game 4");
-                                menuLevel = 1;
+                                menuLevel = 2;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D5)
@@ -918,7 +919,7 @@ namespace Webshop2_TeamG.Helpers
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Selecting Game 5");
-                                menuLevel = 1;
+                                menuLevel = 2;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D6)
@@ -926,7 +927,7 @@ namespace Webshop2_TeamG.Helpers
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Selecting Game 6");
-                                menuLevel = 1;
+                                menuLevel = 2;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D7)
@@ -934,7 +935,7 @@ namespace Webshop2_TeamG.Helpers
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Selecting Game 7");
-                                menuLevel = 1;
+                                menuLevel = 2;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D8)
@@ -942,7 +943,7 @@ namespace Webshop2_TeamG.Helpers
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Selecting Game 8");
-                                menuLevel = 1;
+                                menuLevel = 2;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D9)
@@ -950,7 +951,7 @@ namespace Webshop2_TeamG.Helpers
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
                                 Console.Write("Selecting Game 9");
-                                menuLevel = 1;
+                                menuLevel = 2;
                                 return menuLevel;
                             }
                         }
@@ -981,55 +982,55 @@ namespace Webshop2_TeamG.Helpers
                             if (userInputKey.Key == ConsoleKey.A)
                             {
                                 Admin.AdminTools(1);
-                                menuLevel = 1;
+                                menuLevel = 3;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.S)
                             {
                                 Admin.AdminTools(2);
-                                menuLevel = 1;
+                                menuLevel = 3;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D)
                             {
                                 Admin.AdminTools(3);
-                                menuLevel = 1;
+                                menuLevel = 3;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.F)
                             {
                                 SelectGame(0, 666666);
-                                menuLevel = 1;
+                                menuLevel = 3;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.G)
                             {
                                 Admin.AdminTools(5);
-                                menuLevel = 1;
+                                menuLevel = 3;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.H)
                             {
                                 Admin.AdminTools(6);
-                                menuLevel = 1;
+                                menuLevel = 3;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.J)
                             {
                                 Admin.AdminTools(7);
-                                menuLevel = 1;
+                                menuLevel = 3;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.K)
                             {
                                 Admin.AdminTools(8);
-                                menuLevel = 1;
+                                menuLevel = 3;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.L)
                             {
                                 Admin.AdminTools(9);
-                                menuLevel = 1;
+                                menuLevel = 3;
                                 return menuLevel;
                             }
                         }

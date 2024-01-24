@@ -32,20 +32,59 @@ namespace Webshop2_TeamG.Helpers
             new Genre { Name = "Action" },
             new Genre { Name = "Adventure" },
             new Genre { Name = "Strategy" },
-            new Genre { Name = "Sports / Racing" }
+            new Genre { Name = "Racing" },
+            new Genre { Name = "Sports" },
+            new Genre { Name = "Puzzle" },
+            new Genre { Name = "Fight" },
+            new Genre { Name = "RPG" }
         };
 
             database.Genres.AddRange(genres);
             database.SaveChanges();
 
-            // var actionGames = new List<Game>
+            // -----------------------------------  Game Blueprint -----------------------------------------
+
+            //new Game
+            //{
+            //    Title = "",
+            //    Price = m,
+            //    GenreId = genres[0].Id, // Action
+            //    GenreId = genres[1].Id, // Adventure
+            //    GenreId = genres[2].Id, // Strategy
+            //    GenreId = genres[3].Id, // Racing
+            //    GenreId = genres[4].Id, // Sports
+            //    GenreId = genres[5].Id, // Puzzle
+            //    GenreId = genres[6].Id, // Fight
+            //    GenreId = genres[7].Id, // RPG
+            //    Stock = ,
+            //    AgeRating = AgeRating.Everyone,
+            //    AgeRating = AgeRating.Teen,
+            //    AgeRating = AgeRating.Mature,
+
+            // NOTE that you have to remove leading spaces on row 2 and onward from descriptions
+
+            //                  123456789 123456789 123456789 123456789 123456 - 46
+            //    ShortInfo = @"Classic Fighting with Heihachi, Nina, Paul, 
+            //                  King and a whole army of playable characters.
+            //                  Now go punch your friends like enemies",
+            //                 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 - 79
+            //    LongInfo = @"TEKKEN 8 continues the tragic saga of the Mishima bloodline and its world-
+            //                 shaking father-and-son grudge matches. After defeating his father, Heihachi, 
+            //                 Kazuya continues his conquest for global domination, using the forces of 
+            //                 G Corporation to wage war on the world. Jin is forced to face his fate head-on
+            //                 as he is reunited with his long-lost mother and seeks to stop his father 
+            //                 Kazuya's reign of terror."
+            //},
+
+            // -----------------------------------  Game Blueprint End -------------------------------------
+
             var allGames = new List<Game>
         {
             new Game
             {
                 Title = "Call of Duty: Modern Warfare",
                 Price = 599.99m,
-                GenreId = genres[0].Id,
+                GenreId = genres[0].Id,     // Action
                 Stock = 100,
                 AgeRating = AgeRating.Mature,
                 ShortInfo = @"Intense first-person shooter with realistic
@@ -58,7 +97,7 @@ enthusiasts."
             {
                 Title = "The Legend of Zelda: Breath of the Wild",
                 Price = 599.99m,
-                GenreId = genres[1].Id,
+                GenreId = genres[1].Id,     // Adventure
                 Stock = 90,
                 AgeRating = AgeRating.Everyone,
                 OnDisplay = 0,
@@ -67,15 +106,12 @@ open world with creative puzzles and
 exploration.",
                 LongInfo = "Embark on a grand adventure in The Legend of Zelda: Breath of the Wild. Explore \nthe vast kingdom of Hyrule, solve intricate puzzles, battle formidable enemies, \nand uncover the secrets of this beautifully crafted open-world game."
             },
-                        // 123456789 123456789 123456789 123456789 123456
-                        // Fast-paced, demon-slaying action with stunning
-                        // 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
-                        // Embark on a grand adventure in The Legend of Zelda: Breath of the Wild. Explore
+
             new Game
             {
                 Title = "DOOM Eternal",
                 Price = 549.99m,
-                GenreId = genres[0].Id,
+                GenreId = genres[0].Id,     // Action
                 Stock = 120,
                 OnDisplay= 0,
                 AgeRating = AgeRating.Mature,
@@ -86,16 +122,60 @@ action. Battle hordes of demons across various dimensions, unravel the lore,
 and experience heart-pounding moments in this adrenaline-fueled first-person 
 shooter."
             },
-        //};
+            new Game
+            {
+                Title = "Tekken 8",
+                Price = 799.95m,
+                GenreId = genres[6].Id, // Fight
+                Stock = 42,
+                AgeRating = AgeRating.Mature,
+                ShortInfo = @"Classic Fighting with Heihachi, Nina, Paul, 
+King and a whole army of playable characters.
+Now go punch your friends like enemies",
+                LongInfo = @"TEKKEN 8 continues the tragic saga of the Mishima bloodline and its world-
+shaking father-and-son grudge matches. After defeating his father, Heihachi, 
+Kazuya continues his conquest for global domination, using the forces of 
+G Corporation to wage war on the world. Jin is forced to face his fate head-on
+as he is reunited with his long-lost mother and seeks to stop his father 
+Kazuya's reign of terror."
+            },
+            new Game
+            {
+                Title = "Puzzle Bobble World Tour",
+                Price = 399.95m,
+                GenreId = genres[5].Id, // Puzzle
+                Stock = 21,
+                AgeRating = AgeRating.Everyone,
 
-        //    var adventureGames = new List<Game>
-        //{
-
+                ShortInfo = @"Bub, Bob and friends are back on a tour around
+the World in a bubble-blasting tournament.
+Classic puzzle-action for the whole family",
+                LongInfo = @"Puzzle Bobble is a long running series of games featurng the stars Bub and Bob
+from the classic arcade game Bubble-Bobble. This adventure will take the hectic
+puzzles to landmarks around the world. Collect stamps, souvernirs and coins
+to unlock even more locations, skins and characters. 
+This game is completely free from micro transactions."
+            },
+            new Game
+            {
+                Title = "Final Fantasy VII - Remake",
+                Price = 499.95m,
+                GenreId = genres[7].Id, // RPG
+                Stock = 35,
+                AgeRating = AgeRating.Teen,
+                ShortInfo = @"The long awaited Remake of Final Fantasy VII
+                              in powerful HD-glory. Bring back memories of
+                              Cloud, Tifa and others in thie classic J-RPG",
+                LongInfo = @"One of the most anticipated Final Fantasy remakes ever. Carefully recreated in
+                             modern graphics to tell the story once again to a new generation and old fans 
+                             of the series alike. Spectacular scenery and orchestrated music will make this
+                             journey one that you will remember for a very long time"
+            },
             new Game
             {
                 Title = "Uncharted 4: A Thief's End",
                 Price = 399.99m,
-                GenreId = genres[1].Id,
+                GenreId = genres[1].Id, // Adventure
                 Stock = 75,
                 AgeRating = AgeRating.Teen,
                 ShortInfo = @"Action-packed cinematic experience following
@@ -108,7 +188,7 @@ as Drake embarks on a quest to find a lost pirate treasure."
             {
                 Title = "Stellaris",
                 Price = 299.99m,
-                GenreId = genres[2].Id,
+                GenreId = genres[2].Id, // Strategy
                 Stock = 65,
                 AgeRating = AgeRating.Teen,
                 ShortInfo = @"Grand strategy game set inspace with 
@@ -123,7 +203,7 @@ universe."
             {
                 Title = "Red Dead Redemption 2",
                 Price = 499.99m,
-                GenreId = genres[1].Id,
+                GenreId = genres[1].Id, // Adventure
                 Stock = 110,
                 OnDisplay= 0,
                 AgeRating = AgeRating.Mature,
@@ -133,14 +213,12 @@ story and realistic details.",
 Ride through stunning landscapes, engage in intense gunfights, and experience a
 gripping narrative that explores the era of outlaws and lawmen."
             },
-        //};
-        //    var strategyGames = new List<Game>
-        //{
+
             new Game
             {
                 Title = "Civilization VI",
                 Price = 399.99m,
-                GenreId = genres[2].Id,
+                GenreId = genres[2].Id, // Strategy
                 Stock = 85,
                 AgeRating = AgeRating.Everyone,
                 ShortInfo = @"Turn-based strategy game where you lead a 
@@ -149,12 +227,12 @@ modern era.",
                 LongInfo = @"Lead your civilization to greatness in Civilization VI. From the dawn of 
 civilization to the modern era, engage in diplomacy, build wonders, and wage 
 wars to establish your empire's legacy."
-            },            
+            },
                 new Game
             {
                 Title = "NBA 2K22",
                 Price = 499.99m,
-                GenreId = genres[3].Id,
+                GenreId = genres[4].Id, // Sports
                 Stock = 100,
                 AgeRating = AgeRating.Everyone,
                 ShortInfo = @"Basketball simulation game featuring
@@ -169,7 +247,7 @@ ultimate basketball simulation experience."
             {
                 Title = "Total War: Three Kingdoms",
                 Price = 499.99m,
-                GenreId = genres[2].Id,
+                GenreId = genres[2].Id, // Strategy
                 Stock = 95,
                 AgeRating = AgeRating.Mature,
                 ShortInfo = @"Historical strategy game set in ancient
@@ -187,7 +265,7 @@ and intrigue in this historical strategy masterpiece."
             {
                 Title = "FIFA 22",
                 Price = 599.99m,
-                GenreId = genres[3].Id,
+                GenreId = genres[4].Id, // Sports
                 Stock = 120,
                 AgeRating = AgeRating.Everyone,
                 ShortInfo = @"The latest installment in the popular
@@ -201,7 +279,7 @@ football simulation experience to date."
             {
                 Title = "Assassin's Creed Valhalla",
                 Price = 499.99m,
-                GenreId = genres[0].Id,
+                GenreId = genres[0].Id, // Action
                 Stock = 80,
                 AgeRating = AgeRating.Mature,
                 ShortInfo = @"Explore the Viking era in this open-world 
@@ -215,7 +293,7 @@ lovers."
             {
                 Title = "Forza Horizon 3",
                 Price = 999.99m,
-                GenreId = genres[3].Id,
+                GenreId = genres[3].Id, // Racing
                 Stock = 80,
                 OnDisplay = 0,
                 AgeRating = AgeRating.Everyone,
@@ -230,7 +308,7 @@ with changing weather conditions."
             {
                 Title = "Laban on the Run",
                 Price = 599.99m,
-                GenreId = genres[0].Id,
+                GenreId = genres[0].Id,  // Action
                 Stock = 17,
                 AgeRating = AgeRating.Mature,
                 ShortInfo = @"Laban is on the run again, trying to avoid
@@ -244,7 +322,7 @@ on Bahamas."
             {
                 Title = "Greger in LaLa-Land",
                 Price = 499.99m,
-                GenreId = genres[3].Id,
+                GenreId = genres[3].Id, // Racing
                 Stock = 22,
                 AgeRating = AgeRating.Everyone,
                 ShortInfo = @"Greger is racing in LaLa-Land, It's a
@@ -258,7 +336,7 @@ methods to win this race, but Greger is tougher than a nut."
             {
                 Title = "Ninja Commando XIV",
                 Price = 599.99m,
-                GenreId = genres[0].Id,
+                GenreId = genres[0].Id, // Action
                 Stock = 22,
                 AgeRating = AgeRating.Mature,
                 ShortInfo = @"The fourteenth installment of this 
@@ -272,7 +350,7 @@ guarantee the bloodiest mess ever witnessed on screen! Hii-yaaaah!"
             {
                 Title = "The Thinker",
                 Price = 199.95m,
-                GenreId = genres[2].Id,
+                GenreId = genres[2].Id, // Strategy
                 Stock = 22,
                 AgeRating = AgeRating.Teen,
                 OnDisplay = 0,
@@ -287,7 +365,7 @@ unfortunately. This game is much harder than you think!"
             {
                 Title = "Adventures in the house",
                 Price = 12.95m,
-                GenreId = genres[1].Id,
+                GenreId = genres[1].Id, // Adventure
                 Stock = 22,
                 AgeRating = AgeRating.Everyone,
                 ShortInfo = @"Your house could be an adventure, sort of,
@@ -302,7 +380,7 @@ written NOW!"
             {
                 Title = "Rally-Åke",
                 Price = 79.95m,
-                GenreId = genres[3].Id,
+                GenreId = genres[3].Id, // Racing
                 Stock = 22,
                 OnDisplay = 3,
                 AgeRating = AgeRating.Everyone,
@@ -314,7 +392,7 @@ vägen och inte trillar av i Halmstads Kummun."
             {
                 Title = "Laban in the Jungle",
                 Price = 12.95m,
-                GenreId = genres[0].Id,
+                GenreId = genres[0].Id, // Action
                 Stock = 22,
                 OnDisplay = 2,
                 AgeRating = AgeRating.Teen,
@@ -329,7 +407,7 @@ doesn't move, we don't really care)."
             {
                 Title = "Check Mate or Checkmate",
                 Price = 799.95m,
-                GenreId = genres[2].Id,
+                GenreId = genres[2].Id, // Strategy
                 Stock = 22,
                 OnDisplay = 1,
                 AgeRating = AgeRating.Mature,
