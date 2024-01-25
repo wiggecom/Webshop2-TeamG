@@ -894,7 +894,13 @@ namespace Webshop2_TeamG.Helpers
                             {
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
-                                Console.Write("Edit Basket");
+                                using (var database = new ShopDbContext())
+                                {
+                                    var customers = database.Customers.ToList();
+                                    var customer = customers.FirstOrDefault();
+                                    ClearMainArea();
+                                    BasketView.RemoveItemFromBasket(database, customer);
+                                }
                                 menuLevel = 2;
                                 return menuLevel;
                             }

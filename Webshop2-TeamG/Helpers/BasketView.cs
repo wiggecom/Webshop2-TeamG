@@ -247,6 +247,8 @@ namespace Webshop2_TeamG.Helpers
                 int i = 1;
                 foreach (var entry in basket.BasketEntries)
                 {
+                    if (entry.Quantity > 0)
+                    {
                     string strPrice = Math.Round((entry.Game.Price), 2).ToString();
                     //Console.SetCursorPosition(rightColumnStart, currentRow);
                     //Console.WriteLine($"- {entry.Game.Title} (Quantity: {entry.Quantity}, Price: ${entry.Game.Price * entry.Quantity})SEK");
@@ -261,6 +263,7 @@ namespace Webshop2_TeamG.Helpers
                     Console.SetCursorPosition(rightColumnStart + 74 + (6 - strPrice.Length), currentRow);
                     Console.Write(strPrice);
                     currentRow++; i++;
+                    }
                 }
 
                 decimal shipping = 59.90m;
@@ -496,45 +499,171 @@ namespace Webshop2_TeamG.Helpers
             .ThenInclude(entry => entry.Game)
             .OrderBy(b => b.Id)
             .Last(b => b.CustomerId == customer.Id);
-
+            //SysMenu.ClearMainArea();
+            int i = 0;
+            int winX = Position.mainX; int winY = Position.mainY;
+            var entriesList = basket.BasketEntries.ToList();
 
             if (basket != null && basket.BasketEntries.Any())
             {
+                Console.SetCursorPosition(winX, winY); winY++;
+                Console.Write("Id - Qty - Title");
+                Console.SetCursorPosition(winX, winY); winY++;
+                Console.Write("------------------------------");
+                for (int j = 0; j < entriesList.Count; j++)
+                {
+                    Console.SetCursorPosition(winX, winY); winY++;
+                    Console.Write((j + 1) + " - " + entriesList[j].Quantity + " - " + entriesList[j].Game.Title);
+                }
+                Console.SetCursorPosition(winX, winY); winY++;
+                Console.Write("------------------------------");
+                Console.SetCursorPosition(winX, winY); winY++;
+                Console.Write("Please enter the number of the game you want to edit: ");
+                Console.CursorVisible = true;
+                int selectGame = int.Parse(Console.ReadLine());
+                selectGame -= 1;
+                Console.CursorVisible = false;
+                Console.SetCursorPosition(winX, winY); winY++;
+                Console.Write("Selected title: " + entriesList[selectGame].Game.Title);
+                Console.SetCursorPosition(winX, winY); winY++;
+                Console.Write("------------------------------");
+                Console.SetCursorPosition(winX, winY); winY++;
+                Console.Write("Enter new quantity, 0 to delete: ");
+                Console.CursorVisible = true;
+                int newQty = int.Parse(Console.ReadLine());
+                Console.CursorVisible = false;
 
+                var basketEntry = basket.BasketEntries.ElementAt(selectGame);
+                if (basketEntry != null)
+                {
+                    basketEntry.Quantity = newQty;
+
+                    if (basketEntry.Quantity == 0)
+                    {
+                        basket.BasketEntries.Remove(basketEntry);
+                    }
+
+                    database.Entry(basketEntry.Game).State = EntityState.Modified;
+                    database.Entry(basketEntry).State = EntityState.Modified;
+
+                    database.SaveChanges();
+                }
+                //Console.SetCursorPosition(winX, winY); winY++;
+                //Console.Write("Update Complete, Press [ANY] Key to Continue");
+                //Console.ReadKey();
             }
         }
 
-        //    if (basket != null && basket.BasketEntries.Any())
-        //    {
-        //        Console.WriteLine("Items in the basket:");
+//            if (basket != null && basket.BasketEntries.Any())
+//            {
+//                Console.WriteLine("Items in the basket:");
 
-        //        // unlisted, not enumerable -------------------------------------------------------------------------------------------------------------------
-        //        for (int i = 0; i < basket.BasketEntries.Count; i++)
-        //        {
-        //            Console.WriteLine($"{i + 1}. {basket.BasketEntries[i].Game.Title} - Quantity: {basket.BasketEntries[i].Quantity}");
-        //        }
+//                // unlisted, not enumerable -------------------------------------------------------------------------------------------------------------------
+//                for (int i = 0; i<basket.BasketEntries.Count; i++)
+//                {
+//                    Console.WriteLine($"{i + 1}. {basket.BasketEntries[i].Game.Title} - Quantity: {basket.BasketEntries[i].Quantity}");
+//                }
 
-        //        Console.Write("Enter the number of the item to remove: ");
-        //        if (int.TryParse(Console.ReadLine(), out int selectedItemIndex) && selectedItemIndex >= 1 && selectedItemIndex <= basket.BasketEntries.Count)
-        //        {
-        //            var selectedEntry = basket.BasketEntries[selectedItemIndex - 1];
-        //            basket.BasketEntries.Remove(selectedEntry);
+//    Console.Write("Enter the number of the item to remove: ");
+//                if (int.TryParse(Console.ReadLine(), out int selectedItemIndex) && selectedItemIndex >= 1 && selectedItemIndex <= basket.BasketEntries.Count)
+//                {
+//                    var selectedEntry = basket.BasketEntries[selectedItemIndex - 1];
+//    basket.BasketEntries.Remove(selectedEntry);
 
-        //            database.SaveChanges();
+//                    database.SaveChanges();
 
-        //            Console.WriteLine("Item removed from the basket.");
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("Invalid selection.");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("Basket is empty. ");
+//                    Console.WriteLine("Item removed from the basket.");
+//                }
+//                else
+//{
+//    Console.WriteLine("Invalid selection.");
+//}
+//            }
+//            else
+//{
+//    Console.WriteLine("Basket is empty. ");
 
-        //    }
+//}
         //}
+
+        public static void RemoveItemFromBasket2(ShopDbContext database, Customer customer)
+        {
+            if (customer == null || customer.Baskets == null)
+            {
+                Console.WriteLine("Invalid customer or basket information.");
+                return;
+            }
+
+            Console.WriteLine("Baskets for the Customer:");
+            for (int i = 0; i < customer.Baskets.Count; i++)
+            {
+                var basket = customer.Baskets.ElementAt(i);
+                Console.WriteLine($"{i + 1}. Basket {basket.Id}");
+            }
+
+            Console.Write("Enter the number of the basket to modify: ");
+            if (!int.TryParse(Console.ReadLine(), out int selectedBasketIndex) || selectedBasketIndex <= 0 || selectedBasketIndex > customer.Baskets.Count)
+            {
+                Console.WriteLine("Invalid number.");
+                return;
+            }
+
+            var selectedBasket = customer.Baskets.ElementAt(selectedBasketIndex - 1);
+
+            if (selectedBasket == null || selectedBasket.BasketEntries == null)
+            {
+                Console.WriteLine("Error loading basket information from the database.");
+                return;
+            }
+
+            Console.WriteLine("Items in the Basket:");
+            for (int i = 0; i < selectedBasket.BasketEntries.Count; i++)
+            {
+                var entry = selectedBasket.BasketEntries.ElementAt(i);
+                Console.WriteLine($"{i + 1}. {entry.Game.Title} - Quantity: {entry.Quantity}");
+            }
+
+            Console.Write("Enter the number of the item to remove: ");
+            if (!int.TryParse(Console.ReadLine(), out int selectedIndex) || selectedIndex <= 0 || selectedIndex > selectedBasket.BasketEntries.Count)
+            {
+                Console.WriteLine("Invalid number.");
+                return;
+            }
+
+            Console.Write("Enter the quantity to remove: ");
+            if (!int.TryParse(Console.ReadLine(), out int quantityToRemove) || quantityToRemove <= 0)
+            {
+                Console.WriteLine("Invalid quantity.");
+                return;
+            }
+
+            var basketEntry = selectedBasket.BasketEntries.ElementAt(selectedIndex - 1);
+
+            if (basketEntry != null)
+            {
+                quantityToRemove = Math.Min(quantityToRemove, basketEntry.Quantity);
+
+                basketEntry.Game.Stock += quantityToRemove;
+                basketEntry.Game.SoldTotal -= quantityToRemove;
+                basketEntry.Quantity -= quantityToRemove;
+
+                if (basketEntry.Quantity == 0)
+                {
+                    selectedBasket.BasketEntries.Remove(basketEntry);
+                }
+
+                database.Entry(basketEntry.Game).State = EntityState.Modified;
+                database.Entry(basketEntry).State = EntityState.Modified;
+
+                database.SaveChanges();
+
+                Console.WriteLine($"Successfully removed {quantityToRemove} copy of {basketEntry.Game.Title} from the basket.");
+            }
+            else
+            {
+                Console.WriteLine($"Invalid index. Item not found in the basket.");
+            }
+        }
         private static void ClearBasket(ShopDbContext database, Basket basket)
         {
 
