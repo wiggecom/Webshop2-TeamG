@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,11 +13,10 @@ namespace Webshop2_TeamG.Helpers
 {
     public class Create
     {
-        // Fast-paced, demon-slaying action with stunning   // 46
-        // 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
-        // the vast kingdom of Hyrule, solve intricate puzzles, battle formidable enemies,   // 79
         public static void FillDatabase(ShopDbContext database)
         {
+            Random rnd = new Random();
+
             if (database.Games.Any() || database.Genres.Any())
             {
                 Position.MoveCursorMainStart(0);
@@ -83,9 +83,10 @@ namespace Webshop2_TeamG.Helpers
             new Game
             {
                 Title = "Call of Duty: Modern Warfare",
-                Price = 599.99m,
+                Price = 599.90m,
                 GenreId = genres[0].Id,     // Action
-                Stock = 100,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 AgeRating = AgeRating.Mature,
                 ShortInfo = @"Intense first-person shooter with realistic
 graphics and thrilling multiplayer.",
@@ -96,9 +97,10 @@ enthusiasts."
                         new Game
             {
                 Title = "The Legend of Zelda: Breath of the Wild",
-                Price = 599.99m,
+                Price = 599.90m,
                 GenreId = genres[1].Id,     // Adventure
-                Stock = 90,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 AgeRating = AgeRating.Everyone,
                 OnDisplay = 0,
                 ShortInfo = @"Epic action-adventure game set in a vast,
@@ -110,9 +112,10 @@ exploration.",
             new Game
             {
                 Title = "DOOM Eternal",
-                Price = 549.99m,
+                Price = 549.90m,
                 GenreId = genres[0].Id,     // Action
-                Stock = 120,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 OnDisplay= 0,
                 AgeRating = AgeRating.Mature,
                 ShortInfo = @"Fast-paced, demon-slaying action with stunning
@@ -125,9 +128,10 @@ shooter."
             new Game
             {
                 Title = "Tekken 8",
-                Price = 799.95m,
+                Price = 799.90m,
                 GenreId = genres[6].Id, // Fight
-                Stock = 42,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 AgeRating = AgeRating.Mature,
                 ShortInfo = @"Classic Fighting with Heihachi, Nina, Paul, 
 King and a whole army of playable characters.
@@ -142,9 +146,10 @@ Kazuya's reign of terror."
             new Game
             {
                 Title = "Puzzle Bobble World Tour",
-                Price = 399.95m,
+                Price = 399.90m,
                 GenreId = genres[5].Id, // Puzzle
-                Stock = 21,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 AgeRating = AgeRating.Everyone,
 
                 ShortInfo = @"Bub, Bob and friends are back on a tour around
@@ -159,24 +164,26 @@ This game is completely free from micro transactions."
             new Game
             {
                 Title = "Final Fantasy VII - Remake",
-                Price = 499.95m,
+                Price = 499.90m,
                 GenreId = genres[7].Id, // RPG
-                Stock = 35,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 AgeRating = AgeRating.Teen,
                 ShortInfo = @"The long awaited Remake of Final Fantasy VII
-                              in powerful HD-glory. Bring back memories of
-                              Cloud, Tifa and others in thie classic J-RPG",
+in powerful HD-glory. Bring back memories of
+Cloud, Tifa and others in thie classic J-RPG",
                 LongInfo = @"One of the most anticipated Final Fantasy remakes ever. Carefully recreated in
-                             modern graphics to tell the story once again to a new generation and old fans 
-                             of the series alike. Spectacular scenery and orchestrated music will make this
-                             journey one that you will remember for a very long time"
+modern graphics to tell the story once again to a new generation and old fans 
+of the series alike. Spectacular scenery and orchestrated music will make this
+journey one that you will remember for a very long time"
             },
             new Game
             {
                 Title = "Uncharted 4: A Thief's End",
-                Price = 399.99m,
+                Price = 399.90m,
                 GenreId = genres[1].Id, // Adventure
-                Stock = 75,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 AgeRating = AgeRating.Teen,
                 ShortInfo = @"Action-packed cinematic experience following
 Nathan Drake's final adventure.",
@@ -187,9 +194,10 @@ as Drake embarks on a quest to find a lost pirate treasure."
                         new Game
             {
                 Title = "Stellaris",
-                Price = 299.99m,
+                Price = 299.90m,
                 GenreId = genres[2].Id, // Strategy
-                Stock = 65,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 AgeRating = AgeRating.Teen,
                 ShortInfo = @"Grand strategy game set inspace with 
 exploration, diplomacy, and epic space
@@ -202,9 +210,10 @@ universe."
             new Game
             {
                 Title = "Red Dead Redemption 2",
-                Price = 499.99m,
+                Price = 499.90m,
                 GenreId = genres[1].Id, // Adventure
-                Stock = 110,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 OnDisplay= 0,
                 AgeRating = AgeRating.Mature,
                 ShortInfo = @"Wild West open-world game with an immersive
@@ -217,9 +226,10 @@ gripping narrative that explores the era of outlaws and lawmen."
             new Game
             {
                 Title = "Civilization VI",
-                Price = 399.99m,
+                Price = 399.90m,
                 GenreId = genres[2].Id, // Strategy
-                Stock = 85,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 AgeRating = AgeRating.Everyone,
                 ShortInfo = @"Turn-based strategy game where you lead a 
 civilization from ancient times to the
@@ -231,9 +241,10 @@ wars to establish your empire's legacy."
                 new Game
             {
                 Title = "NBA 2K22",
-                Price = 499.99m,
+                Price = 499.90m,
                 GenreId = genres[4].Id, // Sports
-                Stock = 100,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 AgeRating = AgeRating.Everyone,
                 ShortInfo = @"Basketball simulation game featuring
 stunning graphics, immersive career
@@ -246,9 +257,10 @@ ultimate basketball simulation experience."
             new Game
             {
                 Title = "Total War: Three Kingdoms",
-                Price = 499.99m,
+                Price = 499.90m,
                 GenreId = genres[2].Id, // Strategy
-                Stock = 95,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 AgeRating = AgeRating.Mature,
                 ShortInfo = @"Historical strategy game set in ancient
 China with real-time battles and
@@ -264,9 +276,10 @@ and intrigue in this historical strategy masterpiece."
             new Game
             {
                 Title = "FIFA 22",
-                Price = 599.99m,
+                Price = 599.90m,
                 GenreId = genres[4].Id, // Sports
-                Stock = 120,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 AgeRating = AgeRating.Everyone,
                 ShortInfo = @"The latest installment in the popular
 football simulation series with 
@@ -278,9 +291,10 @@ football simulation experience to date."
             new Game
             {
                 Title = "Assassin's Creed Valhalla",
-                Price = 499.99m,
+                Price = 499.90m,
                 GenreId = genres[0].Id, // Action
-                Stock = 80,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 AgeRating = AgeRating.Mature,
                 ShortInfo = @"Explore the Viking era in this open-world 
 action-adventure game.",
@@ -292,9 +306,10 @@ lovers."
             new Game
             {
                 Title = "Forza Horizon 3",
-                Price = 999.99m,
+                Price = 999.90m,
                 GenreId = genres[3].Id, // Racing
-                Stock = 80,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 OnDisplay = 0,
                 AgeRating = AgeRating.Everyone,
                 ShortInfo = @"Open-world racing game featuring a variety
@@ -307,9 +322,10 @@ with changing weather conditions."
                         new Game
             {
                 Title = "Laban on the Run",
-                Price = 599.99m,
+                Price = 599.90m,
                 GenreId = genres[0].Id,  // Action
-                Stock = 17,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 AgeRating = AgeRating.Mature,
                 ShortInfo = @"Laban is on the run again, trying to avoid
 everything",
@@ -321,9 +337,10 @@ on Bahamas."
             new Game
             {
                 Title = "Greger in LaLa-Land",
-                Price = 499.99m,
+                Price = 499.90m,
                 GenreId = genres[3].Id, // Racing
-                Stock = 22,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 AgeRating = AgeRating.Everyone,
                 ShortInfo = @"Greger is racing in LaLa-Land, It's a
 Rough Day at Work!",
@@ -335,9 +352,10 @@ methods to win this race, but Greger is tougher than a nut."
             new Game
             {
                 Title = "Ninja Commando XIV",
-                Price = 599.99m,
+                Price = 599.90m,
                 GenreId = genres[0].Id, // Action
-                Stock = 22,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 AgeRating = AgeRating.Mature,
                 ShortInfo = @"The fourteenth installment of this 
 popular action game series",
@@ -349,9 +367,10 @@ guarantee the bloodiest mess ever witnessed on screen! Hii-yaaaah!"
             new Game
             {
                 Title = "The Thinker",
-                Price = 199.95m,
+                Price = 199.90m,
                 GenreId = genres[2].Id, // Strategy
-                Stock = 22,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 AgeRating = AgeRating.Teen,
                 OnDisplay = 0,
                 ShortInfo = @"In this game you have to think,
@@ -364,9 +383,10 @@ unfortunately. This game is much harder than you think!"
             new Game
             {
                 Title = "Adventures in the house",
-                Price = 12.95m,
+                Price = 12.90m,
                 GenreId = genres[1].Id, // Adventure
-                Stock = 22,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 AgeRating = AgeRating.Everyone,
                 ShortInfo = @"Your house could be an adventure, sort of,
 we guess >:(",
@@ -379,9 +399,10 @@ written NOW!"
             new Game
             {
                 Title = "Rally-Åke",
-                Price = 79.95m,
+                Price = 79.90m,
                 GenreId = genres[3].Id, // Racing
-                Stock = 22,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 OnDisplay = 3,
                 AgeRating = AgeRating.Everyone,
                 ShortInfo = @"Rally-Åke rullar buss",
@@ -391,9 +412,10 @@ vägen och inte trillar av i Halmstads Kummun."
                         new Game
             {
                 Title = "Laban in the Jungle",
-                Price = 12.95m,
+                Price = 12.90m,
                 GenreId = genres[0].Id, // Action
-                Stock = 22,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 OnDisplay = 2,
                 AgeRating = AgeRating.Teen,
                 ShortInfo = @"Laban is on the warpath in the jungle 
@@ -406,9 +428,10 @@ doesn't move, we don't really care)."
             new Game
             {
                 Title = "Check Mate or Checkmate",
-                Price = 799.95m,
+                Price = 799.90m,
                 GenreId = genres[2].Id, // Strategy
-                Stock = 22,
+                Stock = rnd.Next(10, 100),
+                SoldTotal = rnd.Next(10, 100),
                 OnDisplay = 1,
                 AgeRating = AgeRating.Mature,
                 ShortInfo = @"The world's first chess/dating
@@ -418,10 +441,6 @@ potential mates by playing games of chess... Beware the extra naughty
 scene, kings and queens, we dare not say anything else. NSFW!!!"
             }
         };
-            //database.Games.AddRange(actionGames);
-            //database.Games.AddRange(adventureGames);
-            //database.Games.AddRange(strategyGames);
-            //database.Games.AddRange(sportGames);
 
             database.Games.AddRange(allGames);
 
@@ -449,24 +468,23 @@ scene, kings and queens, we dare not say anything else. NSFW!!!"
         {
             new Customer
             {
-                Name = "Smith",
-                Email = "Smith@matrix.neo",
+                Name = "Jack Daniels",
+                Email = "jd@matrix.neo",
                 Password  = "abc123",
                 Age =30,
                 Phone ="123-456789",
-                Street ="Rosvalla 76",
+                Street ="Rusvalla 76",
                 PostalCode="51130",
                 City ="Nykoping",
                 Country="Sweden",
                 Payment= PaymentMethod.CreditCard,
                 Baskets = new List<Basket>
-
                 {
                     new Basket
                     {
                         BasketEntries = new List<BasketEntry>
                         {
-                            //new BasketEntry { GameId = actionGames.First().Id, Quantity = 2 },
+
                         }
                     }
                 }

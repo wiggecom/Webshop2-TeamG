@@ -16,9 +16,12 @@ namespace Webshop2_TeamG.Helpers
                 Featured(i);
             }
             //Gfx.LongDNA(175, 2); // static spiral
+            Gfx.Pac(170, 10);
+            Gfx.Ghost(170, 28);
             Gfx.ColorIni();
-            //Gfx.Icons5(170, 8, 1);
+
             //Gfx.LowDNA(175, 8);
+            
         }
         public static void Featured(int featuredNumber)
         {
@@ -136,16 +139,15 @@ namespace Webshop2_TeamG.Helpers
 
                     int gamesTotal = database.Games.Count();
                     var allGames = database.Games.ToList();
-                    //idNumber = allGames[idNumber].Id;
-
+                    var allCustomers = database.Customers.ToList();
                     var games = database.Games.Where(g => g.Id == idNumber + 1).ToList(); // idNumber + 1
                     var genres = database.Genres.ToList();
-                    // if game.ondisplay
+
                     ratingString = Enum.GetName(typeof(AgeRating), games[0].AgeRating);
                     infoString = games[0].LongInfo;
                     int posY = 11;
                     int posYReset = posY;
-                    //posY -= 1; // raderna ska börja på 11, 23 och 35
+
                     int idStart = idNumber;
                     #region gfxFrame
                     Console.SetCursorPosition(45, posY); posY++;
@@ -205,8 +207,6 @@ namespace Webshop2_TeamG.Helpers
                         Console.Write(line);
                     }
 
-                    // Alternativ: lägg in databasens objekt.info direkt med lambda
-
                     // ▄ ▀
                     #region iconFrame
                     Console.ForegroundColor = ConsoleColor.Yellow;
@@ -236,6 +236,7 @@ namespace Webshop2_TeamG.Helpers
                     Gfx.Icons5(131, posYReset + 2, iconNum);
                     //
                     #endregion
+                    
                     Gfx.ColorIni();
                     if (browsable == 1)
                     {
@@ -265,23 +266,22 @@ namespace Webshop2_TeamG.Helpers
                                 {
                                     idNumber = 0;
                                 }
-                                //while (true)
-                                //    {
-                                //        if (database.Games.Any(g => g.Id == idNumber - 1) && idNumber < allGames.Count())
-                                //        {
-                                //            break;
-                                //        }
-                                //        else if (database.Games.Any(g => g.Id == idNumber - 1) && idNumber == allGames.Count()) 
-                                //        {
-                                //            idNumber = 0;
-                                //            break; 
-                                //        }
-                                //        else 
-                                //        { 
-                                //            idNumber++;
-                                //        }
-                                //    }
-                                //idNumber = games[idNumber-1].Id;
+                                return idNumber;
+                            }
+                            if (userInputKey.Key == ConsoleKey.Spacebar)
+                            {
+                                //Customer thisCustomer = database.Customers.Where(x => x.Id == Program.currentUser.Id).FirstOrDefault();
+                                Customer thisCustomer = database.Customers.Where(x => x.Id == 1).FirstOrDefault();
+                                Game currentGame = database.Games.Where(g => g.Id == idNumber+1).FirstOrDefault();
+                                //BasketView.AddGameToBasket(database, thisCustomer, currentGame, 1);
+                                if (currentGame != null)
+                                {
+                                    BasketView.AddGameToBasket(database, thisCustomer, currentGame, 1);
+                                    SysMenu.ClearAllAreas();
+                                    BasketView.ItemsInBasket(database, thisCustomer);
+                                    Console.ReadKey();
+                                }
+                                SysMenu.ClearAllAreas();
                                 return idNumber;
                             }
 
@@ -380,21 +380,6 @@ namespace Webshop2_TeamG.Helpers
                         }
                     }
                 }
-            }
-        }
-        public static void BasketCase()  // rework to separate method for all info that needs positioning
-        {
-            string testString = "The quick brown fox jumped over the lazy dog";
-            SysMenu.ClearMainArea();
-            Position.MoveCursorMainStart(0);
-            int rowLength = 20;
-            testString = Create.StringBreak(testString, rowLength);
-            int posY = 0;
-            int posX = 45;
-            foreach (var line in testString.Split('\n'))
-            {
-                Position.MoveCursorTextAnywhere(posX, posY); posY++;
-                Console.Write(line);
             }
         }
     }

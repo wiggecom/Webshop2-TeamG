@@ -11,6 +11,8 @@ namespace Webshop2_TeamG.Helpers
         //public static int menuLevel = 1;
         public static int topX = 85;
         public static int topY = 3;
+        public static int mainX = 45;
+        public static int mainY = 11;
         public static int sideX = 7;
         public static int sideY = 9;
         public static int sideYMenu = 13;

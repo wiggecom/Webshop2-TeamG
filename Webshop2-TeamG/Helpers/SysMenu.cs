@@ -12,32 +12,99 @@ namespace Webshop2_TeamG.Helpers
     {
         public static void TopMenu(int topX, int topY)
         {
-            int i = 60;
-            Console.SetCursorPosition(topX, topY);
-            Console.Write("                       ");
-            Console.SetCursorPosition(topX, topY);
-            Console.Write("F1. Main Menu");
-            Console.SetCursorPosition(topX, topY + 1);
-            Console.Write("                       ");
-            Console.SetCursorPosition(topX, topY + 1);
-            Console.Write("F2. Shopping Basket");
-            Console.SetCursorPosition(topX, topY + 2);
-            Console.Write("                       ");
-            Console.SetCursorPosition(topX, topY + 2);
-            Console.Write("F3. Admin");
+            using (var database = new ShopDbContext())
+            {
+                int i = 60;
+                Console.SetCursorPosition(topX, topY);
+                Console.Write("                       ");
+                Console.SetCursorPosition(topX, topY);
+                Console.Write("F1. Main Menu");
+                Console.SetCursorPosition(topX, topY + 1);
+                Console.Write("                       ");
+                Console.SetCursorPosition(topX, topY + 1);
+                Console.Write("F2. Shopping Basket");
+                Console.SetCursorPosition(topX, topY + 2);
+                Console.Write("                       ");
+                Console.SetCursorPosition(topX, topY + 2);
+                Console.Write("F3. Admin");
+                Console.SetCursorPosition(topX + i, topY);
+                Console.Write("                       ");
 
-            Console.SetCursorPosition(topX + i, topY);
-            Console.Write("                       ");
-            Console.SetCursorPosition(topX + i, topY);
-            Console.Write("[User Name]");
-            Console.SetCursorPosition(topX + i, topY + 1);
-            Console.Write("                       ");
-            Console.SetCursorPosition(topX + i, topY + 1);
-            Console.Write("[Basket has ## Items]");
-            Console.SetCursorPosition(topX + i, topY + 2);
-            Console.Write("                       ");
-            Console.SetCursorPosition(topX + i, topY + 2);
-            Console.Write("[Basket ####SEK Total]");
+                if (database.Customers.Any() && database.Baskets.Any() &! database.BasketEntries.Any())
+                {
+                    var customers = database.Customers.ToList();
+                    var customer = customers.FirstOrDefault();
+                    Console.SetCursorPosition(topX + i, topY);
+                Console.Write(customer.Name);
+                Console.SetCursorPosition(topX + i, topY + 1);
+                Console.Write("                       ");
+                Console.SetCursorPosition(topX + i, topY + 1);
+                Console.Write("Basket is empty");
+                Console.SetCursorPosition(topX + i, topY + 2);
+                Console.Write("                       ");
+                Console.SetCursorPosition(topX + i, topY + 2);
+                Console.Write("                       ");
+                }
+
+                else if (database.Customers.Any() && database.Baskets.Any() && database.BasketEntries.Any()) 
+                { 
+                var customers = database.Customers.ToList();
+                var customer = customers.FirstOrDefault();
+                var baskets = database.Baskets.ToList();
+                var entries = database.BasketEntries.ToList();
+                int lastBasket = baskets.Count - 1;
+                string userName = customers[0].Name;
+                int totalItems = baskets[lastBasket].BasketEntries.Count;
+
+                    //decimal totalAmount = 0;
+                    //totalAmount = BasketView.BasketTotalAmount(database, customers[0]);
+
+                    decimal totalAmount = BasketView.CalculateTotalAmount(database, customer);
+
+
+                    Console.SetCursorPosition(topX + i, topY);
+                    Console.Write("                       ");
+                    Console.SetCursorPosition(topX + i, topY);
+                    Console.Write("User: " + userName);
+                    Console.SetCursorPosition(topX + i, topY + 1);
+                    Console.Write("                       ");
+                    Console.SetCursorPosition(topX + i, topY + 1);
+                    if (totalItems > 0)
+                    {
+                        Console.Write(totalItems + " items in basket");
+                        Console.SetCursorPosition(topX + i, topY + 2);
+                        Console.Write("Total: " + totalAmount + " SEK");
+                    }
+                    else
+                    {
+                        Console.Write("Basket is empty");
+                        Console.SetCursorPosition(topX + i, topY + 2);
+                        Console.Write("                       ");
+                    }
+                    //Console.SetCursorPosition(topX + i, topY + 2);
+                    //Console.Write("Basket total: " + totalAmount + " SEK");
+                }
+                else
+                {
+                    var customers = database.Customers.ToList();
+                    var customer = customers.FirstOrDefault();
+                    Console.SetCursorPosition(topX + i, topY);
+                    Console.Write(customer.Name + " Logged In");
+                    Console.SetCursorPosition(topX + i, topY + 1);
+                    Console.Write("                       ");
+                    Console.SetCursorPosition(topX + i, topY + 1);
+                    Console.Write("");
+                    Console.SetCursorPosition(topX + i, topY + 2);
+                    Console.Write("                       ");
+                    Console.SetCursorPosition(topX + i, topY + 2);
+                    Console.Write("");
+
+                }
+
+
+
+
+            }
         }
         public static void SideMenu(int menuLevel)
         {
@@ -96,7 +163,7 @@ namespace Webshop2_TeamG.Helpers
             Console.Write("1-3) Select Featured");
 
             //------------------------------
-            //CopyrightMenu(winX, winY + 32);
+            CopyrightMenu(winX, winY + 32);
             MainView.MainArea();
             //return menuLevel;
         }  // ------------ SETS SET VIEW ON MAIN AREA ------------
@@ -105,26 +172,21 @@ namespace Webshop2_TeamG.Helpers
             //ClearFullSidemenu(winX, winY);
             int i = 0;
             Console.SetCursorPosition(winX, winY + i); i++;
-            Console.Write("1-9) Select Item");
+            Console.Write("A) Edit Basket");
             Console.SetCursorPosition(winX, winY + i); i++;
-            Console.Write("A) Add Item");
+            Console.Write("S) Checkout");
             Console.SetCursorPosition(winX, winY + i); i++;
-            Console.Write("S) Empty Basket");
-            Console.SetCursorPosition(winX, winY + i); i++;
-            Console.Write("D) Delete Item");
-            Console.SetCursorPosition(winX, winY + i); i++;
-            Console.Write("F) Checkout");
-            Console.SetCursorPosition(winX, winY + i); i++;
-            Console.Write("");
+            Console.Write("D) History");
+
+
             //------------------------------
-            //CopyrightMenu(winX, winY + 32);
-            MainView.BasketCase();
+            CopyrightMenu(winX, winY + 32);
+            BasketView.BasketViewDefault();
             //menuLevel = KeyInput(40, 12, menuLevel);
             //return menuLevel;
         }
         public static void AdminMenu(int winX, int winY, int menuLevel)
         {
-            //ClearFullSidemenu(winX, winY);
             int i = 0;
             Console.SetCursorPosition(winX, winY + i); i++;
             Console.Write("A) Add Title");
@@ -135,22 +197,8 @@ namespace Webshop2_TeamG.Helpers
             Console.SetCursorPosition(winX, winY + i); i++;
             Console.Write("F) List Titles");
             Console.SetCursorPosition(winX, winY + i); i++;
-            Console.Write("G) Add Sample Data");
-            Console.SetCursorPosition(winX, winY + i); i++;
-            Console.Write("H) Sample Customers");
-            Console.SetCursorPosition(winX, winY + i); i++;
-            Console.Write("--- Queries ---");
-            Console.SetCursorPosition(winX, winY + i); i++;
-            Console.Write("J) Top Console");
-            Console.SetCursorPosition(winX, winY + i); i++;
-            Console.Write("K) Top Game");
-            Console.SetCursorPosition(winX, winY + i); i++;
-            Console.Write("L) Low Stock");
-
-            //------------------------------
-            //CopyrightMenu(winX, winY + 32);
-            //menuLevel = KeyInput(40, 12, menuLevel);
-            //return menuLevel;
+            Console.Write("G) Admin Data");
+            CopyrightMenu(winX, winY + 32);
         }
         public static void CopyrightMenu(int winX, int winY)
         {
@@ -199,6 +247,7 @@ namespace Webshop2_TeamG.Helpers
                 Console.SetCursorPosition(startX, i);
                 Console.Write(wiper);
             }
+            TopMenu(Position.topX, Position.topY);
         }
         public static void SelectGame(int edit, int gameId)
         { // edit 0 = browse, 1 = delete, 2 = edit
@@ -641,18 +690,9 @@ namespace Webshop2_TeamG.Helpers
                     }
 
                 }
-                //else
-                //{
-                //    Console.Write("Buhuuu");
-                //    //break;
-                //}
-
                 return;
-                //Console.Write("6 - Age Rating: " + games[selectedIndex].AgeRating);
-                //Console.Write("7 - Featured Game: " + games[selectedIndex].OnDisplay);
             }
         }
-        //}
         public static void ReturnToMain(int menuLevel)
         {
             Gfx.WinIni();
@@ -854,7 +894,7 @@ namespace Webshop2_TeamG.Helpers
                             {
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
-                                Console.Write("Add Item");
+                                Console.Write("Edit Basket");
                                 menuLevel = 2;
                                 return menuLevel;
                             }
@@ -862,7 +902,13 @@ namespace Webshop2_TeamG.Helpers
                             {
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
-                                Console.Write("Empty Basket");
+                                using (var database = new ShopDbContext())
+                                {
+                                    var customers = database.Customers.ToList();
+                                    var customer = customers.FirstOrDefault();
+                                    ClearMainArea();
+                                    BasketView.PurchaseItems(database, customer);
+                                }
                                 menuLevel = 2;
                                 return menuLevel;
                             }
@@ -870,87 +916,13 @@ namespace Webshop2_TeamG.Helpers
                             {
                                 ClearMainArea();
                                 Position.MoveCursorMainStart(0);
-                                Console.Write("Delete Item");
-                                menuLevel = 2;
-                                return menuLevel;
-                            }
-                            if (userInputKey.Key == ConsoleKey.F)
-                            {
-                                ClearMainArea();
-                                Position.MoveCursorMainStart(0);
-                                Console.Write("Checkout");
-                                menuLevel = 2;
-                                return menuLevel;
-                            }
-                            if (userInputKey.Key == ConsoleKey.D1)
-                            {
-                                ClearMainArea();
-                                Position.MoveCursorMainStart(0);
-                                Console.Write("Selecting Game 1");
-                                menuLevel = 2;
-                                return menuLevel;
-                            }
-                            if (userInputKey.Key == ConsoleKey.D2)
-                            {
-                                ClearMainArea();
-                                Position.MoveCursorMainStart(0);
-                                Console.Write("Selecting Game 2");
-                                menuLevel = 2;
-                                return menuLevel;
-                            }
-                            if (userInputKey.Key == ConsoleKey.D3)
-                            {
-                                ClearMainArea();
-                                Position.MoveCursorMainStart(0);
-                                Console.Write("Selecting Game 3");
-                                menuLevel = 2;
-                                return menuLevel;
-                            }
-                            if (userInputKey.Key == ConsoleKey.D4)
-                            {
-                                ClearMainArea();
-                                Position.MoveCursorMainStart(0);
-                                Console.Write("Selecting Game 4");
-                                menuLevel = 2;
-                                return menuLevel;
-                            }
-                            if (userInputKey.Key == ConsoleKey.D5)
-                            {
-                                ClearMainArea();
-                                Position.MoveCursorMainStart(0);
-                                Console.Write("Selecting Game 5");
-                                menuLevel = 2;
-                                return menuLevel;
-                            }
-                            if (userInputKey.Key == ConsoleKey.D6)
-                            {
-                                ClearMainArea();
-                                Position.MoveCursorMainStart(0);
-                                Console.Write("Selecting Game 6");
-                                menuLevel = 2;
-                                return menuLevel;
-                            }
-                            if (userInputKey.Key == ConsoleKey.D7)
-                            {
-                                ClearMainArea();
-                                Position.MoveCursorMainStart(0);
-                                Console.Write("Selecting Game 7");
-                                menuLevel = 2;
-                                return menuLevel;
-                            }
-                            if (userInputKey.Key == ConsoleKey.D8)
-                            {
-                                ClearMainArea();
-                                Position.MoveCursorMainStart(0);
-                                Console.Write("Selecting Game 8");
-                                menuLevel = 2;
-                                return menuLevel;
-                            }
-                            if (userInputKey.Key == ConsoleKey.D9)
-                            {
-                                ClearMainArea();
-                                Position.MoveCursorMainStart(0);
-                                Console.Write("Selecting Game 9");
+                                using (var database = new ShopDbContext())
+                                {
+                                    var customers = database.Customers.ToList();
+                                    var customer = customers.FirstOrDefault();
+                                    ClearMainArea();
+                                    BasketView.PurchaseHistory(database, customer);
+                                }
                                 menuLevel = 2;
                                 return menuLevel;
                             }
@@ -981,58 +953,46 @@ namespace Webshop2_TeamG.Helpers
                             }
                             if (userInputKey.Key == ConsoleKey.A)
                             {
+                                // Add Title
                                 Admin.AdminTools(1);
                                 menuLevel = 3;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.S)
                             {
+                                // Remove Title
                                 Admin.AdminTools(2);
                                 menuLevel = 3;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.D)
                             {
+                                // Change Title
                                 Admin.AdminTools(3);
                                 menuLevel = 3;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.F)
                             {
+                                // List Titles
+                                SelectGame(0, 666666);
+                                menuLevel = 3;
+                                return menuLevel;
+                            }
+                            if (userInputKey.Key == ConsoleKey.F)
+                            {
+                                // List Titles
                                 SelectGame(0, 666666);
                                 menuLevel = 3;
                                 return menuLevel;
                             }
                             if (userInputKey.Key == ConsoleKey.G)
                             {
-                                Admin.AdminTools(5);
-                                menuLevel = 3;
-                                return menuLevel;
-                            }
-                            if (userInputKey.Key == ConsoleKey.H)
-                            {
                                 Admin.AdminTools(6);
                                 menuLevel = 3;
                                 return menuLevel;
                             }
-                            if (userInputKey.Key == ConsoleKey.J)
-                            {
-                                Admin.AdminTools(7);
-                                menuLevel = 3;
-                                return menuLevel;
-                            }
-                            if (userInputKey.Key == ConsoleKey.K)
-                            {
-                                Admin.AdminTools(8);
-                                menuLevel = 3;
-                                return menuLevel;
-                            }
-                            if (userInputKey.Key == ConsoleKey.L)
-                            {
-                                Admin.AdminTools(9);
-                                menuLevel = 3;
-                                return menuLevel;
-                            }
+
                         }
                     }
                 default:

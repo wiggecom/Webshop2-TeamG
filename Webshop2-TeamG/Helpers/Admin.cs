@@ -36,68 +36,20 @@ namespace Webshop2_TeamG.Helpers
                 case 3:
                     Position.MoveCursorMainStart(0);
                     EditGame();
-                    //Console.Write("Change Title");
                     return;
                 case 4:
                     Position.MoveCursorMainStart(0);
                     Console.Write("List Titles");
                     return;
-                case 5:
-                    Position.MoveCursorMainStart(0);
-                    try
-                    {
-                        using (var database = new ShopDbContext())
-                        {
-                            Console.Write("Checking if database is empty...");
-                            Position.MoveCursorMainStart(0);
-                            Helpers.Create.FillDatabase(database);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Position.MoveCursorMainStart(0);
-                        Console.Write("                                ");
-                        Position.MoveCursorMainStart(0);
-                        Console.Write($"Error occured: {ex.Message}");
-                        //Thread.Sleep(3000);
-                        //Gfx.Frontend(0, 0);
-                        //Gfx.ColorIni();
-                    }
-                    return;
+
                 case 6:
                     Position.MoveCursorMainStart(0);
-                    try
+                    using (var database = new ShopDbContext())
                     {
-                        using (var database = new ShopDbContext())
-                        {
-                            Console.Write("Checking if database is empty...");
-                            Position.MoveCursorMainStart(0);
-                            Helpers.Create.SampleCustomers(database);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Position.MoveCursorMainStart(0);
-                        Console.Write("                                ");
-                        Position.MoveCursorMainStart(0);
-                        Console.Write($"Error occured: {ex.Message}");
-                        //Thread.Sleep(3000);
-                        //Gfx.Frontend(0, 0);
-                        //Gfx.ColorIni();
+                        AdminQueries(database);
                     }
                     return;
-                case 7:
-                    Position.MoveCursorMainStart(0);
-                    Console.Write("Top Console");
-                    return;
-                case 8:
-                    Position.MoveCursorMainStart(0);
-                    Console.Write("Top Game");
-                    return;
-                case 9:
-                    Position.MoveCursorMainStart(0);
-                    Console.Write("Low Stock");
-                    return;
+
 
             }
         }
@@ -105,8 +57,17 @@ namespace Webshop2_TeamG.Helpers
         {
             using (var database = new ShopDbContext())
             {
-                Position.MoveCursorMainStart(0);
-                Helpers.Create.FirstAdmin(database);
+                if (database.Administrators.Any()) 
+                {
+                    return;
+                }
+                else
+                {
+                    Position.MoveCursorMainStart(0);
+                    Helpers.Create.FirstAdmin(database);
+                    Helpers.Create.FillDatabase(database);
+                    Helpers.Create.SampleCustomers(database);
+                }
             }
         }
         private static void EditGame()
@@ -227,6 +188,149 @@ namespace Webshop2_TeamG.Helpers
             MainView.DetailGame(lastGame, 0);
             SysMenu.MenuTitle(7, 9, "Admin Menu");
             SysMenu.AdminMenu(7, 13, 3);
+        }
+        public static void AdminQueries(ShopDbContext database)
+        {
+            int i = 0;
+            int winX = Position.mainX; int winY = Position.mainY;
+            Console.SetCursorPosition(winX, winY + i); i++;
+            Console.Write("What would you like to see?");
+            Console.SetCursorPosition(winX, winY + i); i++;
+            Console.Write("1. Top 5 Games with the most stock");
+            Console.SetCursorPosition(winX, winY + i); i++;
+            Console.Write("2. Games with low stock");
+            Console.SetCursorPosition(winX, winY + i); i++;
+            Console.Write("3. Top 5 most sold games");
+            Console.SetCursorPosition(winX, winY + i); i++;
+            Console.Write("Enter a Number to choose what to see: ");
+            Console.CursorVisible = true;
+            Console.CursorSize = 100;
+            string userInput = Console.ReadLine();
+            Console.CursorVisible = false;
+            Console.SetCursorPosition(winX, winY + i); i++;
+            switch (userInput)
+            {
+                case "1":
+                    SysMenu.ClearMainArea();
+                    TopGamesByStock(database);
+                    break;
+
+                case "2":
+                    SysMenu.ClearMainArea();
+                    LowStock(database);
+                    break;
+                case "3":
+                    SysMenu.ClearMainArea();
+                    TopGamesSold(database);
+                    break;
+                default:
+                    Console.Write("Invalid selection.");
+                    break;
+            }
+        }
+
+        public static void TopGamesByStock(ShopDbContext database)
+        {
+            var topGamesWithMostStock = database.Games
+                .OrderByDescending(g => g.Stock)
+                .Take(5)
+                .ToList();
+            int i = 0;
+            int winX = Position.mainX; int winY = Position.mainY;
+            Console.SetCursorPosition(winX, winY + i); i++;
+            Console.Write("Top 5 Games with the Most Stock:");
+            Console.SetCursorPosition(winX, winY + i); i++;
+            Console.Write("--------------------------------");
+            foreach (var game in topGamesWithMostStock)
+            {
+                Console.SetCursorPosition(winX, winY + i); i++;
+                Console.Write(game.Stock + " - " + game.Title);
+            }
+            Console.SetCursorPosition(winX, winY + i); i++;
+            Console.Write("--------------------------------");
+            Console.SetCursorPosition(winX, winY + i); i++;
+            Console.Write("Press [ANY] Key to Continue");
+            Console.ReadKey();
+
+        }
+
+        //public static void StockUnder(ShopDbContext database)
+        //{
+        //    var gamesWithStockUnder = database.Games
+        //        .Where(g => g.Stock < 10)
+        //        .ToList();
+        //    int i = 0;
+        //    int winX = Position.mainX; int winY = Position.mainY;
+        //    Console.SetCursorPosition(winX, winY + i); i++;
+        //    Console.Write("Games with Stock Under 10:");
+        //    foreach (var game in gamesWithStockUnder)
+        //    {
+        //        Console.SetCursorPosition(winX, winY + i); i++;
+        //        Console.Write($"Title: {game.Title}, Stock: {game.Stock}");
+        //    }
+        //    Console.SetCursorPosition(winX, winY + i); i++;
+        //    Console.Write("Press [ANY] Key to Continue");
+        //    Console.ReadKey();
+
+        //}
+        public static void LowStock(ShopDbContext database)
+        {
+            var gamesWithLowStock = database.Games
+            .Where(g => g.Stock < 100)
+            .OrderBy(g => g.Stock)
+            .Take(10)
+            .ToList();
+            int i = 0;
+            int winX = Position.mainX; int winY = Position.mainY;
+            Console.SetCursorPosition(winX, winY + i); i++;
+            Console.Write("10 Games with Lowest Stock:");
+            Console.SetCursorPosition(winX, winY + i); i++;
+            Console.Write("---------------------------");
+
+            foreach (var game in gamesWithLowStock)
+            {
+                Console.SetCursorPosition(winX, winY + i); i++;
+                Console.Write(game.Stock + " - " + game.Title);
+            }
+            Console.SetCursorPosition(winX, winY + i); i++;
+            Console.Write("---------------------------");
+
+            Console.SetCursorPosition(winX, winY + i); i++;
+            Console.Write("Press [ANY] Key to Continue");
+            Console.ReadKey();
+        }
+        public static void TopGamesSold(ShopDbContext database)
+        {
+            var topGamesSold = database.Games
+                .OrderByDescending(g => g.SoldTotal)
+                .Take(5)
+                .ToList();
+            int i = 0;
+            int winX = Position.mainX; int winY = Position.mainY;
+            Console.SetCursorPosition(winX, winY + i); i++;
+            if (topGamesSold.Any())
+            {
+                Console.Write("Top 5 Games Sold:");
+                Console.SetCursorPosition(winX, winY + i); i++;
+                Console.Write("-----------------");
+                foreach (var game in topGamesSold)
+                {
+                    Console.SetCursorPosition(winX, winY + i); i++;
+                    Console.Write(game.SoldTotal + " - " + game.Title);
+                }
+            }
+            else
+            {
+                Console.SetCursorPosition(winX, winY + i); i++;
+                Console.Write("No games found.");
+            }
+            Console.SetCursorPosition(winX, winY + i); i++;
+            Console.Write("-----------------");
+
+            Console.SetCursorPosition(winX, winY + i); i++;
+            Console.Write("Press [ANY] Key to Continue");
+            Console.ReadKey();
+
         }
 
     }

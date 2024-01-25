@@ -3,6 +3,7 @@ using System;
 using System.Reflection.PortableExecutable;
 using System.Threading.Tasks;
 using Webshop2_TeamG.Helpers;
+using Webshop2_TeamG.Models;
 
 namespace Webshop2_TeamG
 {
@@ -15,7 +16,10 @@ namespace Webshop2_TeamG
             Gfx.WinIni();
 
             Position.MoveCursorMainStart(0);
-            Console.WriteLine("Database?");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine("."); // If dot stays database doesn't exist
+            Gfx.ColorIni();
             Admin.MakeFirstAdmin();
             while (true)
             {
