@@ -1541,7 +1541,6 @@ namespace Webshop2_TeamG.Helpers
             Console.BackgroundColor = (ConsoleColor)0;
             Console.Write("██████████");
         }
-
         public static void Ghost(int gfxLeft, int gfxTop)
         {
             Console.SetCursorPosition(gfxLeft, gfxTop); gfxTop++;
@@ -1881,7 +1880,6 @@ namespace Webshop2_TeamG.Helpers
             Console.BackgroundColor = (ConsoleColor)1;
             Console.Write("▀█");
         }
-
         public static void Frontend(int gfxLeft, int gfxTop)
         {
             Console.SetCursorPosition(gfxLeft, gfxTop + 0);
@@ -4446,20 +4444,6 @@ namespace Webshop2_TeamG.Helpers
             Console.BackgroundColor = (ConsoleColor)1;
             Console.Write("███████");
         }
-        //public static void DNA(int gfxLeft, int gfxTop)
-        //{
-        //    int startLine = 1;
-        //    while (true)
-        //    {
-        //        for (int i = startLine; i < 13; i++)
-        //        {
-        //            Console.SetCursorPosition(gfxLeft, gfxTop);
-        //            DNA_Row(i);
-        //            Thread.Sleep(40);
-        //            Console.MoveBufferArea(gfxLeft, gfxTop, 18, 4, gfxLeft, gfxTop + 1);
-        //        }
-        //    }
-        //}
         public static void DNA(int gfxLeft, int gfxTop, int i)
         {
             Console.SetCursorPosition(gfxLeft, gfxTop);

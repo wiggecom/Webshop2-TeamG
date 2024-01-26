@@ -55,6 +55,11 @@ namespace Webshop2_TeamG.Helpers
                 int lastBasket = baskets.Count - 1;
                 string userName = customers[0].Name;
                 int totalItems = baskets[lastBasket].BasketEntries.Count;
+                    int itemQuant = 0;
+                    foreach (BasketEntry e in baskets[lastBasket].BasketEntries)
+                    {
+                        itemQuant += e.Quantity;
+                    }
 
                     //decimal totalAmount = 0;
                     //totalAmount = BasketView.BasketTotalAmount(database, customers[0]);
@@ -71,7 +76,8 @@ namespace Webshop2_TeamG.Helpers
                     Console.SetCursorPosition(topX + i, topY + 1);
                     if (totalItems > 0)
                     {
-                        Console.Write(totalItems + " items in basket");
+                        //Console.Write(totalItems + " items in basket");
+                        Console.Write(itemQuant + " items in basket");
                         Console.SetCursorPosition(topX + i, topY + 2);
                         Console.Write("Total: " + totalAmount + " SEK");
                     }
@@ -166,7 +172,7 @@ namespace Webshop2_TeamG.Helpers
             CopyrightMenu(winX, winY + 32);
             MainView.MainArea();
             //return menuLevel;
-        }  // ------------ SETS SET VIEW ON MAIN AREA ------------
+        }  
         public static void BasketMenu(int winX, int winY, int menuLevel)
         {
             //ClearFullSidemenu(winX, winY);
