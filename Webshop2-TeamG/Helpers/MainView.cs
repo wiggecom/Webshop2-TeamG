@@ -262,7 +262,7 @@ namespace Webshop2_TeamG.Helpers
                             if (userInputKey.Key == ConsoleKey.RightArrow)
                             {
                                 idNumber++;
-                                if (idNumber >= gamesTotal - 1)
+                                if (idNumber > gamesTotal - 1)
                                 {
                                     idNumber = 0;
                                 }
