@@ -10,7 +10,6 @@ namespace Webshop2_TeamG.Models
     {
         public int Id { get; set; }
         public int BasketId { get; set; }
-        public Basket Basket { get; set; }
         public int GameId { get; set; }
         public Game Game { get; set; }
         public int Quantity { get; set; }

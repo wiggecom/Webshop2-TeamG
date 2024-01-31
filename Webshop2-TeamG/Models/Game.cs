@@ -20,11 +20,11 @@ namespace Webshop2_TeamG.Models
         public decimal Price { get; set; }
         public int GenreId { get; set; }
         public Genre Genre { get; set; }
-        public int Stock { get; set; }
-        public int SoldTotal { get; set; }
+        public int? Stock { get; set; }
+        public int? SoldTotal { get; set; }
         public AgeRating AgeRating { get; set; }
         public string ShortInfo { get; set; }
         public string LongInfo { get; set; }
-        public int OnDisplay { get; set; } = 0;
+        public int OnDisplay { get; set; } = 0; // Set as featured/ondisplay from admin to prevent collision
     }
 }

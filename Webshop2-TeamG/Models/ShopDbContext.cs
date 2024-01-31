@@ -17,7 +17,8 @@ namespace Webshop2_TeamG.Models
         public DbSet<BasketEntry> BasketEntries { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS; Database=GameShop; TrustServerCertificate=true;Trusted_Connection=true;");
+            //optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS; Database=GameShop; TrustServerCertificate=true;Trusted_Connection=true;");
+            
         }
     }
 }

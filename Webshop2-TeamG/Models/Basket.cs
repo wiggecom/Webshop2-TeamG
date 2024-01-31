@@ -16,7 +16,7 @@ namespace Webshop2_TeamG.Models
         public DateTime DateOfPurchase { get; set; }
         public string? DeliveryOption { get; set; }
 
-        public ICollection<BasketEntry> BasketEntries { get; set; } = new List<BasketEntry>();
+        public ICollection<BasketEntry>? BasketEntries { get; set; } = new List<BasketEntry>();
 
     }
 }
